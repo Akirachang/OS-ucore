@@ -40,7 +40,7 @@ endif
 # BOARD
 BOARD		?= qemu
 SBI			?= rustsbi
-BOOTLOADER	:= ../bootloader/$(SBI)-$(BOARD).bin
+BOOTLOADER	:= bootloader/$(SBI)-$(BOARD).bin
 
 QEMU = qemu-system-riscv64
 QEMUOPTS = \
