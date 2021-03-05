@@ -35,7 +35,7 @@ printptr(uint64 x) {
 }
 
 // Print to the console. only understands %d, %x, %p, %s.
-void printf(const char *fmt, ...) {
+void printf(char *fmt, ...) {
     va_list ap;
     int i, c;
     char *s;
@@ -80,16 +80,24 @@ void printf(const char *fmt, ...) {
     }
 }
 
-int COLOR[] = {
-        [TRACE] = WHITE,
-        [ERROR] = RED,
-        [WARN] = YELLOW,
-        [INFO] = BRIGHT_YOUND,
-};
+// int COLOR[] = {
+//         [TRACE] = WHITE,
+//         [ERROR] = RED,
+//         [WARN] = YELLOW,
+//         [INFO] = BRIGHT_YOUND,
+// };
 
-const char *LEVEL[] = {
-        [TRACE] = "TRACE",
-        [ERROR] = "ERROR",
-        [WARN] = "WARN",
-        [INFO] = "INFO",
-};
+// const char *LEVEL[] = {
+//         [TRACE] = "TRACE",
+//         [ERROR] = "ERROR",
+//         [WARN] = "WARN",
+//         [INFO] = "INFO",
+// };
+void
+panic(char *s)
+{
+    printf("panic: ");
+    printf(s);
+    printf("\n");
+    loop();
+}
