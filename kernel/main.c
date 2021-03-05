@@ -16,7 +16,7 @@ void clean_bss() {
         *p = 0;
 }
 
-// int debug_level = INFO;
+int debug_level = INFO;
 
 void main() {
     clean_bss();
