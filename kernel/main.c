@@ -19,6 +19,7 @@ void clean_bss() {
 }
 
 int debug_level = INFO;
+int curr_pid = 0
 
 void main() {
     clean_bss();
