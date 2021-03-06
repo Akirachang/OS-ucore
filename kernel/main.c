@@ -18,7 +18,7 @@ void clean_bss() {
         *p = 0;
 }
 
-// int debug_level = INFO;
+int debug_level = INFO;
 
 void main() {
     clean_bss();
@@ -33,7 +33,7 @@ void main() {
     printf("edata: %p\n", edata);
     printf("sbss : %p\n", sbss);
     printf("ebss : %p\n", ebss);
-    info!(".text [{:#x}, {:#x})", stext as usize, etext as usize);
+    info("load range : [%d, %d] start = %d\n", stext, etext, sdata);
 
     printf("\n");
     shutdown();
