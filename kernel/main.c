@@ -1,4 +1,6 @@
 #include "defs.h"
+#include "logger.h"
+
 // here 1
 extern char stext[];
 extern char etext[];
