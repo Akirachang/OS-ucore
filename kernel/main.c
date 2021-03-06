@@ -35,7 +35,7 @@ void main() {
     printf("sbss : %p\n", sbss);
     printf("ebss : %p\n", ebss);
     info("load range : [%p, %p] start = %p\n", stext, etext, sdata);
-    debug("load range : [%p, %p] start = %p\n", srodata, erodata, sbss);
+    error("load range : [%p, %p] start = %p\n", srodata, erodata, sbss);
 
     printf("\n");
     shutdown();
