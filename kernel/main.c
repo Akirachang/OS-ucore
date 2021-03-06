@@ -38,6 +38,8 @@ void main() {
     error("HELLO WORLD");
     printf("\n");
     warn("HELLO WORLD");
+    printf("\n");
+    trace("HELLO WORLD");
 
     printf("\n");
     shutdown();
