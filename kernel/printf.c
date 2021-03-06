@@ -1,4 +1,6 @@
 #include "defs.h"
+#include "logger.h"
+
 #include <stdarg.h>
 static char digits[] = "0123456789abcdef";
 
