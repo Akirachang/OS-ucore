@@ -16,7 +16,7 @@ void clean_bss() {
         *p = 0;
 }
 
-int debug_level = INFO;
+// int debug_level = INFO;
 
 void main() {
     clean_bss();
@@ -31,6 +31,9 @@ void main() {
     printf("edata: %p\n", edata);
     printf("sbss : %p\n", sbss);
     printf("ebss : %p\n", ebss);
+    extern info!(".text [{:#x}, {:#x})", stext as usize, etext as usize);
+    extern debug!(".rodata [{:#x}, {:#x})", srodata as usize, erodata as usize);
+    extern error!(".data [{:#x}, {:#x})", sdata as usize, edata as usize);
     printf("\n");
     shutdown();
     //to here 2
