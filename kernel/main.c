@@ -25,7 +25,7 @@ void main() {
     clean_bss();
     //here 2
     printf("\n");
-    printf("hello wrold!\n");
+    printf("hello world!\n");
     printf("stext: %p\n", stext);
     printf("etext: %p\n", etext);
     printf("sroda: %p\n", srodata);
@@ -35,7 +35,8 @@ void main() {
     printf("sbss : %p\n", sbss);
     printf("ebss : %p\n", ebss);
     info("load range : [%p, %p] start = %p\n", stext, etext, sdata);
-    error("load range : [%p, %p] start = %p\n", srodata, erodata, sbss);
+    error("HELLO WORLD");
+    warn("HELLO WORLD");
 
     printf("\n");
     shutdown();
