@@ -33,7 +33,7 @@ void main() {
     printf("edata: %p\n", edata);
     printf("sbss : %p\n", sbss);
     printf("ebss : %p\n", ebss);
-    info("load range : [%d, %d] start = %d\n", stext, etext, sdata);
+    info!(".text [{:#x}, {:#x})", stext as usize, etext as usize);
 
     printf("\n");
     shutdown();
