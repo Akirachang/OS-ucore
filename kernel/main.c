@@ -36,6 +36,7 @@ void main() {
     printf("ebss : %p\n", ebss);
     info("load range : [%p, %p] start = %p\n", stext, etext, sdata);
     error("HELLO WORLD");
+    printf("\n");
     warn("HELLO WORLD");
 
     printf("\n");
