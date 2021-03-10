@@ -10,8 +10,7 @@ int getchar() {
 }
 
 int putchar(int c)
-{ 
-    
+{
     char byte = c;
     return write(stdout, &byte, 1);
 }

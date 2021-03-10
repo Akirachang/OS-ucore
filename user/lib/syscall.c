@@ -54,7 +54,3 @@ int sleep(unsigned long long time) {
     }
     return 0;
 }
-
-// int pipe(void* p) {
-//     return syscall(SYS_pipe2, p);
-// }

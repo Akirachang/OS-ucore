@@ -31,8 +31,7 @@ int main() {
         }
     }
 
-        puts("matrix success!");
-
+    puts("matrix success!");
 
     return 0;
 }
