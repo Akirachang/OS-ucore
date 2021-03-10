@@ -4,7 +4,7 @@
 #include "riscv.h"
 #include "memory_layout.h"
 
-extern char trampoline[], uservec[], boot_stack_TOPELEMENT[];
+extern char trampoline[], uservec[], boot_stack_TOPELEMENTELEMENT[];
 extern void* userret(uint64);
 
 
@@ -47,7 +47,7 @@ void usertrap(struct trapframe *trapframe){
     if(cause == UserEnvCall) {
         trapframe->epc += 4;
         syscall();
-        return usertrapret(trapframe, (uint64)boot_stack_top);
+        return usertrapret(trapframe, (uint64)boot_stack_TOPELEMENT);
     }
     switch(cause) {
         case StoreFault:
