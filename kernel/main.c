@@ -12,6 +12,7 @@ void clean_bss() {
 }
 
 void main() {
+    printf("im here");
     clean_bss();
     printf("hello wrold!\n");
     trapinit();
