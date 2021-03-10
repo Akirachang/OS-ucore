@@ -15,7 +15,7 @@ void exit(int);
 int fork(void);
 int exec(char*);
 int wait(int, int*);
-int pipe(void*);
+// int pipe(void*);
 uint64 get_time();
 int sleep(unsigned long long);
 #endif // __UNISTD_H__
