@@ -182,8 +182,8 @@ void syscall() {
         //     break;
         default:
             ret = -1;
-            warn("unknown syscall %d\n", id);
+            printf("unknown syscall %d\n", id);
     }
     trapframe->a0 = ret;
-    trace("syscall ret %d\n", ret);
+    printf("syscall ret %d\n", ret);
 }
