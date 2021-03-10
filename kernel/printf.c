@@ -1,5 +1,5 @@
 #include "defs.h"
-#include "logger.h"
+// #include "logger.h"
 
 #include <stdarg.h>
 static char digits[] = "0123456789abcdef";
@@ -82,19 +82,19 @@ void printf(char *fmt, ...) {
     }
 }
 
-int COLOR[] = {
-        [TRACE] = WHITE,
-        [ERROR] = RED,
-        [WARN] = YELLOW,
-        [INFO] = BRIGHT_YOUND,
-};
+// int COLOR[] = {
+//         [TRACE] = WHITE,
+//         [ERROR] = RED,
+//         [WARN] = YELLOW,
+//         [INFO] = BRIGHT_YOUND,
+// };
 
-const char *LEVEL[] = {
-        [TRACE] = "TRACE",
-        [ERROR] = "ERROR",
-        [WARN] = "WARN",
-        [INFO] = "INFO",
-};
+// const char *LEVEL[] = {
+//         [TRACE] = "TRACE",
+//         [ERROR] = "ERROR",
+//         [WARN] = "WARN",
+//         [INFO] = "INFO",
+// };
 void
 panic(char *s)
 {

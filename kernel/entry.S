@@ -1,7 +1,8 @@
-    .section .text.entry
+    ; 
+    .section .text
     .globl _entry
 _entry:
-    la sp, boot_stack
+    la sp, boot_stack_TOPELEMENT
     call main
 
     .section .bss.stack

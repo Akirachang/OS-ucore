@@ -1,9 +1,9 @@
 #include "types.h"
 
-struct file;
-struct context;
-struct proc;
-struct pipe;
+// struct file;
+// struct context;
+// struct proc;
+// struct pipe;
 
 // panic.c
 void loop();
@@ -16,38 +16,38 @@ int console_getchar();
 void shutdown();
 
 // console.c
-// void consoleinit(void);
+void consoleinit(void);
 void consputc(int);
 
 // logger.c
 void printf(char *, ...);
 // #include "logger.h"
-void printfinit(void);
-void panic(char*);
+// void printfinit(void);
+// void panic(char*);
 // // trap.c
-// void trapinit();
+void trapinit();
 // void usertrapret();
 // // void set_usertrap(void);
 // // void set_kerneltrap(void);
 
 // // // string.c
-// // int memcmp(const void *, const void *, uint);
-// // void *memmove(void *, const void *, uint);
-// // void *memset(void *, int, uint);
-// // char *safestrcpy(char *, const char *, int);
-// // int strlen(const char *);
-// // int strncmp(const char *, const char *, uint);
-// // char *strncpy(char *, const char *, int);
+int memcmp(const void *, const void *, uint);
+void *memmove(void *, const void *, uint);
+void *memset(void *, int, uint);
+char *safestrcpy(char *, const char *, int);
+int strlen(const char *);
+int strncmp(const char *, const char *, uint);
+char *strncpy(char *, const char *, int);
 
-// // syscall.c
-// // void syscall();
+// syscall.c
+void syscall();
 
 // // // swtch.S
 // // void swtch(struct context *, struct context *);
 
 // // // loader.c
-// // void batchinit();
-// // int run_all_app();
+void batchinit();
+int run_next_app();
 // // int get_id_by_name(char *name);
 // // void loader(int, void *);
 

@@ -1,20 +1,20 @@
-// #include "defs.h"
-// #include "syscall_ids.h"
-// #include "trap.h"
-// #include "proc.h"
+#include "defs.h"
+#include "syscall_ids.h"
+#include "trap.h"
+#include "proc.h"
 
-// #define min(a, b) a < b ? a : b;
+#define min(a, b) a < b ? a : b;
 
-// uint64 console_write(uint64 va, uint64 len) {
-//     struct proc *p = curr_proc();
-//     char str[200];
-//     int size = MIN(len, 200);
-//     copyin(p->pagetable, str, va, size);
-//     for(int i = 0; i < size; ++i) {
-//         console_putchar(str[i]);
-//     }
-//     return size;
-// }
+uint64 sys_write(int fd, char *str, uint len) {
+    //here
+    if (fd != 0)
+        return -1;
+    int size = min(strlen(str), len);
+    for(int i = 0; i < size; ++i) {
+        console_putchar(str[i]);
+    }
+    return size;
+}
 
 // uint64 console_read(uint64 va, uint64 len) {
 //     struct proc *p = curr_proc();
@@ -81,19 +81,25 @@
 //     return 0;
 // }
 
-// uint64 sys_exit(int code) {
-//     exit(code);
-//     return 0;
-// }
+uint64 sys_exit(int code) {
+
+    //here
+    printf("sysexit(%d)\n", code);
+    run_next_app();
+    printf("all apps over\n");
+    shutdown();    
+    return 0;
+}
 
 // uint64 sys_sched_yield() {
 //     yield();
 //     return 0;
 // }
+extern char trap_page[];
 
-// // uint64 sys_getpid() {
-// //     return curr_proc()->pid;
-// // }
+// uint64 sys_getpid() {
+//     return curr_proc()->pid;
+// }
 
 // uint64 sys_clone() {
 //     info("fork!\n");
@@ -131,50 +137,53 @@
 //     return 0;
 // }
 
-// void syscall() {
-//     struct proc *p = curr_proc();
-//     struct trapframe *trapframe = p->trapframe;
-//     int id = trapframe->a7, ret;
-//     uint64 args[6] = {trapframe->a0, trapframe->a1, trapframe->a2, trapframe->a3, trapframe->a4, trapframe->a5};
-//     trace("syscall %d args:%p %p %p %p %p %p\n", id, args[0], args[1], args[2], args[3], args[4], args[5]);
-//     switch (id) {
-//         case SYS_write:
-//             ret = sys_write(args[0], args[1], args[2]);
-//             break;
-//         case SYS_read:
-//             ret = sys_read(args[0], args[1], args[2]);
-//             break;
-//         case SYS_exit:
-//             ret = sys_exit(args[0]);
-//             break;
-//         case SYS_sched_yield:
-//             ret = sys_sched_yield();
-//             break;
-//         case SYS_getpid:
-//             ret = sys_getpid();
-//             break;
-//         case SYS_clone: // SYS_fork
-//             ret = sys_clone();
-//             break;
-//         case SYS_execve:
-//             ret = sys_exec(args[0]);
-//             break;
-//         case SYS_wait4:
-//             ret = sys_wait(args[0], args[1]);
-//             break;
-//         case SYS_times:
-//             ret = sys_times();
-//             break;
-//         case SYS_pipe2:
-//             ret = sys_pipe(args[0]);
-//             break;
-//         case SYS_close:
-//             ret = sys_close(args[0]);
-//             break;
-//         default:
-//             ret = -1;
-//             warn("unknown syscall %d\n", id);
-//     }
-//     trapframe->a0 = ret;
-//     trace("syscall ret %d\n", ret);
-// }
+void syscall() {
+    //here
+    struct trapframe *trapframe = (struct trapframe *) trap_page;
+    // struct trapframe *trapframe = p->trapframe;
+    int id = trapframe->a7, ret;
+    printf("syscall %d\n", id);
+
+    uint64 args[6] = {trapframe->a0, trapframe->a1, trapframe->a2, trapframe->a3, trapframe->a4, trapframe->a5};
+    // trace("syscall %d args:%p %p %p %p %p %p\n", id, args[0], args[1], args[2], args[3], args[4], args[5]);
+    switch (id) {
+        case SYS_write:
+            ret = sys_write(args[0], (char *) args[1], args[2]);
+            // break;
+        // case SYS_read:
+        //     ret = sys_read(args[0], args[1], args[2]);
+            break;
+        case SYS_exit:
+            ret = sys_exit(args[0]);
+            break;
+        // case SYS_sched_yield:
+        //     ret = sys_sched_yield();
+        //     break;
+        // case SYS_getpid:
+        //     ret = sys_getpid();
+        //     break;
+        // case SYS_clone: // SYS_fork
+        //     ret = sys_clone();
+        //     break;
+        // case SYS_execve:
+        //     ret = sys_exec(args[0]);
+        //     break;
+        // case SYS_wait4:
+        //     ret = sys_wait(args[0], args[1]);
+        //     break;
+        // case SYS_times:
+        //     ret = sys_times();
+        //     break;
+        // case SYS_pipe2:
+        //     ret = sys_pipe(args[0]);
+        //     break;
+        // case SYS_close:
+        //     ret = sys_close(args[0]);
+        //     break;
+        default:
+            ret = -1;
+            warn("unknown syscall %d\n", id);
+    }
+    trapframe->a0 = ret;
+    trace("syscall ret %d\n", ret);
+}

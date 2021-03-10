@@ -307,3 +307,9 @@ static inline void sfence_vma() {
 #define PXSHIFT(level) (PGSHIFT + (9 * (level)))
 #define PX(level, va) ((((uint64)(va)) >> PXSHIFT(level)) & PXMASK)
 
+
+//here
+#define MAXVA (1L << (9 + 9 + 9 + 12 - 1))
+
+typedef uint64 pte_t;
+typedef uint64 *pagetable_t;
