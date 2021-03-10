@@ -14,7 +14,7 @@ void clean_bss() {
 void main() {
     printf("im here");
     clean_bss();
-    printf("hello wrold!\n");
+    printf("hello world!\n");
     trapinit();
     batchinit();
     run_next_app();
