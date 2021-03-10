@@ -15,9 +15,6 @@ void main() {
     clean_bss();
     printf("hello wrold!\n");
     trapinit();
-    printf("hi");
     batchinit();
-    printf("hi2");
     run_next_app();
-    printf("hi3");
 }
