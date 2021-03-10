@@ -1,7 +1,7 @@
 #include "defs.h"
 #include "syscall_ids.h"
 #include "trap.h"
-#include "proc.h"
+// #include "proc.h"
 
 #define min(a, b) a < b ? a : b;
 

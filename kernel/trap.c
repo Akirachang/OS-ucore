@@ -1,8 +1,9 @@
 #include "defs.h"
 #include "trap.h"
-#include "proc.h"
 #include "riscv.h"
-#include "memory_layout.h"
+// #include "proc.h"
+// #include "riscv.h"
+// #include "memory_layout.h"
 
 extern char trampoline[], uservec[], boot_stack_top[];
 extern void* userret(uint64);
