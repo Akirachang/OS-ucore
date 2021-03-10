@@ -4,7 +4,7 @@
 #include "riscv.h"
 #include "memory_layout.h"
 
-extern char trampoline[], uservec[], boot_stack_TOPELEMENTELEMENT[];
+extern char trampoline[], uservec[], boot_stack_TOPELEMENT[];
 extern void* userret(uint64);
 
 
