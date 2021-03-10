@@ -5,8 +5,8 @@
 
 int open(const char*, int, int);
 
-ssize_t read(int, void*, unsigned long long);
-ssize_t write(int, const void*, unsigned long long);
+ssize_t read(int, void*, size_t);
+ssize_t write(int, const void*, size_t);
 
 int close(int);
 pid_t getpid(void);
