@@ -4,7 +4,7 @@
 
 static int app_cur, app_num;
 static uint64* app_info_ptr;
-extern char _app_num[], userret[], boot_stack_top[], ekernel[];
+extern char _app_num[], userret[], boot_stac_TOPELEMENT[], ekernel[];
 const uint64 BASE_ADDRESS = 0x80400000, MAX_APP_SIZE = 0x20000;
 
 void batchinit() {
@@ -39,6 +39,6 @@ int run_next_app() {
     trapframe->epc = BASE_ADDRESS;
     printf("bin range = [%p, %p)\n", *app_info_ptr, *app_info_ptr + length);
     trapframe->sp = (uint64) user_stack + 4096;
-    usertrapret(trapframe, (uint64)boot_stack_top);
+    usertrapret(trapframe, (uint64)boot_stac_TOPELEMENT);
     return 0;
 }
