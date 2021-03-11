@@ -12,9 +12,9 @@ void clean_bss() {
 }
 
 void main() {
-    printf("im here");
+    // printf("im here");
     clean_bss();
-    printf("hello world!\n");
+    // printf("hello world!\n");
     trapinit();
     batch_INIT();
     NEXT_APP();

@@ -20,7 +20,9 @@ __attribute__ ((aligned (16))) char user_stack[4096];
 __attribute__ ((aligned (16))) char trap_page[4096];
 
 int loadAPP(uint64* info) {
-    uint64 start = info[0], end = info[1], length = end - start;
+    uint64 start = info[0];
+    uint64 end = info[1];
+    uint64 length = end - start;
     memset((void*)BASE_ADDRESS, 0, MAX_APP_SIZE);
     memmove((void*)BASE_ADDRESS, (void*)start, length);
     return length;
@@ -28,8 +30,8 @@ int loadAPP(uint64* info) {
 
 int NEXT_APP() {
     struct trapframe* trapframe = (struct trapframe*)trap_page;
-    app_cur++;
-    app_info_ptr++;
+    app_cur+=1;
+    app_info_ptr+=1;
     if(app_cur >= app_num) {
         return -1;
     }
