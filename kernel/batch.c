@@ -7,7 +7,7 @@ static uint64* app_info_ptr;
 extern char _app_num[], userret[], boot_stac_TOPELEMENT[], ekernel[];
 const uint64 BASE_ADDRESS = 0x80400000, MAX_APP_SIZE = 0x20000;
 
-void batchinit() {
+void batch_INIT() {
     if((uint64)ekernel >= BASE_ADDRESS) {
         panic("kernel too large...\n");
     }
@@ -19,14 +19,14 @@ void batchinit() {
 __attribute__ ((aligned (16))) char user_stack[4096];
 __attribute__ ((aligned (16))) char trap_page[4096];
 
-int load_app(uint64* info) {
+int loadAPP(uint64* info) {
     uint64 start = info[0], end = info[1], length = end - start;
     memset((void*)BASE_ADDRESS, 0, MAX_APP_SIZE);
     memmove((void*)BASE_ADDRESS, (void*)start, length);
     return length;
 }
 
-int run_next_app() {
+int NEXT_APP() {
     struct trapframe* trapframe = (struct trapframe*)trap_page;
     app_cur++;
     app_info_ptr++;
@@ -34,7 +34,7 @@ int run_next_app() {
         return -1;
     }
     printf("load and run app %d\n", app_cur);
-    uint64 length = load_app(app_info_ptr);
+    uint64 length = loadAPP(app_info_ptr);
     memset(trapframe, 0, 4096);
     trapframe->epc = BASE_ADDRESS;
     printf("bin range = [%p, %p)\n", *app_info_ptr, *app_info_ptr + length);

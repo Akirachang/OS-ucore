@@ -85,7 +85,7 @@ uint64 sys_exit(int code) {
 
     //here
     printf("sysexit(%d)\n", code);
-    run_next_app();
+    NEXT_APP();
     printf("all apps over\n");
     shutdown();    
     return 0;

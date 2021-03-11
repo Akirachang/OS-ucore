@@ -72,7 +72,7 @@ void usertrap(struct trapframe *trapframe){
             break;
     }
     printf("switch to next app\n");
-    run_next_app();
+    NEXT_APP();
     printf("all apps over\n");
     shutdown();
 }

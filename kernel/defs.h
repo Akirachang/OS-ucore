@@ -32,8 +32,8 @@ char *strncpy(char *, const char *, int);
 void syscall();
 
 // batch.c
-void batchinit();
-int run_next_app();
+void batch_INIT();
+int NEXT_APP();
 
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x) / sizeof((x)[0]))

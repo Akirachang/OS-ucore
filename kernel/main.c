@@ -16,6 +16,6 @@ void main() {
     clean_bss();
     printf("hello world!\n");
     trapinit();
-    batchinit();
-    run_next_app();
+    batch_INIT();
+    NEXT_APP();
 }
