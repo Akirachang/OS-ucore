@@ -140,12 +140,12 @@ extern char trap_page[];
 // }
 
 void syscall() {
-    struct trapframe *tf = (struct tf *) trap_page;
-    // struct tf *tf = p->tf;
-    int id = tf->a7, ret;
+    struct trapframe *trapframe = (struct trapframe *) trap_page;
+    // struct trapframe *trapframe = p->trapframe;
+    int id = trapframe->a7, ret;
     printf("syscall %d\n", id);
 
-    uint64 args[6] = {tf->a0, tf->a1, tf->a2, tf->a3, tf->a4, tf->a5};
+    uint64 args[6] = {trapframe->a0, trapframe->a1, trapframe->a2, trapframe->a3, trapframe->a4, trapframe->a5};
     // trace("syscall %d args:%p %p %p %p %p %p\n", id, args[0], args[1], args[2], args[3], args[4], args[5]);
     switch (id) {
         case SYS_write:
@@ -162,6 +162,6 @@ void syscall() {
             ret = -1;
             printf("unknown syscall %d\n", id);
     }
-    tf->a0 = ret;
+    trapframe->a0 = ret;
     printf("syscall ret %d\n", ret);
 }
