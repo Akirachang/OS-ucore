@@ -28,7 +28,7 @@ uint64 sys_sched_yield() {
 void syscall() {
     struct trapframe *trapframe = curr_proc()->trapframe;
     int id = trapframe->a7, ret;
-    printf("syscall %d\n", id);
+    // printf("syscall %d\n", id);
     uint64 args[7] = {trapframe->a0, trapframe->a1, trapframe->a2, trapframe->a3, trapframe->a4, trapframe->a5, trapframe->a6};
     switch (id) {
         case SYS_write:
@@ -42,8 +42,8 @@ void syscall() {
             break;
         default:
             ret = -1;
-            printf("unknown syscall %d\n", id);
+            // printf("unknown syscall %d\n", id);
     }
     trapframe->a0 = ret;
-    printf("syscall ret %d\n", ret);
+    // printf("syscall ret %d\n", ret);
 }
