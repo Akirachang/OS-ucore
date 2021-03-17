@@ -4,15 +4,20 @@
 #include "riscv.h"
 // #include "memory_layout.h"
 
-extern char trampoline[], uservec[], userret[];
+
+extern char trampoline[], uservec[];
 extern void* userret(uint64);
 
-
-void trapinit(void) {
-    // intr_on();
-    set_kerneltrap();
+// set up to take exceptions and traps while in the kernel.
+void trapinit(void)
+{
+   set_kerneltrap();
 }
 
+void unknown_trap() {
+    printf("unknown trap: %p, stval = %p\n", r_scause(), r_stval());
+    exit(-1);
+}
 void kerneltrap() {
     if((r_sstatus() & SSTATUS_SPP) == 0)
         panic("kerneltrap: not from supervisor mode");
