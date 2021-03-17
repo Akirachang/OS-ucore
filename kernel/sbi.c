@@ -35,6 +35,9 @@ void shutdown() {
     panic("shutdown");
 }
 
+void set_timer(uint64 stime) {
+    sbi_call(SBI_SET_TIMER, stime, 0, 0);
+}
 // void set_timer(uint64 stime) {
 //     sbi_call(SBI_SET_TIMER, stime, 0, 0);
 // }

@@ -1,9 +1,7 @@
 #include "types.h"
 
-struct file;
 struct context;
 struct proc;
-struct pipe;
 
 // panic.c
 void loop();
@@ -14,55 +12,58 @@ void console_putchar(int);
 int console_getchar();
 // void set_timer(uint64);
 void shutdown();
+void set_timer(uint64 stime);
+
 
 // console.c
-// void consoleinit(void);
+void consoleinit();
 void consputc(int);
 
 // logger.c
 void printf(char *, ...);
 // #include "logger.h"
-void printfinit(void);
-void panic(char*);
-// // trap.c
-// void trapinit();
-// void usertrapret();
-// // void set_usertrap(void);
-// // void set_kerneltrap(void);
+// void printfinit(void);
+// void panic(char*);
+// trap.c
+void trapinit();
+void usertrapret();
+void set_usertrap(void);
+void set_kerneltrap(void);
 
-// // // string.c
-// // int memcmp(const void *, const void *, uint);
-// // void *memmove(void *, const void *, uint);
-// // void *memset(void *, int, uint);
-// // char *safestrcpy(char *, const char *, int);
-// // int strlen(const char *);
-// // int strncmp(const char *, const char *, uint);
-// // char *strncpy(char *, const char *, int);
+// string.c
+int memcmp(const void *, const void *, uint);
+void *memmove(void *, const void *, uint);
+void *memset(void *, int, uint);
+char *safestrcpy(char *, const char *, int);
+int strlen(const char *);
+int strncmp(const char *, const char *, uint);
+char *strncpy(char *, const char *, int);
 
-// // syscall.c
-// // void syscall();
+// syscall.c
+void syscall();
 
-// // // swtch.S
-// // void swtch(struct context *, struct context *);
+// swtch.S
+void swtch(struct context *, struct context *);
 
+// batch.c
+int finished();
+void batchinit();
+int run_all_app();
 // // // loader.c
 // // void batchinit();
 // // int run_all_app();
 // // int get_id_by_name(char *name);
 // // void loader(int, void *);
 
-// // proc.c
-// // struct proc *curr_proc();
-// // void exit(int);
-// // void procinit(void);
-// // void scheduler(void) __attribute__((noreturn));
-// // void sched(void);
-// // void yield(void);
-// // int fork(void);
-// // int exec(char *);
-// // int wait(int, int *);
-// // struct proc *allocproc();
-// // int fdalloc(struct file *);
+// proc.c
+struct proc *curr_proc();
+void exit(int);
+void procinit();
+void scheduler() __attribute__((noreturn));
+void sched();
+void yield();
+struct proc* allocproc();
+// int fdalloc(struct file *);
 
 // // kalloc.c
 // void *kalloc(void);
@@ -86,10 +87,10 @@ void panic(char*);
 // int copyin(pagetable_t, char*, uint64, uint64);
 // int copyout(pagetable_t, uint64, char*, uint64);
 
-// // timer.c
-// uint64 get_cycle();
-// void timerinit();
-// void set_next_timer();
+// timer.c
+uint64 get_cycle();
+void timerinit();
+void set_next_timer();
 // uint64 get_time_ms();
 
 // // pipe.c
@@ -103,6 +104,6 @@ void panic(char*);
 // struct file* filealloc();
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x) / sizeof((x)[0]))
-
+#define PAGE_SIZE (4096)
 // #define MIN(a, b) (a < b ? a : b)
 // #define MAX(a, b) (a > b ? a : b)

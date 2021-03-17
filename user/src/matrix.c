@@ -31,5 +31,7 @@ int main() {
         }
     }
 
+    puts("matrix success!");
+
     return 0;
 }
