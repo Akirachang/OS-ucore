@@ -4,15 +4,30 @@
 #include "proc.h"
 
 #define min(a, b) a < b ? a : b;
+extern char user_stack[4096];
+static const uint64 BASE_ADDRESS = 0x80400000;
 
 uint64 sys_write(int fd, char *str, uint len) {
-    if (fd != 0)
+    if (fd != 0 && fd!=1)
+    {
         return -1;
-    int size = min(strlen(str), len);
+    }
+    if(((uint64)(str)<(uint64)user_stack ||
+    (uint64)str+len>(uint64)user_stack+(uint64)4096) && 
+    (uint64)str<BASE_ADDRESS)
+    {
+        return -1;
+    }
+    int size=0;
+    if(strlen(str)<len)
+        size = strlen(str);
+    else
+        size = len;
     for(int i = 0; i < size; ++i) {
         console_putchar(str[i]);
     }
     return size;
+
 }
 
 uint64 sys_exit(int code) {
