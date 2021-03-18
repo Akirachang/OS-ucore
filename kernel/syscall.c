@@ -5,7 +5,7 @@
 
 #define min(a, b) a < b ? a : b;
 
-extern char user_stk[4096];
+char user_stk[4096];
 static const uint64 BASE_ADDRESS = 0x80400000;
 
 uint64 sys_write(int fd, char *str, uint len) {
