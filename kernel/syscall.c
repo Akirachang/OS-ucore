@@ -5,7 +5,7 @@
 
 #define min(a, b) a < b ? a : b;
 
-extern char user_stack[4096];
+extern char user_stk[4096];
 static const uint64 BASE_ADDRESS = 0x80400000;
 
 uint64 sys_write(int fd, char *str, uint len) {
@@ -13,8 +13,8 @@ uint64 sys_write(int fd, char *str, uint len) {
     {
         return -1;
     }
-    if(((uint64)(str)<(uint64)user_stack ||
-    (uint64)str+len>(uint64)user_stack+(uint64)4096) && 
+    if(((uint64)(str)<(uint64)user_stk ||
+    (uint64)str+len>(uint64)user_stk+(uint64)4096) && 
     (uint64)str<BASE_ADDRESS)
     {
         return -1;
