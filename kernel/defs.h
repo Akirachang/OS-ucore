@@ -65,6 +65,11 @@ void yield();
 struct proc* allocproc();
 uint64 set_priority(int code);
 
+struct TimeVal{
+    uint64 sec;	// 自 Unix 纪元起的秒数
+    uint64 usec;	// 微秒数
+};
+
 // int fdalloc(struct file *);
 
 // // kalloc.c

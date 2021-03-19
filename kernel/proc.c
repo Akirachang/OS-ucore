@@ -115,3 +115,14 @@ uint64 set_priority(int code) {
         return -1;
     }
 }
+
+uint64 get_time(TimeVal ts, int tz) {
+    struct TimeVal time = ts;
+    int err = sys_get_time(&time, 0);
+    printf("err is %d",err);
+    if (err == 0) {
+        return ((time.sec & 0xffff) * 1000 + time.usec / 1000);
+    } else {
+        return -1;
+    }
+}
