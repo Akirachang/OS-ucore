@@ -46,7 +46,7 @@ uint64 sys_setpriority(int code) {
     return rtn;
 }
 
-uint64 gettime(){
+uint64 get_time(){
     return 0;
 }
 
