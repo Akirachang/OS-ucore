@@ -41,6 +41,13 @@ uint64 sys_sched_yield() {
     return 0;
 }
 
+uint64 sys_setpriority(int code) {
+    if(code>=2 && code < 16){
+        return code;
+    }
+    return -1;
+}
+
 void syscall() {
     struct trapframe *trapframe = curr_proc()->trapframe;
     int id = trapframe->a7, ret;
@@ -55,6 +62,9 @@ void syscall() {
             break;
         case SYS_sched_yield:
             ret = sys_sched_yield();
+            break;
+        case SYS_setpriority:
+            ret = sys_setpriority(arg[0]);
             break;
         default:
             ret = -1;
