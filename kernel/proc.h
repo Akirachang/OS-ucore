@@ -6,6 +6,7 @@
 // #include "file.h"
 
 // #define FD_MAX (16)
+#define MAX_PROCESS                 4096
 
 struct context {
     uint64 ra;
@@ -45,4 +46,8 @@ struct proc {
     uint64 exit_code;
 
     struct file* files[16];
+
+    //lab3
+    uint64 stride;
+    uint64 prio;
 };

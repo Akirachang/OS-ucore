@@ -42,10 +42,8 @@ uint64 sys_sched_yield() {
 }
 
 uint64 sys_setpriority(int code) {
-    if(code>=2 && code < 16){
-        return code;
-    }
-    return -1;
+    uint64 rtn = set_priority(code);
+    return rtn;
 }
 
 void syscall() {

@@ -103,3 +103,14 @@ void exit(int code) {
     finished();
     sched();
 }
+
+uint64 set_priority(int code) {
+    struct proc *p = curr_proc();
+    if(code>2&&code<MAX_PROCESS){
+        p->prio=code;
+        return code;
+    }
+    else{
+        return -1;
+    }
+}
