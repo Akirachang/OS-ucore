@@ -46,6 +46,11 @@ uint64 sys_setpriority(int code) {
     return rtn;
 }
 
+uint64 get_time(int code) {
+    uint64 rtn = sys_get_time(code);
+    return rtn;
+}
+
 void syscall() {
     struct trapframe *trapframe = curr_proc()->trapframe;
     int id = trapframe->a7, ret;
@@ -63,6 +68,9 @@ void syscall() {
             break;
         case SYS_setpriority:
             ret = sys_setpriority(args[0]);
+            break;
+        case SYS_gettimeofday:
+            ret = sys_get_time();
             break;
         default:
             ret = -1;
