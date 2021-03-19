@@ -1,9 +1,9 @@
 #include "riscv.h"
 // #include "defs.h"
 
-// const uint64 TICKS_PER_SEC = 100;
-// const uint64 MSEC_PER_SEC = 1000;
-// const uint64 CPU_FREQ = 12500000;
+const uint64 TICKS_PER_SEC = 100;
+const uint64 MSEC_PER_SEC = 1000;
+const uint64 CPU_FREQ = 12500000;
 
 uint64 get_cycle() {
     return r_time();
@@ -23,6 +23,6 @@ void set_next_timer() {
     set_timer(get_cycle() + timebase);
 }
 
-// uint64 get_time_ms() {
-//     return get_cycle() / (CPU_FREQ / MSEC_PER_SEC);
-// }
+uint64 get_time_ms() {
+    return get_cycle() / (CPU_FREQ / MSEC_PER_SEC);
+}

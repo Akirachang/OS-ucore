@@ -51,3 +51,8 @@ struct proc {
     uint64 stride;
     uint64 prio;
 };
+
+struct TimeVal{
+    uint64 sec;	// 自 Unix 纪元起的秒数
+    uint64 usec;	// 微秒数
+};
