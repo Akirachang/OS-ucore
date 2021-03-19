@@ -63,6 +63,8 @@ void scheduler() __attribute__((noreturn));
 void sched();
 void yield();
 struct proc* allocproc();
+uint64 set_priority(int code);
+
 // int fdalloc(struct file *);
 
 // // kalloc.c
