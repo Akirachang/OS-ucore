@@ -293,3 +293,8 @@
 #define SYS_pidfd_getfd 438
 #define SYS_faccessat2 439
 #define SYS_riscv_flush_icache 244 + 15
+
+struct TimeVal{
+    uint64 sec;	// 自 Unix 纪元起的秒数
+    uint64 usec;	// 微秒数
+};
