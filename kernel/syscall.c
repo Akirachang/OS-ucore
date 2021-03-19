@@ -64,7 +64,7 @@ void syscall() {
             ret = sys_sched_yield();
             break;
         case SYS_setpriority:
-            ret = sys_setpriority(arg[0]);
+            ret = sys_setpriority(args[0]);
             break;
         default:
             ret = -1;
