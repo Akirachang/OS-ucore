@@ -44,7 +44,7 @@ int exec(char* name) {
 }
 
 int64 get_time() {
-    struct TimeVal time;
+    TimeVal time;
     int err = sys_get_time(&time, 0);
     printf("err is %d",err);
     if (err == 0) {
