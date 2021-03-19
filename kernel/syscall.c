@@ -47,7 +47,7 @@ uint64 sys_setpriority(int code) {
 }
 
 uint64 get_time(){
-    printf("hi, im here")
+    printf("hi, im here");
     return 0;
 }
 
