@@ -5,7 +5,7 @@
 static char digits[] = "0123456789abcdef";
 
 static void
-printint(int xx, int base, int sign) {
+printfint(int xx, int base, int sign) {
     char buf[16];
     int i;
     uint x;
