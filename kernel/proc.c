@@ -107,7 +107,7 @@ void exit(int code) {
 uint64 set_priority(int code) {
     struct proc *p = curr_proc();
     printf("code is %d",code);
-    if(code>2&&code<MAX_PROCESS){
+    if(code>=2&&code<=INT_MAX){
         p->prio=code;
         return code;
     }
