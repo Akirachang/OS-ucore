@@ -46,6 +46,10 @@ uint64 sys_setpriority(int code) {
     return rtn;
 }
 
+uint64 gettime(){
+    return 0;
+}
+
 
 void syscall() {
     struct trapframe *trapframe = curr_proc()->trapframe;
