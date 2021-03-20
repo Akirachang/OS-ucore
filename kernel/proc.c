@@ -56,7 +56,7 @@ struct proc* allocproc(void)
     p->context.ra = (uint64)usertrapret;
     p->context.sp = p->kstack + PAGE_SIZE;
     p->prio = 16; //default prio
-    p->pass=BIG_STRIDE/16;
+    p->pass=INT_MAX/16;
     p->stride = 0;
     return p;
 }
@@ -79,10 +79,6 @@ scheduler(void)
         chosen->state = RUNNING;
         chosen->stride+=chosen->pass; //将对应的 stride 加上其对应的步长 pass
         current_proc = chosen;
-        // if(current_proc->stride >= 500*chosen->pass){
-        //     exit(-1);
-        //     continue;
-        // }
         swtch(&idle.context, &chosen->context);
     }
 }
