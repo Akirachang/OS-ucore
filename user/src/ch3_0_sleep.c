@@ -10,6 +10,7 @@
 
 int main() {
     int64 current_time = get_time();
+    printf(string(current_time));
     assert(current_time > 0);
     printf("get_time OK! %d\n", current_time);
     int64 wait_for = current_time + 3000;

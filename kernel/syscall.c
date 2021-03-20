@@ -75,6 +75,7 @@ void syscall() {
             break;
         case SYS_gettimeofday:
             ret = sys_get_time(args[0],0);
+            printf("rtn is %d",ret);
             break;
         default:
             ret = -1;
