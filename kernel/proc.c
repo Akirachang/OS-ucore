@@ -67,16 +67,16 @@ scheduler(void)
     for(;;){
         struct proc *p;
         struct proc *chosen=0;
-        printf("here");
+        // printf("here");
         for(p = pool; p < &pool[NPROC]; p++) {
-            printf("here2");
+            // printf("here2");
             if(p->state == RUNNABLE && 
             (!chosen||p->stride < chosen->stride)) {
                 chosen = p;
-                printf("chosen");
+                // printf("chosen");
             }
         }
-         chosen->state = RUNNING;
+        chosen->state = RUNNING;
         chosen->stride+=chosen->pass; //将对应的 stride 加上其对应的步长 pass
         current_proc = chosen;
         if(current_proc->stride >= 500*chosen->pass){
