@@ -8,7 +8,6 @@ typedef struct{
 #endif
 struct context;
 struct proc;
-extern uint64 PROC_num;
 
 void get_N(int n);
 

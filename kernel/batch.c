@@ -8,7 +8,6 @@ static uint64* app_info_ptr;
 extern char _app_num[], ekernel[];
 const uint64 BASE_ADDRESS = 0x80400000, MAX_APP_SIZE = 0x20000;
 int fin = 0;
-int PROC_num;
 int finished() {
     ++fin;
     if(fin >= app_num)
