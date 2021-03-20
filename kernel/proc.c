@@ -120,6 +120,6 @@ uint64 set_priority(int code) {
 uint64 get_time(TimeVal* ts, int tz) {
     ts->sec = get_cycle()/12500000;
     ts->usec = (get_cycle()%12500000)*10/125;
-    printf("hi2");
+    // printf("hi2");
     return 0;
 }
