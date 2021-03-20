@@ -15,7 +15,7 @@ uint64 sys_write(int fd, char *str, uint len) {
         return -1;
     }
     struct proc* p = curr_proc();
-    char* user_stk = p->ustack;
+    uint64 user_stk = p->ustack;
     if(((uint64)(str)<(uint64)user_stk ||
     (uint64)str+len>(uint64)user_stk+(uint64)4096) && 
     (uint64)str<BASE_ADDRESS+num*MAX_APP_SIZE)
