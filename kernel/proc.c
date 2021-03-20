@@ -71,7 +71,7 @@ scheduler(void)
         for(p = pool; p < &pool[NPROC]; p++) {
             printf("here2");
             if(p->state == RUNNABLE && 
-            (p->stride < chosen->stride)) {
+            (!chosen||p->stride < chosen->stride)) {
                 chosen = p;
                 printf("chosen");
             }
