@@ -74,6 +74,7 @@ void syscall() {
             ret = sys_setpriority(args[0]);
             break;
         case SYS_gettimeofday:
+            printf("args0 is %d",args[0]);
             ret = sys_get_time(args[0],0);
             break;
         default:
