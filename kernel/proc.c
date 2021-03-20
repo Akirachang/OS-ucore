@@ -79,10 +79,10 @@ scheduler(void)
         chosen->state = RUNNING;
         chosen->stride+=chosen->pass; //将对应的 stride 加上其对应的步长 pass
         current_proc = chosen;
-        if(current_proc->stride >= 500*chosen->pass){
-            exit(-1);
-            continue;
-        }
+        // if(current_proc->stride >= 500*chosen->pass){
+        //     exit(-1);
+        //     continue;
+        // }
         swtch(&idle.context, &chosen->context);
     }
 }
