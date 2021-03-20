@@ -6,7 +6,7 @@
 // #include "file.h"
 
 // #define FD_MAX (16)
-#define INT_MAX 2147483647
+#define INT_MAX 100000
 
 struct context {
     uint64 ra;
