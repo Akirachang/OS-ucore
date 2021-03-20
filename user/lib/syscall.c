@@ -46,7 +46,7 @@ int exec(char* name) {
 int64 get_time() {
     TimeVal time;
     int err = sys_get_time(&time, 0);
-    printf("err is %d",err);
+    // printf("err is %d",err);
     if (err == 0) {
         return ((time.sec & 0xffff) * 1000 + time.usec / 1000);
     } else {
