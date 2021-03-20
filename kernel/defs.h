@@ -64,6 +64,7 @@ void sched();
 void yield();
 struct proc* allocproc();
 uint64 set_priority(int code);
+uint64 get_time(TimeVal* ts, int tz);
 
 // int fdalloc(struct file *);
 
