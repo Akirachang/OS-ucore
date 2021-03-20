@@ -1,8 +1,8 @@
 #include "defs.h"
 #include "trap.h"
 #include "proc.h"
-#ifndef PROC_NUM
-#define PROC_NUM
+#ifndef PROC_num
+#define PROC_num
 #endif
 
 static int app_cur, app_num;
