@@ -67,13 +67,13 @@ scheduler(void)
     for(;;){
         struct proc *p;
         struct proc *chosen=0;
-        printf("here");
+        // printf("here");
         for(p = pool; p < &pool[NPROC]; p++) {
             // printf("here2");
             if(p->state == RUNNABLE && 
             (!chosen||p->stride < chosen->stride)) {
                 chosen = p;
-                printf("chosen");
+                // printf("chosen");
             }
         }
         chosen->state = RUNNING;
