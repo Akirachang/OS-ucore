@@ -1,7 +1,6 @@
 #include "defs.h"
 #include "proc.h"
 #include "trap.h"
-#define BIG_STRIDE    0x7FFFFFFF
 struct proc pool[NPROC];
 char kstack[NPROC][PAGE_SIZE];
 __attribute__ ((aligned (4096))) char ustack[NPROC][PAGE_SIZE];
@@ -117,7 +116,7 @@ void exit(int code) {
 uint64 set_priority(int code) {
     struct proc *p = curr_proc();
     // printf("code is %d",code);
-    if(code>=2&&code<=INT_MAX){
+    if(code>=2&&code<=2147483647){
         p->prio=code;
         p->pass = INT_MAX/p->prio;
         return code;
