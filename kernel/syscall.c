@@ -74,7 +74,7 @@ void syscall() {
             break;
         case SYS_gettimeofday:
             printf("args0 is %d",args[0]);
-            ret = sys_get_time(&args[0],0);
+            ret = sys_get_time((TimeVal *)args[0],0);
             break;
         default:
             ret = -1;
