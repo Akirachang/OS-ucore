@@ -1,7 +1,7 @@
 #include "defs.h"
 #include "proc.h"
 #include "trap.h"
-
+#define BIG_STRIDE    0x7FFFFFFF
 struct proc pool[NPROC];
 char kstack[NPROC][PAGE_SIZE];
 __attribute__ ((aligned (4096))) char ustack[NPROC][PAGE_SIZE];
@@ -56,7 +56,7 @@ struct proc* allocproc(void)
     p->context.ra = (uint64)usertrapret;
     p->context.sp = p->kstack + PAGE_SIZE;
     p->prio = 16; //default prio
-    p->pass=INT_MAX/16;
+    p->pass=BIG_STRIDE/16;
     p->stride = 0;
     return p;
 }
@@ -83,7 +83,6 @@ scheduler(void)
             exit(-1);
             continue;
         }
-       
         swtch(&idle.context, &chosen->context);
     }
 }
