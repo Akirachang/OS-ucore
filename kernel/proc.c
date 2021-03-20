@@ -118,6 +118,7 @@ uint64 set_priority(int code) {
 }
 
 uint64 get_time(TimeVal* ts, int tz) {
-    ts->sec = get_cycle();
+    ts->sec = get_cycle()/12500000;
+    ts->usec = get_cycle()%12500000/12.5;
     return 0;
 }
