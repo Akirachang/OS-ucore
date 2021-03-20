@@ -23,6 +23,6 @@ void set_next_timer() {
     set_timer(get_cycle() + timebase);
 }
 
-uint64 get_time_ms() {
-    return get_cycle() / (CPU_FREQ / MSEC_PER_SEC);
-}
+// uint64 get_time_ms() {
+//     return get_cycle() / (CPU_FREQ / MSEC_PER_SEC);
+// }

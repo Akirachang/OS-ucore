@@ -7,6 +7,11 @@
 char user_stk[4096];
 static const uint64 BASE_ADDRESS = 0x80400000;
 
+typedef struct{
+    uint64 sec;	// 自 Unix 纪元起的秒数
+    uint64 usec;	// 微秒数
+}TimeVal;
+
 uint64 sys_write(int fd, char *str, uint len) {
     if (fd != 0 && fd!=1)
     {

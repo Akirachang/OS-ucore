@@ -26,6 +26,7 @@ procinit(void)
         p->kstack = (uint64)kstack[p - pool];
         p->ustack = (uint64)ustack[p - pool];
         p->trapframe = (struct trapframe*)trapframe[p - pool];
+        p->pid=-1;
     }
     idle.kstack = (uint64)boot_stack_top;
     idle.pid = 0;
@@ -119,6 +120,5 @@ uint64 set_priority(int code) {
 
 uint64 get_time(TimeVal* ts, int tz) {
     ts->sec = get_cycle();
-    ts->usec = get_time_ms();
     return 0;
 }

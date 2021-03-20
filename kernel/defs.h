@@ -1,7 +1,8 @@
 #include "types.h"
-#include "timer.h"
 struct context;
 struct proc;
+
+struct TimeVal;
 
 // panic.c
 void loop();
