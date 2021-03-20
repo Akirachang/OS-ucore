@@ -55,22 +55,28 @@ struct proc* allocproc(void)
     memset((void*)p->kstack, 0, PAGE_SIZE);
     p->context.ra = (uint64)usertrapret;
     p->context.sp = p->kstack + PAGE_SIZE;
+    p->prio = 16; //default prio
+    p->pass=INT_MAX/16;
+    p->stride = 0;
     return p;
 }
 
 void
 scheduler(void)
 {
-    struct proc *p;
-
     for(;;){
+        struct proc *p;
+        struct proc *chosen=0;
         for(p = pool; p < &pool[NPROC]; p++) {
-            if(p->state == RUNNABLE) {
-                p->state = RUNNING;
-                current_proc = p;
-                swtch(&idle.context, &p->context);
+            if(p->state == RUNNABLE && 
+            (p->stride < chosen->stride)) {
+                chosen = p;
             }
         }
+        chosen->state = RUNNING;
+        chosen->stride+=chosen->pass; //将对应的 stride 加上其对应的步长 pass
+        current_proc = chosen;
+        swtch(&idle.context, &best->context);
     }
 }
 

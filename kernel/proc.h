@@ -50,4 +50,5 @@ struct proc {
     //lab3
     uint64 stride;
     uint64 prio;
+    uint64 pass;
 };
