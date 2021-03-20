@@ -18,7 +18,7 @@ uint64 sys_write(int fd, char *str, uint len) {
     uint64 user_stk = p->ustack;
     if(((uint64)(str)<(uint64)user_stk ||
     (uint64)str+len>(uint64)user_stk+(uint64)4096) && 
-    (uint64)str<BASE_ADDRESS+num*MAX_APP_SIZE)
+    (uint64)str<BASE_ADDRESS+PROC_num*MAX_APP_SIZE)
     {
         return -1;
     }
