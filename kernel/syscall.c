@@ -71,7 +71,7 @@ void syscall() {
             ret = sys_setpriority(args[0]);
             break;
         case SYS_gettimeofday:
-            struct TimeVal time;
+            TimeVal *time;
             ret = sys_get_time(&time, 0);
             break;
         default:
