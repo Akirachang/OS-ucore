@@ -28,7 +28,7 @@ uint64 sys_write(int fd, char *str, uint len) {
     else
         size = len;
     for(int i = 0; i < size; ++i) {
-        printf(",");
+        // printf(",");
         console_putchar(str[i]);
     }
     return size;
