@@ -8,6 +8,7 @@ typedef struct{
 #endif
 struct context;
 struct proc;
+int num;
 
 
 // panic.c
