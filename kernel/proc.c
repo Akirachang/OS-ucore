@@ -1,6 +1,7 @@
 #include "defs.h"
 #include "proc.h"
 #include "trap.h"
+#include "timer.h"
 
 struct proc pool[NPROC];
 char kstack[NPROC][PAGE_SIZE];
