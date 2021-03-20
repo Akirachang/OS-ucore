@@ -5,7 +5,7 @@
 #define min(a, b) a < b ? a : b;
 
 // char user_stk[4096];
-const uint64 BASE_ADDRESS = 0x80400000,  MAX_APP_SIZE = 0x20000;
+const uint64 BA = 0x80400000,  MAS= 0x20000;
 
 int num;
 void get_N(int n){
@@ -21,7 +21,7 @@ uint64 sys_write(int fd, char *str, uint len) {
     uint64 user_stk = p->ustack;
     if(((uint64)(str)<(uint64)user_stk ||
     (uint64)str+len>(uint64)user_stk+(uint64)4096) && 
-    (uint64)str<BASE_ADDRESS+ num * MAX_APP_SIZE)
+    (uint64)str<BA+ num * MAS)
     {
         return -1;
     }
