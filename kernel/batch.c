@@ -1,6 +1,9 @@
 #include "defs.h"
 #include "trap.h"
 #include "proc.h"
+#ifndef PROC_NUM
+#define PROC_NUM
+#endif
 
 static int app_cur, app_num;
 static uint64* app_info_ptr;

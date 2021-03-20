@@ -3,7 +3,9 @@
 #include "trap.h"
 #include "proc.h"
 #define min(a, b) a < b ? a : b;
-
+#ifndef PROC_NUM
+#define PROC_NUM
+#endif
 // char user_stk[4096];
 static const uint64 BASE_ADDRESS = 0x80400000,  MAX_APP_SIZE = 0x20000;
 
