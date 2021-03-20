@@ -1,5 +1,7 @@
 #include "types.h"
-
+#ifndef TimeVal
+#define TimeVal
+#endif
 struct context;
 struct proc;
 
