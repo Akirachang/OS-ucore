@@ -23,7 +23,7 @@ uint64 sys_write(int fd, char *str, uint len) {
     (uint64)str+len>(uint64)user_stk+(uint64)4096) && 
     (uint64)str<BA + num * MAS)
     {
-        print("%d",num);
+        printf("%d",num);
         // printf("here");
         return -1;
     }
