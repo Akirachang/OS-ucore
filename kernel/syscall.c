@@ -48,7 +48,7 @@ uint64 sys_setpriority(int code) {
 
 uint64 sys_get_time(){
     TimeVal ts;
-    uint64 rtn = getTime(&ts,0);
+    uint64 rtn = get_time(&ts,0);
     return rtn;
 }
 
