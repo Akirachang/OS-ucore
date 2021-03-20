@@ -76,7 +76,7 @@ scheduler(void)
         chosen->state = RUNNING;
         chosen->stride+=chosen->pass; //将对应的 stride 加上其对应的步长 pass
         current_proc = chosen;
-        swtch(&idle.context, &best->context);
+        swtch(&idle.context, &chosen->context);
     }
 }
 
