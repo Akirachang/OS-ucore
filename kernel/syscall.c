@@ -3,11 +3,9 @@
 #include "trap.h"
 #include "proc.h"
 #define min(a, b) a < b ? a : b;
-#ifndef PROC_num
-#define PROC_num
-#endif
+
 // char user_stk[4096];
-static const uint64 BASE_ADDRESS = 0x80400000,  MAX_APP_SIZE = 0x20000;
+const uint64 BASE_ADDRESS = 0x80400000,  MAX_APP_SIZE = 0x20000;
 
 
 uint64 sys_write(int fd, char *str, uint len) {
@@ -20,7 +18,7 @@ uint64 sys_write(int fd, char *str, uint len) {
     uint64 user_stk = p->ustack;
     if(((uint64)(str)<(uint64)user_stk ||
     (uint64)str+len>(uint64)user_stk+(uint64)4096) && 
-    (uint64)str<BASE_ADDRESS+PROC_num*MAX_APP_SIZE)
+    (uint64)str<BASE_ADDRESS+PROC_num * MAX_APP_SIZE)
     {
         return -1;
     }

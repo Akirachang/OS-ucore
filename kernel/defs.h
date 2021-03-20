@@ -8,7 +8,7 @@ typedef struct{
 #endif
 struct context;
 struct proc;
-extern int PROC_num;
+extern uint64 PROC_num;
 
 
 // panic.c
