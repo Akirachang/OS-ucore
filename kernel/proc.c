@@ -119,6 +119,7 @@ uint64 set_priority(int code) {
     // printf("code is %d",code);
     if(code>=2&&code<=INT_MAX){
         p->prio=code;
+        p->pass = INT_MAX/p->prio;
         return code;
     }
     else{
