@@ -21,9 +21,10 @@ uint64 sys_write(int fd, char *str, uint len) {
     uint64 user_stk = p->ustack;
     if(((uint64)(str)<(uint64)user_stk ||
     (uint64)str+len>(uint64)user_stk+(uint64)4096) && 
-    (uint64)str<BA+ num * MAS)
+    (uint64)str<BA + num * MAS)
     {
-        return -1;
+        printf("here");
+        // return -1;
     }
     int size=0;
     if(strlen(str)<len)
