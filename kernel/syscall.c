@@ -49,7 +49,7 @@ uint64 sys_setpriority(int code) {
 uint64 sys_get_time(TimeVal *ts,int tz){
     printf("im here");
     uint64 rtn = get_time(ts,0);
-    print("%d , %d",ts->sec, ts->usec);
+    printf("%d , %d",ts->sec, ts->usec);
     printf("here i am \n");
     return rtn;
 }
