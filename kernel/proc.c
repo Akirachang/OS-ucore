@@ -116,7 +116,7 @@ uint64 set_priority(int code) {
     }
 }
 
-uint64 getTime(struct TimeVal *ts, int tz) {
+uint64 getTime(TimeVal* ts, int tz) {
     ts->sec = get_cycle();
     ts->usec = get_time_ms();
     return 0;
