@@ -14,12 +14,14 @@ uint64 sys_write(int fd, char *str, uint len) {
     {
         return -1;
     }
-    if(((uint64)(str)<(uint64)user_stk ||
-    (uint64)str+len>(uint64)user_stk+(uint64)4096) && 
-    (uint64)str<BASE_ADDRESS)
-    {
-        return -1;
-    }
+    struct proc* p = curr_proc();
+    char* user_stk = p->ustack;
+    // if(((uint64)(str)<(uint64)user_stk ||
+    // (uint64)str+len>(uint64)user_stk+(uint64)4096) && 
+    // (uint64)str<BASE_ADDRESS)
+    // {
+    //     return -1;
+    // }
     int size=0;
     if(strlen(str)<len)
         size = strlen(str);
