@@ -2,7 +2,6 @@
 #include "syscall_ids.h"
 #include "trap.h"
 #include "proc.h"
-#include "timer.h"
 #define min(a, b) a < b ? a : b;
 
 char user_stk[4096];
