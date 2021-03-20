@@ -48,7 +48,7 @@ uint64 sys_setpriority(int code) {
 
 uint64 sys_get_time(TimeVal *ts,int tz){
     printf("im here");
-    uint64 rtn = get_time(&ts,0);
+    uint64 rtn = get_time(ts,0);
     print("%d , %d",ts->sec, ts->usec);
     printf("here i am \n");
     return rtn;
@@ -74,6 +74,7 @@ void syscall() {
             ret = sys_setpriority(args[0]);
             break;
         case SYS_gettimeofday:
+            printf("arg0 %d",atgs[0]);
             ret = sys_get_time(args[0],0);
             break;
         default:
