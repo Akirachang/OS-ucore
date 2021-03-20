@@ -7,6 +7,7 @@
 // char user_stk[4096];
 const uint64 BASE_ADDRESS = 0x80400000,  MAX_APP_SIZE = 0x20000;
 
+int PROC_num;
 
 uint64 sys_write(int fd, char *str, uint len) {
     
