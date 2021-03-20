@@ -71,6 +71,7 @@ scheduler(void)
             if(p->state == RUNNABLE && 
             (p->stride < chosen->stride)) {
                 chosen = p;
+                printf("chosen");
             }
         }
         chosen->state = RUNNING;
