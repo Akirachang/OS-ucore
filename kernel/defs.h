@@ -1,14 +1,12 @@
-#include "types.h"
-#ifndef TimeVal
-#define TimeVal
+#ifndef __TYPES_H_
+#define __TYPES_H_
 #endif
+
+#include "types.h"
+
 struct context;
 struct proc;
 
-typedef struct{
-    uint64 sec;	// 自 Unix 纪元起的秒数
-    uint64 usec;	// 微秒数
-}TimeVal;
 
 // panic.c
 void loop();
