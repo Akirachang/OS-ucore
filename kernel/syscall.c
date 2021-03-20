@@ -9,6 +9,7 @@ static const uint64 BASE_ADDRESS = 0x80400000;
 
 
 uint64 sys_write(int fd, char *str, uint len) {
+    printf("sys_write");
     if (fd != 0 && fd!=1)
     {
         return -1;
