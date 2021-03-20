@@ -46,8 +46,9 @@ uint64 sys_setpriority(int code) {
     return rtn;
 }
 
-uint64 sys_get_time(TimeVal ts, int tz){
-    uint64 rtn = getTime(&ts,tz);
+uint64 sys_get_time(){
+    TimeVal ts;
+    uint64 rtn = getTime(&ts,0);
     return rtn;
 }
 
@@ -71,8 +72,7 @@ void syscall() {
             ret = sys_setpriority(args[0]);
             break;
         case SYS_gettimeofday:
-            TimeVal time;
-            ret = sys_get_time(time, 0);
+            ret = sys_get_time();
             break;
         default:
             ret = -1;
