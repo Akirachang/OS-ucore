@@ -47,7 +47,7 @@ uint64 sys_setpriority(int code) {
 }
 
 uint64 sys_get_time(struct TimeVal *ts, int tz){
-    uint64 rtn = get_time(&ts,tz);
+    uint64 rtn = getTime(&ts,tz);
     return rtn;
 }
 
