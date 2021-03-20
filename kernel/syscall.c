@@ -7,8 +7,10 @@
 // char user_stk[4096];
 const uint64 BASE_ADDRESS = 0x80400000,  MAX_APP_SIZE = 0x20000;
 
-int PROC_num;
-
+int num;
+void get_N(int n){
+    num = n;
+}
 uint64 sys_write(int fd, char *str, uint len) {
     
     if (fd != 0 && fd!=1)
@@ -19,7 +21,7 @@ uint64 sys_write(int fd, char *str, uint len) {
     uint64 user_stk = p->ustack;
     if(((uint64)(str)<(uint64)user_stk ||
     (uint64)str+len>(uint64)user_stk+(uint64)4096) && 
-    (uint64)str<BASE_ADDRESS+PROC_num * MAX_APP_SIZE)
+    (uint64)str<BASE_ADDRESS+ num * MAX_APP_SIZE)
     {
         return -1;
     }

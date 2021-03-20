@@ -30,7 +30,7 @@ int load_app(int n, uint64* info) {
     uint64 start = info[n], end = info[n+1], length = end - start;
     memset((void*)BASE_ADDRESS + n * MAX_APP_SIZE, 0, MAX_APP_SIZE);
     memmove((void*)BASE_ADDRESS + n * MAX_APP_SIZE, (void*)start, length);
-    PROC_num = n;
+    get_N(n);
     return length;
 }
 
