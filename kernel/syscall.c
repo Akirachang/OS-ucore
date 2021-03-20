@@ -72,7 +72,7 @@ void syscall() {
             break;
         case SYS_gettimeofday:
             TimeVal time;
-            ret = sys_get_time(&time, 0);
+            ret = sys_get_time(time, 0);
             break;
         default:
             ret = -1;
