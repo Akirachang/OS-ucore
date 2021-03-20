@@ -4,7 +4,7 @@
 #include "proc.h"
 #define min(a, b) a < b ? a : b;
 
-char user_stk[4096];
+// char user_stk[4096];
 static const uint64 BASE_ADDRESS = 0x80400000;
 
 
