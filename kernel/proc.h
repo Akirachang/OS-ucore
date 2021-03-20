@@ -52,7 +52,7 @@ struct proc {
     uint64 prio;
 };
 
-struct TimeVal{
+typedef struct{
     uint64 sec;	// 自 Unix 纪元起的秒数
     uint64 usec;	// 微秒数
-};
+}TimeVal;
