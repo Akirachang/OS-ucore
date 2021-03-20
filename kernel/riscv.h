@@ -1,4 +1,7 @@
 #include "defs.h"
+#ifndef TimeVal
+#define TimeVal
+#endif
 
 // which hart (core) is this?
 static inline uint64 r_mhartid() {

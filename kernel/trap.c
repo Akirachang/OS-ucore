@@ -2,6 +2,10 @@
 #include "trap.h"
 #include "proc.h"
 #include "riscv.h"
+
+#ifndef TimeVal
+#define TimeVal
+#endif
 // #include "memory_layout.h"
 
 
