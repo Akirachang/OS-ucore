@@ -7,10 +7,6 @@
 // char user_stk[4096];
 const uint64 BA = 0x80400000,  MAS= 0x20000;
 
-int num;
-void get_N(int n){
-    num = n;
-}
 uint64 sys_write(int fd, char *str, uint len) {
     
     if (fd != 0 && fd!=1)
@@ -21,9 +17,9 @@ uint64 sys_write(int fd, char *str, uint len) {
     uint64 user_stk = p->ustack;
     if(((uint64)(str)<(uint64)user_stk ||
     (uint64)str+len>(uint64)user_stk+(uint64)4096) && 
-    (uint64)str<BA + num * MAS)
+    (uint64)str<BA + p->num * MAS)
     {
-        printf("%d",num);
+        // printf("%d",num);
         // printf("here");
         return -1;
     }

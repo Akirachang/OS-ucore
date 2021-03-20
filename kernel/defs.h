@@ -9,7 +9,6 @@ typedef struct{
 struct context;
 struct proc;
 
-void get_N(int n);
 
 // panic.c
 void loop();

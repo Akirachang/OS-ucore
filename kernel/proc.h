@@ -51,4 +51,5 @@ struct proc {
     uint64 stride;
     uint64 prio;
     uint64 pass;
+    uint64 num;
 };
