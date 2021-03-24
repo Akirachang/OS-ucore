@@ -14,6 +14,8 @@ uint64 sys_write(int fd, char *str, uint len) {
         return -1;
     }
     struct proc* p = curr_proc();
+    char str_array[200];
+    int size = copyinstr(p->pagetable, str_array, (uint64) str, MIN(len, 200));
     uint64 user_stk = p->ustack;
     if(((uint64)(str)<(uint64)user_stk ||
     (uint64)str+len>(uint64)user_stk+(uint64)4096) && 
@@ -23,15 +25,14 @@ uint64 sys_write(int fd, char *str, uint len) {
         // printf("here");
         return -1;
     }
-    int size=0;
+    size=0;
     if(strlen(str)<len)
         size = strlen(str);
     else
         size = len;
         
     //lab4
-    char str_array[200];
-    int size = copyinstr(p->pagetable, str_array, (uint64) str, MIN(len, 200));
+    
     printf("size = %d\n", size);
     for(int i = 0; i < size; ++i) {
         // printf(",");
