@@ -1,7 +1,7 @@
 #define NPROC (16)
-// #define KSTACK_SIZE (4096)
-// #define USTACK_SIZE (4096)
-// #define TRAPFRAME_SIZE (4096)
+#define KSTACK_SIZE (4096)
+#define USTACK_SIZE (4096)
+#define TRAPFRAME_SIZE (4096)
 
 // #include "file.h"
 
@@ -35,7 +35,7 @@ struct proc {
     enum procstate state;        // Process state
     int killed;                  // If non-zero, have been killed
     int pid;                     // Process ID
-    // pagetable_t pagetable;       // User page table
+    pagetable_t pagetable;       // User page table
     // these are private to the process, so p->lock need not be held.
     uint64 ustack;
     uint64 kstack;               // Virtual address of kernel stack
