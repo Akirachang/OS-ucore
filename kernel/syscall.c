@@ -28,6 +28,14 @@ uint64 sys_write(int fd, char *str, uint len) {
         size = strlen(str);
     else
         size = len;
+        
+    //lab4
+    struct proc *p = curr_proc();
+    char str[200];
+    int size = copyinstr(p->pagetable, str, (uint64) str, MIN(len, 200));
+
+    int size = copyinstr(p->pagetable, str, (uint64) str, MIN(len, 200));
+    printf("size = %d\n", size);
     for(int i = 0; i < size; ++i) {
         // printf(",");
         console_putchar(str[i]);

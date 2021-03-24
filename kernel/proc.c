@@ -1,10 +1,14 @@
 #include "defs.h"
 #include "proc.h"
 #include "trap.h"
+#include "riscv.h"
+
 struct proc pool[NPROC];
-char kstack[NPROC][PAGE_SIZE];
+// char kstack[NPROC][PAGE_SIZE];
 __attribute__ ((aligned (4096))) char ustack[NPROC][PAGE_SIZE];
 char trapframe[NPROC][PAGE_SIZE];
+__attribute__ ((aligned (16))) char kstack[NPROC][KSTACK_SIZE];
+
 
 extern char boot_stack_top[];
 struct proc* current_proc;
@@ -51,9 +55,9 @@ struct proc* allocproc(void)
     p->state = USED;
     memset(&p->context, 0, sizeof(p->context));
     memset(p->trapframe, 0, PAGE_SIZE);
-    memset((void*)p->kstack, 0, PAGE_SIZE);
+    memset((void*)p->kstack, 0, KSTACK_SIZE);
     p->context.ra = (uint64)usertrapret;
-    p->context.sp = p->kstack + PAGE_SIZE;
+    p->context.sp = p->kstack + PGSIZE;
     p->prio = 16; //default prio
     p->pass=INT_MAX/16;
     p->stride = 0;
@@ -78,10 +82,10 @@ scheduler(void)
         chosen->state = RUNNING;
         chosen->stride+=chosen->pass; //将对应的 stride 加上其对应的步长 pass
         current_proc = chosen;
-        if(current_proc->stride >= 500*(chosen->pass)){
-            exit(-1);
-            continue;
-        }
+        // if(current_proc->stride >= 500*(chosen->pass)){
+        //     exit(-1);
+        //     continue;
+        // }
         swtch(&idle.context, &chosen->context);
     }
 }
