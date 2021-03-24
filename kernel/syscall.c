@@ -30,8 +30,8 @@ uint64 sys_write(int fd, char *str, uint len) {
         size = len;
         
     //lab4
-    char str[200];
-    int size = copyinstr(p->pagetable, str, (uint64) str, MIN(len, 200));
+    char str_array[200];
+    int size = copyinstr(p->pagetable, str_array, (uint64) str, MIN(len, 200));
     printf("size = %d\n", size);
     for(int i = 0; i < size; ++i) {
         // printf(",");
