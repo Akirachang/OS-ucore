@@ -2,6 +2,8 @@
 #include "trap.h"
 #include "proc.h"
 #include "riscv.h"
+#include "memory_layout.h"
+
 #ifndef TIMEVAL
 #define TIMEVAL
 typedef struct{
