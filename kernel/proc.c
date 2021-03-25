@@ -1,8 +1,10 @@
 #include "defs.h"
 #include "proc.h"
 #include "trap.h"
+#include "riscv.h"
+
 struct proc pool[NPROC];
-char kstack[NPROC][PAGE_SIZE];
+__attribute__ ((aligned (16))) char kstack[NPROC][KSTACK_SIZE];
 __attribute__ ((aligned (4096))) char ustack[NPROC][PAGE_SIZE];
 char trapframe[NPROC][PAGE_SIZE];
 
