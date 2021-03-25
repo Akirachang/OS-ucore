@@ -86,6 +86,7 @@ scheduler(void)
     //     }
     //     swtch(&idle.context, &chosen->context);
     // }
+    struct proc *p;
     for(;;){
         for(p = pool; p < &pool[NPROC]; p++) {
             if(p->state == RUNNABLE) {
