@@ -51,9 +51,9 @@ struct proc* allocproc(void)
     p->state = USED;
     memset(&p->context, 0, sizeof(p->context));
     memset(p->trapframe, 0, PAGE_SIZE);
-    memset((void*)p->kstack, 0, PAGE_SIZE);
+    memset((void*)p->kstack, 0, KSTACK_SIZE);
     p->context.ra = (uint64)usertrapret;
-    p->context.sp = p->kstack + PAGE_SIZE;
+    p->context.sp = p->kstack + PGSIZE;
     p->prio = 16; //default prio
     p->pass=INT_MAX/16;
     p->stride = 0;
@@ -63,26 +63,36 @@ struct proc* allocproc(void)
 void
 scheduler(void)
 {
+    // for(;;){
+    //     struct proc *p;
+    //     struct proc *chosen=0;
+    //     // printf("here");
+    //     for(p = pool; p < &pool[NPROC]; p++) {
+    //         // printf("here2");
+    //         if(p->state == RUNNABLE && 
+    //         (!chosen||p->stride < chosen->stride)) {
+    //             chosen = p;
+    //             // printf("chosen");
+    //         }
+    //     }
+    //     chosen->state = RUNNING;
+    //     chosen->stride+=chosen->pass; //将对应的 stride 加上其对应的步长 pass
+    //     current_proc = chosen;
+    //     if(current_proc->stride >= 500*(chosen->pass)){
+    //         exit(-1);
+    //         continue;
+    //     }
+    //     swtch(&idle.context, &chosen->context);
+    // }
     for(;;){
-        struct proc *p;
-        struct proc *chosen=0;
-        // printf("here");
         for(p = pool; p < &pool[NPROC]; p++) {
-            // printf("here2");
-            if(p->state == RUNNABLE && 
-            (!chosen||p->stride < chosen->stride)) {
-                chosen = p;
-                // printf("chosen");
+            if(p->state == RUNNABLE) {
+                p->state = RUNNING;
+                current_proc = p;
+                printf("switch to next proc\n");
+                swtch(&idle.context, &p->context);
             }
         }
-        chosen->state = RUNNING;
-        chosen->stride+=chosen->pass; //将对应的 stride 加上其对应的步长 pass
-        current_proc = chosen;
-        if(current_proc->stride >= 500*(chosen->pass)){
-            exit(-1);
-            continue;
-        }
-        swtch(&idle.context, &chosen->context);
     }
 }
 

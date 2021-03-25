@@ -9,25 +9,29 @@ const uint64 BA = 0x80400000,  MAS= 0x20000;
 
 uint64 sys_write(int fd, char *str, uint len) {
     
-    if (fd != 0 && fd!=1)
-    {
-        return -1;
-    }
-    struct proc* p = curr_proc();
-    uint64 user_stk = p->ustack;
-    if(((uint64)(str)<(uint64)user_stk ||
-    (uint64)str+len>(uint64)user_stk+(uint64)4096) && 
-    (uint64)str<BA + p->num * MAS)
-    {
-        // printf("%d",num);
-        // printf("here");
-        return -1;
-    }
-    int size=0;
-    if(strlen(str)<len)
-        size = strlen(str);
-    else
-        size = len;
+    // if (fd != 0 && fd!=1)
+    // {
+    //     return -1;
+    // }
+    // struct proc* p = curr_proc();
+    // uint64 user_stk = p->ustack;
+    // if(((uint64)(str)<(uint64)user_stk ||
+    // (uint64)str+len>(uint64)user_stk+(uint64)4096) && 
+    // (uint64)str<BA + p->num * MAS)
+    // {
+    //     // printf("%d",num);
+    //     // printf("here");
+    //     return -1;
+    // }
+    // int size=0;
+    // if(strlen(str)<len)
+    //     size = strlen(str);
+    // else
+    //     size = len;
+    struct proc *p = curr_proc();
+    char str[200];
+    int size = copyinstr(p->pagetable, str, (uint64) addr, MIN(len, 200));
+    printf("size = %d\n", size);
     for(int i = 0; i < size; ++i) {
         // printf(",");
         console_putchar(str[i]);
@@ -85,8 +89,8 @@ void syscall() {
             break;
         default:
             ret = -1;
-            // printf("unknown syscall %d\n", id);
+            printf("unknown syscall %d\n", id);
     }
     trapframe->a0 = ret;
-    // printf("syscall ret %d\n", ret);
+    printf("syscall ret %d\n", ret);
 }
