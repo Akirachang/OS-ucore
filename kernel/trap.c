@@ -126,6 +126,8 @@ void usertrapret() {
     uint64 satp = MAKE_SATP(curr_proc()->pagetable);
     printf("return to user\n");
     uint64 fn = TRAMPOLINE + (userret - trampoline);
+        printf("here1");
     ((void (*)(uint64,uint64))fn)(TRAPFRAME, satp);
+    printf("here2");
 
 }
