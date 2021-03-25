@@ -97,6 +97,7 @@ scheduler(void)
                 swtch(&idle.context, &p->context);
             }
         }
+        printf("exit");
     }
 }
 
