@@ -122,10 +122,10 @@ void usertrapret() {
     w_sstatus(x);
 
     // tell trampoline.S the user page table to switch to.
-    //    userret((uint64) trapframe);
-    uint64 satp = MAKE_SATP(curr_proc()->pagetable);
-    printf("return to user\n");
-    uint64 fn = TRAMPOLINE + (userret - trampoline);
-    ((void (*)(uint64,uint64))fn)(TRAPFRAME, satp);
+       userret((uint64) trapframe);
+    // uint64 satp = MAKE_SATP(curr_proc()->pagetable);
+    // printf("return to user\n");
+    // uint64 fn = TRAMPOLINE + (userret - trampoline);
+    // ((void (*)(uint64,uint64))fn)(TRAPFRAME, satp);
 
 }
