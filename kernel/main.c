@@ -1,6 +1,6 @@
 #include "defs.h"
 
-extern char ekernel[];
+// extern char ekernel[];
 extern char s_bss[];
 extern char e_bss[];
 
