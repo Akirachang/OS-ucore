@@ -76,11 +76,11 @@ void syscall() {
         case SYS_write:
             printf("sys write");
             // physical_addr = walkaddr(get_pagetable(), args[0]);
-            ret = sys_write(args[0], (char *) walkaddr(get_pagetable(), args[1]), args[2]);
+            ret = sys_write(args[0], (char *) useraddr(get_pagetable(), args[1]), args[2]);
             break;
         case SYS_exit:
             printf("sys exit");
-            physical_addr = walkaddr(get_pagetable(), args[0]);
+            physical_addr = useraddr(get_pagetable(), args[0]);
             ret = sys_exit(physical_addr);
             break;
         case SYS_sched_yield:
