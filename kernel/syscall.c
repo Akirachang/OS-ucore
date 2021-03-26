@@ -12,7 +12,7 @@ uint64 sys_write(int fd, char *addr, uint len) {
     struct proc *p = curr_proc();
     char str[200];
     int size = copyinstr(p->pagetable, str, (uint64) addr, MIN(len, 200));
-    printf("size = %d\n", size);
+    // printf("size = %d\n", size);
 
     // if (fd != 0 && fd!=1)
     // {
@@ -92,8 +92,8 @@ void syscall() {
             break;
         default:
             ret = -1;
-            printf("unknown syscall %d\n", id);
+            // printf("unknown syscall %d\n", id);
     }
     trapframe->a0 = ret;
-    printf("syscall ret %d\n", ret);
+    // printf("syscall ret %d\n", ret);
 }
