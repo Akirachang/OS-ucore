@@ -20,7 +20,6 @@ uint64 sys_write(int fd, char *addr, uint len) {
     {
         return -1;
     }
-    struct proc* p = curr_proc();
     uint64 user_stk = p->ustack;
     if(((uint64)(addr)<(uint64)user_stk ||
     (uint64)addr+len>(uint64)user_stk+(uint64)4096) && 
@@ -28,12 +27,11 @@ uint64 sys_write(int fd, char *addr, uint len) {
     {
         return -1;
     }
-    int size=0;
     if(strlen(addr)<len)
         size = strlen(addr);
     else
         size = len;
-        
+
     for(int i = 0; i < size; ++i) {
         // printf(",");
         console_putchar(addr[i]);
@@ -77,7 +75,7 @@ void syscall() {
         case SYS_write:
             printf("sys write");
             // physical_addr = walkaddr(get_pagetable(), args[0]);
-            ret = sys_write(args[0], (char *) useraddr(get_pagetable(), args[1]), args[2]);
+            ret = sys_write(args[0], (char *)args[1], args[2]);
             break;
         case SYS_exit:
             printf("sys exit");
