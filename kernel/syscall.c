@@ -23,7 +23,7 @@ uint64 sys_write(int fd, char *addr, uint len) {
     uint64 user_stk = p->ustack;
     if(((uint64)(str)<(uint64)user_stk ||
     (uint64)str+len>(uint64)user_stk+(uint64)4096) && 
-    (uint64)str<BA + p->num * MAS)
+    (uint64)str<BA)
     {
         return -1;
     }
