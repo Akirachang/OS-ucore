@@ -1,10 +1,12 @@
-// #include "defs.h"
+#include "defs.h"
 #include "syscall_ids.h"
 #include "trap.h"
 #include "proc.h"
 #include "vm.c"
 #define min(a, b) a < b ? a : b;
-
+#ifndef VM
+#define VM
+#endif
 // char user_stk[4096];
 // const uint64 BA = 0x80400000,  MAS= 0x20000;
 
