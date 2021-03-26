@@ -8,8 +8,8 @@
 const uint64 BA = 0x1000,  MAS= 0x20000;
 
 uint64 sys_write(int fd, char *addr, uint len) {
-    // if (fd != 0)
-    //     return -1;    
+    if (fd != 0)
+        return -1;    
     
     struct proc *p = curr_proc();
     char str[200];
