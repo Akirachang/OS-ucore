@@ -5,37 +5,38 @@
 #define min(a, b) a < b ? a : b;
 
 // char user_stk[4096];
-// const uint64 BA = 0x80400000,  MAS= 0x20000;
+const uint64 BA = 0x80400000,  MAS= 0x20000;
 
 uint64 sys_write(int fd, char *addr, uint len) {
-    if (fd != 0)
-        return -1;    
-    // if (fd != 0 && fd!=1)
-    // {
-    //     return -1;
-    // }
-    // struct proc* p = curr_proc();
-    // uint64 user_stk = p->ustack;
-    // if(((uint64)(str)<(uint64)user_stk ||
-    // (uint64)str+len>(uint64)user_stk+(uint64)4096) && 
-    // (uint64)str<BA + p->num * MAS)
-    // {
-    //     // printf("%d",num);
-    //     // printf("here");
-    //     return -1;
-    // }
-    // int size=0;
-    // if(strlen(str)<len)
-    //     size = strlen(str);
-    // else
-    //     size = len;
+    // if (fd != 0)
+    //     return -1;    
+    
     struct proc *p = curr_proc();
     char str[200];
     int size = copyinstr(p->pagetable, str, (uint64) addr, MIN(len, 200));
     printf("size = %d\n", size);
+
+    if (fd != 0 && fd!=1)
+    {
+        return -1;
+    }
+    struct proc* p = curr_proc();
+    uint64 user_stk = p->ustack;
+    if(((uint64)(addr)<(uint64)user_stk ||
+    (uint64)addr+len>(uint64)user_stk+(uint64)4096) && 
+    (uint64)addr<BA + p->num * MAS)
+    {
+        return -1;
+    }
+    int size=0;
+    if(strlen(addr)<len)
+        size = strlen(addr);
+    else
+        size = len;
+        
     for(int i = 0; i < size; ++i) {
         // printf(",");
-        console_putchar(str[i]);
+        console_putchar(addr[i]);
     }
     return size;
 
