@@ -6,7 +6,7 @@
 
 // char user_stk[4096];
 uint64 sys_write(int fd, char *addr, uint len) {
-    if (fd != 0)
+    if (fd != 0 && fd!=1)
         return -1;    
     
     struct proc *p = curr_proc();
