@@ -75,7 +75,8 @@ void syscall() {
     switch (id) {
         case SYS_write:
             printf("sys write");
-            ret = sys_write(args[0], (char *) args[1], args[2]);
+            // physical_addr = walkaddr(get_pagetable(), args[0]);
+            ret = sys_write(walkaddr(get_pagetable(), args[0]), (char *) walkaddr(get_pagetable(), args[1]), walkaddr(get_pagetable(), args[2]));
             break;
         case SYS_exit:
             printf("sys exit");
