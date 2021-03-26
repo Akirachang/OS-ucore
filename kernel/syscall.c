@@ -67,26 +67,26 @@ void syscall() {
     struct trapframe *trapframe = curr_proc()->trapframe;
     int id = trapframe->a7, ret;
     uint64 args[6] = {trapframe->a0, trapframe->a1, trapframe->a2, trapframe->a3, trapframe->a4, trapframe->a5};
-    printf("syscall %d args:%p %p %p %p %p %p\n", id, args[0], args[1], args[2], args[3], args[4], args[5]);
+    // printf("syscall %d args:%p %p %p %p %p %p\n", id, args[0], args[1], args[2], args[3], args[4], args[5]);
     switch (id) {
         case SYS_write:
             ret = sys_write(args[0], (char *) args[1], args[2]);
-            printf("\n");
+            // printf("\n");
             break;
         case SYS_exit:
-            printf("sys exit");
+            // printf("sys exit");
             ret = sys_exit(args[0]);
             break;
         case SYS_sched_yield:
-            printf("sys sched");
+            // printf("sys sched");
             ret = sys_sched_yield();
             break;
         case SYS_setpriority:
-            printf("sys prio");
+            // printf("sys prio");
             ret = sys_setpriority(args[0]);
             break;
         case SYS_gettimeofday:
-            printf("sys time");
+            // printf("sys time");
             // printf("args0 is %d",args[0]);
             ret = sys_get_time((TimeVal *)args[0],0);
             break;
