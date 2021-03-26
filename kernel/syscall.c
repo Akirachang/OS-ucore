@@ -16,25 +16,25 @@ uint64 sys_write(int fd, char *addr, uint len) {
     int size = copyinstr(p->pagetable, str, (uint64) addr, MIN(len, 200));
     printf("size = %d\n", size);
 
-    if (fd != 0 && fd!=1)
-    {
-        return -1;
-    }
-    uint64 user_stk = p->ustack;
-    if(((uint64)(addr)<(uint64)user_stk ||
-    (uint64)addr+len>(uint64)user_stk+(uint64)4096) && 
-    (uint64)addr<BA + p->num * MAS)
-    {
-        return -1;
-    }
-    if(strlen(addr)<len)
-        size = strlen(addr);
-    else
-        size = len;
+    // if (fd != 0 && fd!=1)
+    // {
+    //     return -1;
+    // }
+    // uint64 user_stk = p->ustack;
+    // if(((uint64)(addr)<(uint64)user_stk ||
+    // (uint64)addr+len>(uint64)user_stk+(uint64)4096) && 
+    // (uint64)addr<BA + p->num * MAS)
+    // {
+    //     return -1;
+    // }
+    // if(strlen(addr)<len)
+    //     size = strlen(addr);
+    // else
+    //     size = len;
 
     for(int i = 0; i < size; ++i) {
         // printf(",");
-        console_putchar(addr[i]);
+        console_putchar(str[i]);
     }
     return size;
 
