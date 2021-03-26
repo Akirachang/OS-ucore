@@ -2,7 +2,7 @@
 #include "memory_layout.h"
 #include "riscv.h"
 
-// pagetable_t kernel_pagetable; //page table for kernel mode
+pagetable_t kernel_pagetable; //page table for kernel mode
 
 extern char e_text[];     // kernel.ld sets this to end of kernel code.
 extern char trampoline[];
@@ -18,6 +18,10 @@ pagetable_t kvmmake(void) {
     kvmmap(kpgtbl, (uint64) e_text, (uint64) e_text, PHYSTOP - (uint64) e_text, PTE_R | PTE_W);
     kvmmap(kpgtbl, TRAMPOLINE, (uint64)trampoline, PGSIZE, PTE_R | PTE_X);
     return kpgtbl;
+}
+
+pagetable_t get_pagetable(){
+    return kernel_pagetable;
 }
 
 // Initialize the one kernel_pagetable

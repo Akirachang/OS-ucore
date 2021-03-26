@@ -77,7 +77,7 @@ void syscall() {
             ret = sys_write(args[0], (char *) args[1], args[2]);
             break;
         case SYS_exit:
-            physical_addr = walkaddr(kernel_pagetable, args[0]);
+            physical_addr = walkaddr(get_pagetable(), args[0]);
             ret = sys_exit(physical_addr);
             break;
         case SYS_sched_yield:
