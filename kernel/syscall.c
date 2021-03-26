@@ -5,7 +5,7 @@
 #define min(a, b) a < b ? a : b;
 
 // char user_stk[4096];
-const uint64 BA = 0x80400000,  MAS= 0x20000;
+const uint64 BA = 0x1000,  MAS= 0x20000;
 
 uint64 sys_write(int fd, char *addr, uint len) {
     // if (fd != 0)
