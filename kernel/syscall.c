@@ -5,8 +5,6 @@
 #define min(a, b) a < b ? a : b;
 
 // char user_stk[4096];
-const uint64 BA = 0x1000,  MAS= 0x20000;
-
 uint64 sys_write(int fd, char *addr, uint len) {
     if (fd != 0)
         return -1;    
@@ -68,13 +66,12 @@ uint64 sys_get_time(TimeVal* ts,int tz){
 void syscall() {
     struct trapframe *trapframe = curr_proc()->trapframe;
     int id = trapframe->a7, ret;
-    // printf("syscall %d\n", id);
-    uint64 args[7] = {trapframe->a0, trapframe->a1, trapframe->a2, trapframe->a3, trapframe->a4, trapframe->a5, trapframe->a6};
+    uint64 args[6] = {trapframe->a0, trapframe->a1, trapframe->a2, trapframe->a3, trapframe->a4, trapframe->a5};
+    printf("syscall %d args:%p %p %p %p %p %p\n", id, args[0], args[1], args[2], args[3], args[4], args[5]);
     switch (id) {
         case SYS_write:
-            printf("sys write");
-            // physical_addr = walkaddr(get_pagetable(), args[0]);
-            ret = sys_write(args[0], (char *)args[1], args[2]);
+            ret = sys_write(args[0], (char *) args[1], args[2]);
+            printf("\n");
             break;
         case SYS_exit:
             printf("sys exit");
