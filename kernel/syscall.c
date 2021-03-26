@@ -21,14 +21,14 @@ uint64 sys_write(int fd, char *addr, uint len) {
         return -1;
     }
     uint64 user_stk = p->ustack;
-    if(((uint64)(addr)<(uint64)user_stk ||
-    (uint64)addr+len>(uint64)user_stk+(uint64)4096) && 
-    (uint64)addr<BA + p->num * MAS)
+    if(((uint64)(str)<(uint64)user_stk ||
+    (uint64)str+len>(uint64)user_stk+(uint64)4096) && 
+    (uint64)str<BA + p->num * MAS)
     {
         return -1;
     }
-    if(strlen(addr)<len)
-        size = strlen(addr);
+    if(strlen(str)<len)
+        size = strlen(str);
     else
         size = len;
 
