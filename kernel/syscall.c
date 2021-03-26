@@ -74,9 +74,11 @@ void syscall() {
     uint64 args[7] = {trapframe->a0, trapframe->a1, trapframe->a2, trapframe->a3, trapframe->a4, trapframe->a5, trapframe->a6};
     switch (id) {
         case SYS_write:
+            printf("sys write");
             ret = sys_write(args[0], (char *) args[1], args[2]);
             break;
         case SYS_exit:
+            printf("sys exit");
             physical_addr = walkaddr(get_pagetable(), args[0]);
             ret = sys_exit(physical_addr);
             break;
