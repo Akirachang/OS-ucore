@@ -20,10 +20,6 @@ pagetable_t kvmmake(void) {
     return kpgtbl;
 }
 
-pagetable_t get_pagetable(){
-    return kernel_pagetable;
-}
-
 // Initialize the one kernel_pagetable
 // Switch h/w page table register to the kernel's page table,
 // and enable paging.

@@ -68,7 +68,6 @@ uint64 sys_get_time(TimeVal* ts,int tz){
 void syscall() {
     struct trapframe *trapframe = curr_proc()->trapframe;
     int id = trapframe->a7, ret;
-    uint64 physical_addr;
     // printf("syscall %d\n", id);
     uint64 args[7] = {trapframe->a0, trapframe->a1, trapframe->a2, trapframe->a3, trapframe->a4, trapframe->a5, trapframe->a6};
     switch (id) {
@@ -79,8 +78,7 @@ void syscall() {
             break;
         case SYS_exit:
             printf("sys exit");
-            physical_addr = useraddr(get_pagetable(), args[0]);
-            ret = sys_exit(physical_addr);
+            ret = sys_exit(args[0]);
             break;
         case SYS_sched_yield:
             printf("sys sched");
