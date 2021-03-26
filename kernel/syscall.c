@@ -83,12 +83,15 @@ void syscall() {
             ret = sys_exit(physical_addr);
             break;
         case SYS_sched_yield:
+            printf("sys sched");
             ret = sys_sched_yield();
             break;
         case SYS_setpriority:
+            printf("sys prio");
             ret = sys_setpriority(args[0]);
             break;
         case SYS_gettimeofday:
+            printf("sys time");
             // printf("args0 is %d",args[0]);
             ret = sys_get_time((TimeVal *)args[0],0);
             break;
