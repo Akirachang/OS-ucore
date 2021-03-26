@@ -5,8 +5,8 @@
 
 struct proc pool[NPROC];
 __attribute__ ((aligned (16))) char kstack[NPROC][KSTACK_SIZE];
-__attribute__ ((aligned (4096))) char ustack[NPROC][PAGE_SIZE];
-char trapframe[NPROC][PAGE_SIZE];
+// __attribute__ ((aligned (4096))) char ustack[NPROC][PAGE_SIZE];
+// char trapframe[NPROC][PAGE_SIZE];
 
 extern char boot_stack_top[];
 struct proc* current_proc;
@@ -24,9 +24,9 @@ procinit(void)
     for(p = pool; p < &pool[NPROC]; p++) {
         p->state = UNUSED;
         p->kstack = (uint64)kstack[p - pool];
-        p->ustack = (uint64)ustack[p - pool];
-        p->trapframe = (struct trapframe*)trapframe[p - pool];
-        p->pid=0;
+        // p->ustack = (uint64)ustack[p - pool];
+        // p->trapframe = (struct trapframe*)trapframe[p - pool];
+        // p->pid=0;
     }
     idle.kstack = (uint64)boot_stack_top;
     idle.pid = 0;
@@ -52,13 +52,13 @@ struct proc* allocproc(void)
     p->pid = allocpid();
     p->state = USED;
     memset(&p->context, 0, sizeof(p->context));
-    memset(p->trapframe, 0, PAGE_SIZE);
+    // memset(p->trapframe, 0, PAGE_SIZE);
     memset((void*)p->kstack, 0, KSTACK_SIZE);
     p->context.ra = (uint64)usertrapret;
     p->context.sp = p->kstack + PGSIZE;
-    p->prio = 16; //default prio
-    p->pass=INT_MAX/16;
-    p->stride = 0;
+    // p->prio = 16; //default prio
+    // p->pass=INT_MAX/16;
+    // p->stride = 0;
     return p;
 }
 
