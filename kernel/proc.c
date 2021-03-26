@@ -88,7 +88,6 @@ scheduler(void)
     // }
     struct proc *p;
     for(;;){
-        printf("here i am");
         for(p = pool; p < &pool[NPROC]; p++) {
             if(p->state == RUNNABLE) {
                 p->state = RUNNING;
