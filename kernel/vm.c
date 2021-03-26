@@ -7,6 +7,9 @@ pagetable_t kernel_pagetable; //page table for kernel mode
 extern char e_text[];     // kernel.ld sets this to end of kernel code.
 extern char trampoline[];
 
+pagetable_t get_pagetable(){
+    return kernel_pagetable;
+}
 // Make a direct-map page table for the kernel.
 pagetable_t kvmmake(void) {
     pagetable_t kpgtbl;
