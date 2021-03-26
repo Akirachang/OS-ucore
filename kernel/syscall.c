@@ -2,6 +2,7 @@
 #include "syscall_ids.h"
 #include "trap.h"
 #include "proc.h"
+#include "vm.c"
 #define min(a, b) a < b ? a : b;
 
 // char user_stk[4096];
@@ -76,7 +77,8 @@ void syscall() {
             ret = sys_write(args[0], (char *) args[1], args[2]);
             break;
         case SYS_exit:
-            ret = sys_exit(args[0]);
+            uint64 physical_addr = walkaddr(kernel_pagetable,args[0]);
+            ret = sys_exit(physical_addr);
             break;
         case SYS_sched_yield:
             ret = sys_sched_yield();

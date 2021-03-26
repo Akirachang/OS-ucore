@@ -2,7 +2,7 @@
 #include "memory_layout.h"
 #include "riscv.h"
 
-pagetable_t kernel_pagetable;
+pagetable_t kernel_pagetable; //page table for kernel mode
 
 extern char e_text[];     // kernel.ld sets this to end of kernel code.
 extern char trampoline[];
