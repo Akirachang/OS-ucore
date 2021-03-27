@@ -53,9 +53,11 @@ uint64 sys_setpriority(int code) {
     return rtn;
 }
 
-uint64 sys_get_time(TimeVal* ts,int tz){
+uint64 sys_get_time(uint64 ts,int tz){
     // printf("im here");
-    uint64 rtn = get_time(ts,0);
+    struct proc *p = curr_proc();
+    uint64 physical_addr = useraddr(p->pagetable,ts);
+    uint64 rtn = get_time((TimeVal *)physical_addr,0);
     // printf("%d",((ts->sec & 0xffff) * 1000 + ts->usec / 1000));
     // printf("\n");
     // printf("here i am \n");
@@ -89,9 +91,9 @@ void syscall() {
             // printf("sys time");
             printf("args0 is %p",args[0]);
             printf("\n");
-            printf("physical args0 is %p",useraddr(get_pagetable(),args[0]));
-            // ret = sys_get_time((TimeVal *)useraddr(get_pagetable(),args[0]),0);
-            ret=-1;
+            // printf("physical args0 is %p",useraddr(p->pagetable,args[0]));
+            ret = sys_get_time(args[0],0);
+            // ret=-1;
             break;
         default:
             ret = -1;

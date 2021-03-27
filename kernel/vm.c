@@ -31,7 +31,7 @@ void kvminit(void) {
     //******
     for(int i=0;i<512;i++){
         printf("pagetable entry %d is %p",i,kernel_pagetable[i]);    
-        printf("\n");
+        printf("n");
     }
     //******
     w_satp(MAKE_SATP(kernel_pagetable));
