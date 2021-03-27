@@ -93,11 +93,11 @@ scheduler(void)
             if(p->state == RUNNABLE) {
                 p->state = RUNNING;
                 current_proc = p;
-                printf("switch to next proc\n");
+                // printf("switch to next proc\n");
                 swtch(&idle.context, &p->context);
             }
         }
-        printf("exit");
+        // printf("exit");
     }
 }
 
