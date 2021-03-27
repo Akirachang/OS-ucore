@@ -82,6 +82,9 @@ uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
             len++;
         }    
     }
+    if(useraddr(p->pagetable,start)!=0){
+        return -1;
+    }
     uint64 physical_addr = (uint64) kalloc();
     // start left shift, last bit 
     printf("port1 is %d",port);
