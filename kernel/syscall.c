@@ -67,12 +67,12 @@ uint64 sys_mmap(uint64 start, uint64 len, int port){
     struct proc *p = curr_proc();
     uint64 physical_addr = useraddr(p->pagetable,start);
     printf("*************");
-    int copy_in = copyin(p->pagetable,(char *)physical_addr,start,len);
+    // int copy_in = copyin(p->pagetable,(char *)physical_addr,start,len);
     int mmp = mappages(p->pagetable, start, len, physical_addr, port);
     printf("aaaaaaaaa");
     printf("mmp is %d: ",mmp);
     printf("\n");
-    if(mmp == 0 && copy_in == 0 ){
+    if(mmp == 0){
         return len;
         }
     else
