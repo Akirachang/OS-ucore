@@ -78,6 +78,7 @@ walkaddr(pagetable_t pagetable, uint64 va) {
     pte = walk(pagetable, va, 0);
     //******
     printf("*****table entry selected is: %d",pte);
+    printf("\n");
     //******
     if (pte == 0)
         return 0;
