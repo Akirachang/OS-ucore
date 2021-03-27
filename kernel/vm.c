@@ -53,11 +53,15 @@ walk(pagetable_t pagetable, uint64 va, int alloc) {
     for (int level = 2; level > 0; level--) {
         pte_t *pte = &pagetable[PX(level, va)];
         //******
-        printf("pts is: %p",pte);
+        printf("pte is: %p",pte);
         printf("\n");
         //******
         if (*pte & PTE_V) {
             pagetable = (pagetable_t) PTE2PA(*pte);
+            //******
+            printf("pagetable in if is: %p",pagetable);
+            printf("\n");
+            //******
         } else {
             if (!alloc || (pagetable = (pde_t *) kalloc()) == 0)
                 return 0;
