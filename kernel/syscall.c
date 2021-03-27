@@ -2,6 +2,7 @@
 #include "syscall_ids.h"
 #include "trap.h"
 #include "proc.h"
+#include "riscv.h"
 #define min(a, b) a < b ? a : b;
 
 // char user_stk[4096];
@@ -80,9 +81,9 @@ uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
     }
 
 
-    // port = port<<1;
-    port = port | 0b00001;
-    port = port | 0b10000;
+    port = port<<1;
+    port = port | PTE_U;
+    port = port | PTE_V;
     printf("port is %d\n", port);
     
     if(((port&0x8)!=0) || ((port&0x7)==0)){
