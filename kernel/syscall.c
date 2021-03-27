@@ -84,7 +84,7 @@ uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
     port = port | 0b10000;
     printf("port is %d\n", port);
 
-    if((port&0x8!=0) || (port&0x7==0)){
+    if(((port&0x8)!=0) || ((port&0x7)==0)){
         return -1;
     }
 
