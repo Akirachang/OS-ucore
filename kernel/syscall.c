@@ -87,9 +87,9 @@ void syscall() {
             break;
         case SYS_gettimeofday:
             // printf("sys time");
-            printf("args0 is %d",args[0]);
+            printf("args0 is %p",args[0]);
             printf("\n");
-            printf("physical args0 is %d",useraddr(get_pagetable(),args[0]));
+            printf("physical args0 is %p",useraddr(get_pagetable(),args[0]));
             // ret = sys_get_time((TimeVal *)useraddr(get_pagetable(),args[0]),0);
             ret=-1;
             break;

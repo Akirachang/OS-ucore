@@ -77,7 +77,7 @@ walkaddr(pagetable_t pagetable, uint64 va) {
 
     pte = walk(pagetable, va, 0);
     //******
-    printf("*****table entry selected is: %d",pte);
+    printf("*****table entry selected is: %p",pte);
     printf("\n");
     if (pte == 0){
         printf("here 1");
@@ -101,7 +101,7 @@ walkaddr(pagetable_t pagetable, uint64 va) {
 uint64 useraddr(pagetable_t pagetable, uint64 va) {
     //***my code***
     for(int i=0;i<512;i++){
-        printf("pagetable entry %d is %d",i,pagetable[i]);    
+        printf("pagetable entry %d is p",i,pagetable[i]);    
         printf("\n");
     }
     //***end***
