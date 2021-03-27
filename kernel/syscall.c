@@ -63,7 +63,15 @@ uint64 sys_get_time(uint64 ts,int tz){
     // printf("here i am \n");
     return rtn;
 }
-
+uint64 sys_mmap(uint64 start, uint64 len, int port){
+    struct proc *p = curr_proc();
+    uint64 physical_addr = useraddr(start,0);
+    int mmp = mappages(p->pagetable, start, len, physical_addr, port);
+    if(mmp == 0)
+        return len;
+    else
+        return -1;
+}
 
 void syscall() {
     struct trapframe *trapframe = curr_proc()->trapframe;
@@ -94,6 +102,9 @@ void syscall() {
             // printf("physical args0 is %p",useraddr(p->pagetable,args[0]));
             ret = sys_get_time(args[0],0);
             // ret=-1;
+            break;
+        case SYS_mmap:
+            ret = sys_mmap(args[0],args[1],(int)args[2]);
             break;
         default:
             ret = -1;
