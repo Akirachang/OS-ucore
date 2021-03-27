@@ -74,11 +74,6 @@ uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
     if(((port&0x8)!=0) || ((port&0x7)==0)){
         return -1;
     }
-for(int i=0;i<len;i++){
-    uint64 physical_addr = (uint64) kalloc();
-    // start left shift, last bit 
-    printf("port1 is %d",port);
-
     if(start%4096!=0)
         return -1;
 
@@ -87,12 +82,12 @@ for(int i=0;i<len;i++){
             len++;
         }    
     }
-
+    uint64 physical_addr = (uint64) kalloc();
+    // start left shift, last bit 
+    printf("port1 is %d",port);
     printf("port is %d\n", port);
-    
+    mmp = mappages(p->pagetable, start, len, physical_addr, port);
 
-    mmp = mappages(p->pagetable, start+i, 1, physical_addr, port);
-}
     if(mmp == 0){
         return len;
     }
