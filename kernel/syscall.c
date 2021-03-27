@@ -91,6 +91,7 @@ void syscall() {
             printf("\n");
             printf("physical args0 is %d",useraddr(get_pagetable(),args[0]));
             // ret = sys_get_time((TimeVal *)useraddr(get_pagetable(),args[0]),0);
+            ret=-1;
             break;
         default:
             ret = -1;
