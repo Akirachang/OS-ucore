@@ -64,19 +64,21 @@ uint64 sys_get_time(uint64 ts,int tz){
     return rtn;
 }
 
-uint64 sys_mmap(uint64 start, uint64 len, int port){
+uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
     struct proc *p = curr_proc();
     uint64 physical_addr = useraddr(p->pagetable,start);
     // start left shift, last bit 
     if(start%4096!=0)
         return -1;
     if(4096%len!=0){
-        while(4096%len!=0){
+        while(len%4096!=0){
             len++;
         }    
     }
-    port = port*2+1;
-    int mmp = mappages(p->pagetable, start, len, physical_addr, port);
+    port = port<<1;
+    port = port | 0x01;
+    port = port | 0x10;
+    int mmp = mappages(p->pagetable, start, len, physical_addr, (int)port);
     if(mmp == 0){
         return len;
     }
@@ -120,7 +122,7 @@ void syscall() {
         case SYS_mmap:
             // printf("args0 is %p \n",args[0]);
             // printf("args1 is %p \n",args[1]);
-            ret = sys_mmap(args[0],args[1],(int)args[2]);
+            ret = sys_mmap(args[0],args[1],args[2]);
             break;
         default:
             ret = -1;
