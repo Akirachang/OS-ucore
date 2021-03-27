@@ -68,12 +68,11 @@ uint64 sys_mmap(uint64 start, uint64 len, int port){
     uint64 physical_addr = useraddr(p->pagetable,start);
     printf("*************");
     int mmp = mappages(p->pagetable, start, len, physical_addr, port);
-    int a;
-    a = copyout(p->pagetable,start,(char*)physical_addr,len);
+    copyout(p->pagetable,start,(char*)physical_addr,len);
     printf("aaaaaaaaa");
     printf("mmp is %d: ",mmp);
     printf("\n");
-    if(mmp == 0)
+    if(mmp == 0 && !copyout(p->pagetable,start,(char*)physical_addr,len))
         return len;
     else
         return -1;
