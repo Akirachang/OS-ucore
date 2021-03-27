@@ -68,6 +68,12 @@ uint64 sys_get_time(uint64 ts,int tz){
 uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
     struct proc *p = curr_proc();
     int mmp=0;
+    port = port<<1;
+    port = port | PTE_U;
+    port = port | PTE_V;
+    if(((port&0x8)!=0) || ((port&0x7)==0)){
+        return -1;
+    }
 for(int i=0;i<len;i++){
     uint64 physical_addr = (uint64) kalloc();
     // start left shift, last bit 
@@ -82,15 +88,9 @@ for(int i=0;i<len;i++){
         }    
     }
 
-
-    port = port<<1;
-    port = port | PTE_U;
-    port = port | PTE_V;
     printf("port is %d\n", port);
     
-    if(((port&0x8)!=0) || ((port&0x7)==0)){
-        return -1;
-    }
+
     mmp = mappages(p->pagetable, start+i, 1, physical_addr, port);
 }
     if(mmp == 0){
