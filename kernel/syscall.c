@@ -66,6 +66,7 @@ uint64 sys_get_time(uint64 ts,int tz){
 uint64 sys_mmap(uint64 start, uint64 len, int port){
     struct proc *p = curr_proc();
     uint64 physical_addr = useraddr(p->pagetable,start);
+    printf("*************");
     int mmp = mappages(p->pagetable, start, len, physical_addr, port);
     if(mmp == 0)
         return len;
