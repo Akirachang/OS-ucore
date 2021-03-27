@@ -108,6 +108,8 @@ void syscall() {
             // ret=-1;
             break;
         case SYS_mmap:
+            printf("args0 is %p \n",args[0]);
+            printf("args1 is %p \n",args[1]);
             ret = sys_mmap(args[0],args[1],(int)args[2]);
             break;
         default:
