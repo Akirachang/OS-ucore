@@ -75,7 +75,7 @@ uint64 sys_mmap(uint64 start, uint64 len, int port){
             len++;
         }    
     }
-    port = port*2+16+1;
+    port = port*2+1;
     int mmp = mappages(p->pagetable, start, len, physical_addr, port);
     if(mmp == 0){
         return len;
@@ -83,6 +83,9 @@ uint64 sys_mmap(uint64 start, uint64 len, int port){
     else
         return -1;
 }
+// 0  0 0 1 1
+// 16 8 4 2 1
+// 00110
 
 void syscall() {
     struct trapframe *trapframe = curr_proc()->trapframe;
@@ -115,11 +118,9 @@ void syscall() {
             // ret=-1;
             break;
         case SYS_mmap:
-            printf("args0 is %p \n",args[0]);
-            printf("args1 is %p \n",args[1]);
+            // printf("args0 is %p \n",args[0]);
+            // printf("args1 is %p \n",args[1]);
             ret = sys_mmap(args[0],args[1],(int)args[2]);
-            printf("im here yoyo$$$$$$$\n");
-            printf("ret is: %d\n",ret);
             break;
         default:
             ret = -1;
