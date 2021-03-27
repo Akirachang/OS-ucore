@@ -28,6 +28,12 @@ pagetable_t kvmmake(void) {
 // and enable paging.
 void kvminit(void) {
     kernel_pagetable = kvmmake();
+    //******
+    for(int i=0;i<512;i++){
+        printf("pagetable entry %d is %p",i,kernel_pagetable[i]);    
+        printf("\n");
+    }
+    //******
     w_satp(MAKE_SATP(kernel_pagetable));
     sfence_vma();
     printf("enable pageing at %p\n", r_satp());
@@ -108,10 +114,10 @@ walkaddr(pagetable_t pagetable, uint64 va) {
 // Look up a virtual address, return the physical address,
 uint64 useraddr(pagetable_t pagetable, uint64 va) {
     //***my code***
-    for(int i=0;i<512;i++){
-        printf("pagetable entry %d is %p",i,pagetable[i]);    
-        printf("\n");
-    }
+    // for(int i=0;i<512;i++){
+    //     printf("pagetable entry %d is %p",i,pagetable[i]);    
+    //     printf("\n");
+    // }
     //***end***
     uint64 page = walkaddr(pagetable, va);
     if (page == 0)
