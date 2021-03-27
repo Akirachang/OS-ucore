@@ -68,6 +68,7 @@ uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
     struct proc *p = curr_proc();
     uint64 physical_addr = useraddr(p->pagetable,start);
     // start left shift, last bit 
+    printf("port1 is %d",port);
     if(start%4096!=0)
         return -1;
     if(4096%len!=0){
