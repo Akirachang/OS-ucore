@@ -75,7 +75,7 @@ uint64 sys_mmap(uint64 start, uint64 len, int port){
             len++;
         }    
     }
-    port = port*2+5;
+    port = port*2+16+1;
     int mmp = mappages(p->pagetable, start, len, physical_addr, port);
     if(mmp == 0){
         return len;
