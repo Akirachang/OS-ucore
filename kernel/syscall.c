@@ -69,7 +69,7 @@ uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
     struct proc *p = curr_proc();
     int mmp=0;
 for(int i=0;i<len;i++){
-    if(useraddr(p->pagetable,start)!=0)
+    if(useraddr(p->pagetable,start+i)!=0)
         return -1;
     uint64 physical_addr = (uint64) kalloc();
     // start left shift, last bit 
