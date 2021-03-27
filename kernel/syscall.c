@@ -69,7 +69,7 @@ uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
     struct proc *p = curr_proc();
     int mmp=0;
 
-    uint64 physical_addr = kalloc();
+    uint64 physical_addr = (uint64) kalloc();
     // start left shift, last bit 
     printf("port1 is %d",port);
 
