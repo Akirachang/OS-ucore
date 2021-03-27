@@ -63,18 +63,16 @@ uint64 sys_get_time(uint64 ts,int tz){
     // printf("here i am \n");
     return rtn;
 }
+
 uint64 sys_mmap(uint64 start, uint64 len, int port){
     struct proc *p = curr_proc();
     uint64 physical_addr = useraddr(p->pagetable,start);
-    printf("*************");
-    // int copy_in = copyin(p->pagetable,(char *)physical_addr,start,len);
+    // start left shift, last bit 
+    port = port<<1+5;
     int mmp = mappages(p->pagetable, start, len, physical_addr, port);
-    printf("aaaaaaaaa");
-    printf("mmp is %d: ",mmp);
-    printf("\n");
     if(mmp == 0){
         return len;
-        }
+    }
     else
         return -1;
 }
