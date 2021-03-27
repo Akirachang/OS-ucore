@@ -79,15 +79,15 @@ uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
         }    
     }
 
-    if(((port&0x8)!=0) || ((port&0x7)==0)){
-        return -1;
-    }
 
     port = port<<1;
     port = port | 0b00001;
     port = port | 0b10000;
     printf("port is %d\n", port);
-
+    
+    if(((port&0x8)!=0) || ((port&0x7)==0)){
+        return -1;
+    }
     
     int mmp = mappages(p->pagetable, start, len, physical_addr, port);
 
@@ -135,6 +135,7 @@ void syscall() {
             // printf("args0 is %p \n",args[0]);
             // printf("args1 is %p \n",args[1]);
             ret = sys_mmap(args[0],args[1],args[2]);
+            printf("ret is %d \n",ret);
             break;
         default:
             ret = -1;
