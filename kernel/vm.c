@@ -79,15 +79,22 @@ walkaddr(pagetable_t pagetable, uint64 va) {
     //******
     printf("*****table entry selected is: %d",pte);
     printf("\n");
-    //******
-    if (pte == 0)
+    if (pte == 0){
+        printf("here 1");
         return 0;
-    if ((*pte & PTE_V) == 0)
+    }
+    if ((*pte & PTE_V) == 0){
+        printf("here 2");
         return 0;
-    if ((*pte & PTE_U) == 0)
+    }
+    if ((*pte & PTE_U) == 0){
+        printf("here 3");
         return 0;
+    }
     pa = PTE2PA(*pte);
     return pa;
+    //******
+
 }
 
 // Look up a virtual address, return the physical address,
