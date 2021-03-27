@@ -119,7 +119,7 @@ void syscall() {
             printf("args1 is %p \n",args[1]);
             ret = sys_mmap(args[0],args[1],(int)args[2]);
             printf("im here yoyo$$$$$$$\n");
-            printf("ret is: %d",ret);
+            printf("ret is: %d\n",ret);
             break;
         default:
             ret = -1;
