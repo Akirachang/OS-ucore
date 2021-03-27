@@ -73,14 +73,14 @@ uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
     if(start%4096!=0)
         return -1;
 
-    if(4096%len!=0){
+    if(len%4096!=0){
         while(len%4096!=0){
             len++;
         }    
     }
 
 
-    port = port<<1;
+    // port = port<<1;
     port = port | 0b00001;
     port = port | 0b10000;
     printf("port is %d\n", port);
