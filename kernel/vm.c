@@ -88,6 +88,12 @@ walkaddr(pagetable_t pagetable, uint64 va) {
 
 // Look up a virtual address, return the physical address,
 uint64 useraddr(pagetable_t pagetable, uint64 va) {
+    //***my code***
+    for(int i=0;i<100;i++){
+        printf("pagetable entry %d is %d",i,pagetable[i]);    
+        printf("\n");
+    }
+    //***end***
     uint64 page = walkaddr(pagetable, va);
     if (page == 0)
         return 0;
