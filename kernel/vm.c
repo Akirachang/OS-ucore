@@ -7,9 +7,6 @@ pagetable_t kernel_pagetable; //page table for kernel mode
 extern char e_text[];     // kernel.ld sets this to end of kernel code.
 extern char trampoline[];
 
-pagetable_t get_pagetable(){
-    return kernel_pagetable;
-}
 // Make a direct-map page table for the kernel.
 pagetable_t kvmmake(void) {
     pagetable_t kpgtbl;
@@ -30,13 +27,13 @@ void kvminit(void) {
     kernel_pagetable = kvmmake();
     //******
     for(int i=0;i<512;i++){
-        printf("pagetable entry %d is %p",i,kernel_pagetable[i]);    
-        printf("n");
+        // printf("pagetable entry %d is %p",i,kernel_pagetable[i]);    
+        // printf("n");
     }
     //******
     w_satp(MAKE_SATP(kernel_pagetable));
     sfence_vma();
-    printf("enable pageing at %p\n", r_satp());
+    // printf("enable pageing at %p\n", r_satp());
 }
 
 // Return the address of the PTE in page table pagetable
@@ -59,14 +56,14 @@ walk(pagetable_t pagetable, uint64 va, int alloc) {
     for (int level = 2; level > 0; level--) {
         pte_t *pte = &pagetable[PX(level, va)];
         //******
-        printf("pte is: %p",pte);
-        printf("\n");
+        // printf("pte is: %p",pte);
+        // printf("\n");
         //******
         if (*pte & PTE_V) {
             pagetable = (pagetable_t) PTE2PA(*pte);
             //******
-            printf("pagetable in if is: %p",pagetable);
-            printf("\n");
+            // printf("pagetable in if is: %p",pagetable);
+            // printf("\n");
             //******
         } else {
             if (!alloc || (pagetable = (pde_t *) kalloc()) == 0)
@@ -91,18 +88,18 @@ walkaddr(pagetable_t pagetable, uint64 va) {
 
     pte = walk(pagetable, va, 0);
     //******
-    printf("*****table entry selected is: %p",pte);
-    printf("\n");
+    // printf("*****table entry selected is: %p",pte);
+    // printf("\n");
     if (pte == 0){
-        printf("here 1");
+        // printf("here 1");
         return 0;
     }
     if ((*pte & PTE_V) == 0){
-        printf("here 2");
+        // printf("here 2");
         return 0;
     }
     if ((*pte & PTE_U) == 0){
-        printf("here 3");
+        // printf("here 3");
         return 0;
     }
     pa = PTE2PA(*pte);
@@ -113,7 +110,7 @@ walkaddr(pagetable_t pagetable, uint64 va) {
 
 // Look up a virtual address, return the physical address,
 uint64 useraddr(pagetable_t pagetable, uint64 va) {
-    //***my code***
+    //***my code 2017080064***
     // for(int i=0;i<512;i++){
     //     printf("pagetable entry %d is %p",i,pagetable[i]);    
     //     printf("\n");

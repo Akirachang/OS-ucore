@@ -82,7 +82,6 @@ void kinit(void);
 
 // vm.c
 // pagetable_t kernel_pagetable;
-pagetable_t get_pagetable();
 void kvminit(void);
 void kvmmap(pagetable_t, uint64, uint64, uint64, int);
 int mappages(pagetable_t, uint64, uint64, uint64, int);
