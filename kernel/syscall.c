@@ -81,7 +81,7 @@ uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
     port = port | 0b00001;
     port = port | 0b10000;
     printf("port is %d\n", port);
-    int mmp = mappages(p->pagetable, start, len, physical_addr, (int)port);
+    int mmp = mappages(p->pagetable, start, len, physical_addr, port);
     if(mmp == 0){
         return len;
     }
