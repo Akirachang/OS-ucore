@@ -107,8 +107,17 @@ uint64 sys_munmap(uint64 start, uint64 len){
             len++;
         }    
     }
-
+    pte_t *pte;
+    uint64 a;
     struct proc *p = curr_proc();
+    for (a = start; a < start + (len/PGSIZE) * PGSIZE; a += PGSIZE) {
+        pte = walk(p->pagetable, a, 0);
+        if ((*pte & PTE_V) == 0){
+            return -1; //not mapped, return -1
+        }
+
+    }
+
     uvmunmap(p->pagetable,start,len/PGSIZE,1);
     return len;
 }
