@@ -42,6 +42,7 @@ kfree(void *pa)
             printf("1 is %d \n",((uint64)pa % PGSIZE));
             printf("2 is %d \n",((char*)pa < ekernel));
             printf("3 is %d \n",((uint64)pa >= PHYSTOP));
+            printf("%d , %d\n",pa,PHYSTOP);
 
             panic("kfree");
         }
