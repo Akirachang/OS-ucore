@@ -38,7 +38,8 @@ kfree(void *pa)
 {
     struct linklist *l;
     if(((uint64)pa % PGSIZE) != 0 || (char*)pa < ekernel || (uint64)pa >= PHYSTOP)
-        panic("kfree");
+        {printf("pa is %d \n",pa);
+            panic("kfree");}
     // Fill with junk to catch dangling refs.
     memset(pa, 1, PGSIZE);
     l = (struct linklist*)pa;
