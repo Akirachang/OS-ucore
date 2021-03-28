@@ -108,7 +108,7 @@ uint64 sys_munmap(uint64 start, uint64 len){
         }    
     }
     struct proc *p = curr_proc();
-    uvmunmap(p,start,len,1);
+    uvmunmap(p->pagetable,start,len,1);
     return len;
 }
 // 0  0 0 1 1
