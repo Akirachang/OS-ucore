@@ -96,6 +96,21 @@ uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
     else
         return -1;
 }
+
+uint64 sys_munmap(uint64 start, uint64 len){
+
+    if(start%4096!=0)
+        return -1;
+
+    if(len%4096!=0){
+        while(len%4096!=0){
+            len++;
+        }    
+    }
+    struct proc *p = curr_proc();
+    uvmunmap(p,start,len,1);
+    return len;
+}
 // 0  0 0 1 1
 // 16 8 4 2 1
 // 00110
@@ -134,6 +149,10 @@ void syscall() {
             // printf("args0 is %p \n",args[0]);
             // printf("args1 is %p \n",args[1]);
             ret = sys_mmap(args[0],args[1],args[2]);
+            printf("ret is %d \n",ret);
+            break;
+        case SYS_munmap:
+            ret = sys_munmap(args[0],args[1]);
             printf("ret is %d \n",ret);
             break;
         default:
