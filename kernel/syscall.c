@@ -89,13 +89,13 @@ uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
     printf("port1 is %d",port);
     printf("port is %d\n", port);
     mmp = mappages(p->pagetable, start+i, len, physical_addr, port);
-
+    }
     if(mmp == 0){
         return len;
     }
     else
         return -1;
- }
+ 
 }
 
 uint64 sys_munmap(uint64 start, uint64 len){
