@@ -142,7 +142,10 @@ int mappages(pagetable_t pagetable, uint64 va, uint64 size, uint64 pa, int perm)
     last = PGROUNDDOWN(va + size - 1);
     for (;;) {
         if ((pte = walk(pagetable, a, 1)) == 0)
-            return -1;
+            {
+                panic("walk");
+                return -1;
+            }
         if (*pte & PTE_V){
             // return -1;
             panic("remap");
