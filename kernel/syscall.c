@@ -83,18 +83,19 @@ uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
             len++;
         }    
     }
-    
+    for(int i=0;i<len/PGSIZE;i++){
     uint64 physical_addr = (uint64) kalloc();
     // start left shift, last bit 
     printf("port1 is %d",port);
     printf("port is %d\n", port);
-    mmp = mappages(p->pagetable, start, len, physical_addr, port);
+    mmp = mappages(p->pagetable, start+i, len, physical_addr, port);
 
     if(mmp == 0){
         return len;
     }
     else
         return -1;
+ }
 }
 
 uint64 sys_munmap(uint64 start, uint64 len){
@@ -115,7 +116,6 @@ uint64 sys_munmap(uint64 start, uint64 len){
         if ((*pte & PTE_V) == 0){
             return -1; //not mapped, return -1
         }
-
     }
 
     uvmunmap(p->pagetable,start,len/PGSIZE,1);
