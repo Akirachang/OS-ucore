@@ -75,9 +75,10 @@ uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
     port = port | PTE_U;
     port = port | PTE_V;
     
-    if(start%4096!=0)
+    if(start%4096!=0){
+        printf("here");
         return -1;
-
+    }
     if(len%4096!=0){
         while(len%4096!=0){
             len++;
@@ -93,8 +94,10 @@ uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
     if(mmp == 0){
         return len;
     }
-    else
+    else{
+        printf("here2");
         return -1;
+        }
  
 }
 
