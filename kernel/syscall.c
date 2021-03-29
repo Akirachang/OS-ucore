@@ -75,30 +75,26 @@ uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
     port = port | PTE_U;
     port = port | PTE_V;
     
-    if(start%4096!=0){
-        printf("here");
+    if(start%4096!=0)
         return -1;
-    }
+
     if(len%4096!=0){
         while(len%4096!=0){
             len++;
         }    
     }
-    for(uint64 i=0;i<len/PGSIZE;i++){
+    
     uint64 physical_addr = (uint64) kalloc();
     // start left shift, last bit 
     printf("port1 is %d",port);
     printf("port is %d\n", port);
-    mmp = mappages(p->pagetable, start+i, 1, physical_addr, port);
-    }
+    mmp = mappages(p->pagetable, start, len, physical_addr, port);
+
     if(mmp == 0){
         return len;
     }
-    else{
-        printf("here2");
+    else
         return -1;
-        }
- 
 }
 
 uint64 sys_munmap(uint64 start, uint64 len){
