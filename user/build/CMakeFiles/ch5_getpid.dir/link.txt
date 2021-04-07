@@ -1,0 +1,1 @@
+riscv64-linux-musl-gcc -march=rv64imac -mabi=lp64 -mcmodel=medany -fno-builtin -nostdinc -fno-stack-protector -ggdb -Wall -O3 -DNDEBUG  -nostdlib -T /home/akira/Desktop/compare/OS2/user/lib/arch/riscv/user.ld -Ttext 0x1000 CMakeFiles/ch5_getpid.dir/src/ch5_getpid.c.o -o riscv64/ch5_getpid  libulib.a 
