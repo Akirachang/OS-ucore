@@ -1,4 +1,6 @@
 #include "defs.h"
+#include "logger.h"
+
 
 extern char s_bss[];
 extern char e_bss[];
