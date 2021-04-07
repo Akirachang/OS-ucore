@@ -117,7 +117,7 @@ struct proc* allocproc(void)
         panic("");
     }
     memset(&p->context, 0, sizeof(p->context));
-    // memset(p->trapframe, 0, PAGE_SIZE);
+    memset(p->trapframe, 0, PAGE_SIZE);
     memset((void*)p->kstack, 0, KSTACK_SIZE);
     p->context.ra = (uint64)usertrapret;
     p->context.sp = p->kstack + PGSIZE;
