@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int main(void)
-{
-    asm volatile("sret");
+int main() {
+    puts("hello wrold!");
     return 0;
 }

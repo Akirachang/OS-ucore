@@ -2,21 +2,14 @@ OUTPUT_ARCH(riscv)
 ENTRY(_start)
 
 SECTIONS {
+    . = 0x1000;
 
-    .text : { 
-        *(.text.entry)
-        *(.text .text.*)
+    .startup : {
+        *crt.S.o(.text)
     }
 
-    .bss : { 
-        *(.bss .bss.*)
-        *(.sbss .sbss.*)
-    }
+    .text : { *(.text) }
+    .data : { *(.data .rodata) }
 
-    .data : { 
-        *(.data .rodata) 
-        *(.sdata .sdata.*)
-    }
-    
     /DISCARD/ : { *(.eh_*) }
 }
