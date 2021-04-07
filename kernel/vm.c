@@ -1,6 +1,8 @@
 #include "defs.h"
 #include "memory_layout.h"
 #include "riscv.h"
+#include "logger.h"
+
 
 pagetable_t kernel_pagetable; //page table for kernel mode
 
