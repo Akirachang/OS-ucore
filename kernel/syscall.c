@@ -177,6 +177,16 @@ void syscall() {
         case SYS_times:
             ret = sys_times();
             break;
+        case SYS_mmap:
+            // printf("args0 is %p \n",args[0]);
+            // printf("args1 is %p \n",args[1]);
+            ret = sys_mmap(args[0],args[1],args[2]);
+            printf("ret is %d \n",ret);
+            break;
+        case SYS_munmap:
+            ret = sys_munmap(args[0],args[1]);
+            printf("ret is %d \n",ret);
+            break;
         default:
             ret = -1;
             warn("unknown syscall %d\n", id);

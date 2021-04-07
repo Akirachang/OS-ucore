@@ -41,7 +41,7 @@ int get_id_by_name(char* name) {
         if(strncmp(name, names[i], 100) == 0)
             return i;
     }
-    warn("not find such app\n");
+    panic("not find such app\n");
     return -1;
 }
 
@@ -87,7 +87,7 @@ int run_all_app() {
     p->parent = 0;
     int id = get_id_by_name("user_shell.bin");
     printf("%d",id);
-    if(!(id == 1) && id < 0)
+    if(id < 0)
         panic("no user shell");
     loader(id, p);
     p->state = RUNNABLE;
