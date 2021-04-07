@@ -3,6 +3,8 @@
 #include "trap.h"
 #include "proc.h"
 #include "riscv.h"
+#include "logger.h"
+
 #define min(a, b) a < b ? a : b;
 
 // char user_stk[4096];
