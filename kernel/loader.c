@@ -2,6 +2,8 @@
 #include "proc.h"
 #include "riscv.h"
 #include "trap.h"
+#include "logger.h"
+
 #include "memory_layout.h"
 
 static int app_cur, app_num;
