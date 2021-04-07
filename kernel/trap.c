@@ -20,7 +20,7 @@ extern char trampoline[], uservec[], userret[];
 
 
 void trapinit() {
-    intr_on();
+    // intr_on();
     set_kerneltrap();
 }
 
