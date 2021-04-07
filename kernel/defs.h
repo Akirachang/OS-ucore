@@ -28,7 +28,7 @@ void consputc(int);
 
 // logger.c
 void printf(char *, ...);
-#include "logger.h"
+// #include "logger.h"
 // void printfinit(void);
 // void panic(char*);
 // trap.c
