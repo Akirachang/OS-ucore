@@ -87,7 +87,7 @@ int run_all_app() {
     p->parent = 0;
     int id = get_id_by_name("user_shell.bin");
     printf("%d",id);
-    if(!(id == 1))
+    if(!(id == 1) && id < 0)
         panic("no user shell");
     loader(id, p);
     p->state = RUNNABLE;
