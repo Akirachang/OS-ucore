@@ -95,11 +95,11 @@ const char *LEVEL[] = {
         [WARN] = "WARN",
         [INFO] = "INFO",
 };
-void
-panic(char *s)
-{
-    printf("panic: ");
-    printf(s);
-    printf("\n");
-    loop();
-}
+// void
+// panic(char *s)
+// {
+//     printf("panic: ");
+//     printf(s);
+//     printf("\n");
+//     loop();
+// }
