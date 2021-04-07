@@ -1,4 +1,5 @@
 #include "defs.h"
+#include "logger.h"
 #ifndef TIMEVAL
 #define TIMEVAL
 typedef struct{
