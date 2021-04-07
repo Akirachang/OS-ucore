@@ -1,4 +1,4 @@
-#define NPROC (16)
+#define NPROC (256)
 #define KSTACK_SIZE (4096)
 #define USTACK_SIZE (4096)
 #define TRAPFRAME_SIZE (4096)
@@ -6,7 +6,7 @@
 // #include "file.h"
 
 // #define FD_MAX (16)
-#define INT_MAX 100000
+// #define INT_MAX 100000
 
 struct context {
     uint64 ra;
@@ -33,7 +33,7 @@ enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 struct proc {
     // p->lock must be held when using these:
     enum procstate state;        // Process state
-    int killed;                  // If non-zero, have been killed
+    // int killed;                  // If non-zero, have been killed
     int pid;                     // Process ID
     pagetable_t pagetable;       // User page table
     // these are private to the process, so p->lock need not be held.
@@ -45,11 +45,11 @@ struct proc {
     struct proc *parent;         // Parent process
     uint64 exit_code;
 
-    struct file* files[16];
+    // struct file* files[16];
 
-    //lab3
-    uint64 stride;
-    uint64 prio;
-    uint64 pass;
-    uint64 num;
+    // //lab3
+    // uint64 stride;
+    // uint64 prio;
+    // uint64 pass;
+    // uint64 num;
 };

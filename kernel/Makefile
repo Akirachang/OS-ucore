@@ -61,4 +61,13 @@ QEMUOPTS = \
 run: kernel
 	$(QEMU) $(QEMUOPTS)
 
+QEMUGDB = $(shell if $(QEMU) -help | grep -q '^-gdb'; \
+	then echo "-gdb tcp::$(GDBPORT)"; \
+	else echo "-s -p $(GDBPORT)"; fi)
+
+debug: $K/kernel .gdbinit
+	$(QEMU) $(QEMUOPTS) -S $(QEMUGDB) &
+	sleep 1
+	$(GDB)
+
 

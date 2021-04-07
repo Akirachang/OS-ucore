@@ -12,7 +12,7 @@ void loop() {
 
 void panic(char *s)
 {
-    printf("panic: ");
+    error("panic: %s", s);
     printf(s);
     printf("\n");
     shutdown();
