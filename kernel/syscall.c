@@ -2,8 +2,8 @@
 #include "syscall_ids.h"
 #include "trap.h"
 #include "proc.h"
-// #include "riscv.h"
-// #define min(a, b) a < b ? a : b;
+#include "riscv.h"
+#define min(a, b) a < b ? a : b;
 
 // char user_stk[4096];
 uint64 sys_write(int fd, uint64 va, uint len) {

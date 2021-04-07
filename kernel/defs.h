@@ -117,6 +117,6 @@ uint64 get_time_ms();
 // struct file* filealloc();
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x) / sizeof((x)[0]))
-// #define PAGE_SIZE (4096)
+#define PAGE_SIZE (4096)
 #define MIN(a, b) (a < b ? a : b)
 #define MAX(a, b) (a > b ? a : b)
