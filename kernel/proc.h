@@ -6,7 +6,7 @@
 // #include "file.h"
 
 // #define FD_MAX (16)
-// #define INT_MAX 100000
+#define INT_MAX 100000
 
 struct context {
     uint64 ra;
@@ -48,8 +48,8 @@ struct proc {
     // struct file* files[16];
 
     // //lab3
-    // uint64 stride;
-    // uint64 prio;
-    // uint64 pass;
-    // uint64 num;
+    uint64 stride;
+    uint64 prio;
+    uint64 pass;
+    uint64 num;
 };

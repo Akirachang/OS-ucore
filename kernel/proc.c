@@ -3,6 +3,8 @@
 #include "trap.h"
 #include "riscv.h"
 #include "memory_layout.h"
+#include "logger.h"
+
 
 
 struct proc pool[NPROC];
