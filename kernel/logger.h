@@ -13,7 +13,7 @@ extern int curr_pid;
 
 #define logger(level, fmt, ...) {                                                                           \
     if(debug_level <= level)                                                                                \
-        printf("\x1b[%dm[%s][%d] "fmt"\x1b[0m", LOG_COLOR[level], LOG_LEVEL[level], curr_pid, ##__VA_ARGS__);       \
+        printf("\x1b[%dm[%s][%d] "fmt"\x1b[0m", COLOR[level], LEVEL[level], curr_pid, ##__VA_ARGS__);       \
 }
 
 #define info(fmt, ...) \

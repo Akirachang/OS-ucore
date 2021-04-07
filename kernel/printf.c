@@ -82,24 +82,24 @@ void printf(char *fmt, ...) {
     }
 }
 
-// int COLOR[] = {
-//         [TRACE] = WHITE,
-//         [ERROR] = RED,
-//         [WARN] = YELLOW,
-//         [INFO] = BRIGHT_YOUND,
-// };
+int COLOR[] = {
+        [TRACE] = WHITE,
+        [ERROR] = RED,
+        [WARN] = YELLOW,
+        [INFO] = BRIGHT_YOUND,
+};
 
-// const char *LEVEL[] = {
-//         [TRACE] = "TRACE",
-//         [ERROR] = "ERROR",
-//         [WARN] = "WARN",
-//         [INFO] = "INFO",
-// };
-// void
-// panic(char *s)
-// {
-//     printf("panic: ");
-//     printf(s);
-//     printf("\n");
-//     loop();
-// }
+const char *LEVEL[] = {
+        [TRACE] = "TRACE",
+        [ERROR] = "ERROR",
+        [WARN] = "WARN",
+        [INFO] = "INFO",
+};
+void
+panic(char *s)
+{
+    printf("panic: ");
+    printf(s);
+    printf("\n");
+    loop();
+}
