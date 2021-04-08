@@ -15,6 +15,8 @@ extern char trampoline[];
 extern char boot_stack_top[];
 struct proc* current_proc = 0;
 struct proc idle;
+int curr_pid = 0;
+
 
 
 struct proc* curr_proc() {
