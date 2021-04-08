@@ -153,7 +153,7 @@ void syscall() {
     // printf("syscall %d args:%p %p %p %p %p %p\n", id, args[0], args[1], args[2], args[3], args[4], args[5]);
     switch (id) {
         case SYS_write:
-            ret = sys_write(args[0], (char *) args[1], args[2]);
+            ret = sys_write(args[0], args[1], args[2]);
             // printf("\n");
             break;
         case SYS_read:
