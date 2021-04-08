@@ -28,7 +28,7 @@ void consputc(int);
 
 // logger.c
 void printf(char *, ...);
-// #include "logger.h"
+#include "logger.h"
 // void printfinit(void);
 // void panic(char*);
 // trap.c
@@ -56,6 +56,8 @@ void swtch(struct context *, struct context *);
 int finished();
 void batchinit();
 int run_all_app();
+int get_id_by_name(char* name);
+void loader(int, void*);
 // // // loader.c
 // // void batchinit();
 // // int run_all_app();
@@ -65,11 +67,14 @@ int run_all_app();
 // proc.c
 struct proc *curr_proc();
 void exit(int);
-void procinit();
-void scheduler() __attribute__((noreturn));
-void sched();
-void yield();
-struct proc* allocproc();
+void procinit(void);
+void scheduler(void) __attribute__((noreturn));
+void sched(void);
+void yield(void);
+int fork(void);
+int exec(char*);
+int wait(int, int*);
+struct proc *allocproc();
 uint64 set_priority(int code);
 uint64 get_time(TimeVal* ts, int tz);
 
