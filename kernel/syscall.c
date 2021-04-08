@@ -7,6 +7,7 @@
 
 // char user_stk[4096];
 uint64 sys_write(int fd, uint64 va, uint len) {
+    printf("fd is %d\n",fd);
     if (fd != 0)
         return -1;
     struct proc *p = curr_proc();
