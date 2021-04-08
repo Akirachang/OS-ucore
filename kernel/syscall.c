@@ -151,40 +151,47 @@ void syscall() {
     trace("syscall %d args:%p %p %p %p %p %p %p\n", id, args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
     switch (id) {
         case SYS_write:
+            printf("sy_write");
             ret = sys_write(args[0], args[1], args[2]);
             break;
         case SYS_read:
+            printf("sy_read");
             ret = sys_read(args[0], args[1], args[2]);
             break;
         case SYS_exit:
-            // printf("sys exit");
+            printf("sys exit");
             ret = sys_exit(args[0]);
             break;
         case SYS_sched_yield:
-            // printf("sys sched");
+            printf("sys sched");
             ret = sys_sched_yield();
             break;
         case SYS_getpid:
+            printf("sy_getpid");
             ret = sys_getpid();
             break;
         case SYS_clone: // SYS_fork
+            printf("sy_clone");
             ret = sys_clone();
             break;
         case SYS_execve:
+            printf("sy_exec");
             ret = sys_exec(args[0]);
             break;
         case SYS_wait4:
+            printf("sy_wait4");
             ret = sys_wait(args[0], args[1]);
             break;
         case SYS_times:
+            printf("sy_times");
             ret = sys_times();
             break;
         case SYS_setpriority:
-            // printf("sys prio");
+            printf("sys prio");
             ret = sys_setpriority(args[0]);
             break;
         case SYS_gettimeofday:
-            // printf("sys time");
+            printf("sys time");
             // printf("args0 is %p",args[0]);
             // printf("\n");
             // printf("physical args0 is %p",useraddr(p->pagetable,args[0]));
@@ -192,12 +199,14 @@ void syscall() {
             // ret=-1;
             break;
         case SYS_mmap:
+            printf("sy_mmap");
             // printf("args0 is %p \n",args[0]);
             // printf("args1 is %p \n",args[1]);
             ret = sys_mmap(args[0],args[1],args[2]);
             printf("ret is %d \n",ret);
             break;
         case SYS_munmap:
+            printf("sy_unmap");
             ret = sys_munmap(args[0],args[1]);
             printf("ret is %d \n",ret);
             break;
