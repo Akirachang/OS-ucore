@@ -23,7 +23,7 @@ void set_timer(uint64 stime);
 
 
 // console.c
-void consoleinit();
+// void consoleinit();
 void consputc(int);
 
 // logger.c
@@ -53,7 +53,7 @@ void syscall();
 void swtch(struct context *, struct context *);
 
 // batch.c
-int finished();
+// int finished();
 void batchinit();
 int run_all_app();
 int get_id_by_name(char* name);
