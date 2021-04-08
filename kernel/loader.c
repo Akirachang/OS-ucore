@@ -43,7 +43,7 @@ int get_id_by_name(char* name) {
         if(strncmp(name, names[i], 100) == 0)
             return i;
     }
-    panic("not find such app\n");
+    warn("not find such app\n");
     return -1;
 }
 
@@ -84,8 +84,7 @@ void loader(int id, void* p) {
 int run_all_app() {
     struct proc *p = allocproc();
     p->parent = 0;
-    int id = get_id_by_name("user_shell.bin");
-    printf("%d",id);
+    int id = get_id_by_name("user_shell");
     if(id < 0)
         panic("no user shell");
     loader(id, p);

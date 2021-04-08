@@ -17,6 +17,7 @@ struct {
 void
 kinit()
 {
+    printf("ekernel = %p\n", (void*)ekernel);
     freerange(ekernel, (void*)PHYSTOP);
 }
 
@@ -37,13 +38,8 @@ void
 kfree(void *pa)
 {
     struct linklist *l;
-    if(((uint64)pa % PGSIZE) != 0 || (char*)pa < ekernel || (uint64)pa >= PHYSTOP)
-        {
-            printf("1 is %d \n",((uint64)pa % PGSIZE));
-            printf("2 is %d \n",((char*)pa < ekernel));
-            printf("3 is %d \n",((uint64)pa >= PHYSTOP));
-            printf("%p , %p\n",pa,PHYSTOP);
-
+    if(((uint64)pa % PGSIZE) != 0 || (char*)pa < ekernel || (uint64)pa >= PHYSTOP) {
+        printf("error free addr = %p\n", pa);
             panic("kfree");
         }
     // Fill with junk to catch dangling refs.
