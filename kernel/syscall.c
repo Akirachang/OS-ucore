@@ -6,37 +6,29 @@
 #define min(a, b) a < b ? a : b;
 
 // char user_stk[4096];
-uint64 sys_write(int fd, char *addr, uint len) {
-    if (fd != 0 && fd!=1)
-        return -1;    
-    
+uint64 sys_write(int fd, uint64 va, uint len) {
+    if (fd != 0)
+        return -1;
     struct proc *p = curr_proc();
     char str[200];
-    int size = copyinstr(p->pagetable, str, (uint64) addr, MIN(len, 200));
-    // printf("size = %d\n", size);
-
-    // if (fd != 0 && fd!=1)
-    // {
-    //     return -1;
-    // }
-    // uint64 user_stk = p->ustack;
-    // if(((uint64)(str)<(uint64)user_stk ||
-    // (uint64)str+len>(uint64)user_stk+(uint64)4096) && 
-    // (uint64)str<BA + p->num * MAS)
-    // {
-    //     return -1;
-    // }
-    // if(strlen(str)<len)
-    //     size = strlen(str);
-    // else
-    //     size = len;
-
+    int size = copyinstr(p->pagetable, str, va, MIN(len, 200));
     for(int i = 0; i < size; ++i) {
-        // printf(",");
         console_putchar(str[i]);
     }
     return size;
+}
 
+uint64 sys_read(int fd, uint64 va, uint64 len) {
+    if (fd != 0)
+        return -1;
+    struct proc *p = curr_proc();
+    char str[200];
+    for(int i = 0; i < len; ++i) {
+        int c = console_getchar();
+        str[i] = c;
+    }
+    copyout(p->pagetable, va, str, len);
+    return len;
 }
 
 uint64 sys_exit(int code) {
@@ -48,6 +40,34 @@ uint64 sys_sched_yield() {
     yield();
     return 0;
 }
+
+uint64 sys_getpid() {
+    return curr_proc()->pid;
+}
+
+uint64 sys_clone() {
+    info("fork!\n");
+    return fork();
+}
+
+uint64 sys_exec(uint64 va) {
+    struct proc* p = curr_proc();
+    char name[200];
+    copyinstr(p->pagetable, name, va, 200);
+    info("sys_exec %s\n", name);
+    return exec(name);
+}
+
+uint64 sys_wait(int pid, uint64 va) {
+    struct proc* p = curr_proc();
+    int* code = (int*)useraddr(p->pagetable, va);
+    return wait(pid, code);
+}
+
+uint64 sys_times() {
+    return get_time_ms();
+}
+
 
 uint64 sys_setpriority(int code) {
     uint64 rtn = set_priority(code);
@@ -125,14 +145,19 @@ uint64 sys_munmap(uint64 start, uint64 len){
 // 00110
 
 void syscall() {
-    struct trapframe *trapframe = curr_proc()->trapframe;
+    struct proc *p = curr_proc();
+    struct trapframe *trapframe = p->trapframe;
     int id = trapframe->a7, ret;
-    uint64 args[6] = {trapframe->a0, trapframe->a1, trapframe->a2, trapframe->a3, trapframe->a4, trapframe->a5};
+    uint64 args[7] = {trapframe->a0, trapframe->a1, trapframe->a2, trapframe->a3, trapframe->a4, trapframe->a5, trapframe->a6};
+    trace("syscall %d args:%p %p %p %p %p %p %p\n", id, args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
     // printf("syscall %d args:%p %p %p %p %p %p\n", id, args[0], args[1], args[2], args[3], args[4], args[5]);
     switch (id) {
         case SYS_write:
             ret = sys_write(args[0], (char *) args[1], args[2]);
             // printf("\n");
+            break;
+        case SYS_read:
+            ret = sys_read(args[0], args[1], args[2]);
             break;
         case SYS_exit:
             // printf("sys exit");
@@ -142,6 +167,20 @@ void syscall() {
             // printf("sys sched");
             ret = sys_sched_yield();
             break;
+            case SYS_getpid:
+            ret = sys_getpid();
+            break;
+        case SYS_clone: // SYS_fork
+            ret = sys_clone();
+            break;
+        case SYS_execve:
+            ret = sys_exec(args[0]);
+            break;
+        case SYS_wait4:
+            ret = sys_wait(args[0], args[1]);
+            break;
+        case SYS_times:
+            ret = sys_times();
         case SYS_setpriority:
             // printf("sys prio");
             ret = sys_setpriority(args[0]);
@@ -166,8 +205,8 @@ void syscall() {
             break;
         default:
             ret = -1;
-            // printf("unknown syscall %d\n", id);
+            warn("unknown syscall %d\n", id);
     }
     trapframe->a0 = ret;
-    // printf("syscall ret %d\n", ret);
+    trace("syscall ret %d\n", ret);
 }

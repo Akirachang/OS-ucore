@@ -1,4 +1,4 @@
-#define NPROC (16)
+#define NPROC (256)
 #define KSTACK_SIZE (4096)
 #define USTACK_SIZE (4096)
 #define TRAPFRAME_SIZE (4096)
