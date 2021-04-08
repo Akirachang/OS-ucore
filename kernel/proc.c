@@ -7,7 +7,7 @@
 
 struct proc pool[NPROC];
 __attribute__ ((aligned (16))) char kstack[NPROC][KSTACK_SIZE];
-// __attribute__ ((aligned (4096))) char ustack[NPROC][PAGE_SIZE];
+__attribute__ ((aligned (4096))) char ustack[NPROC][PAGE_SIZE];
 char trapframe[NPROC][PAGE_SIZE];
 extern char trampoline[];
 
