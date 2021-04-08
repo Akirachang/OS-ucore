@@ -13,7 +13,6 @@ uint64 sys_write(int fd, uint64 va, uint len) {
     char str[200];
     int size = copyinstr(p->pagetable, str, va, MIN(len, 200));
     for(int i = 0; i < size; ++i) {
-        printf("%c",str[i]);
         console_putchar(str[i]);
     }
     return size;
