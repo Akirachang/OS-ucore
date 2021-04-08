@@ -12,7 +12,7 @@ else()
 endif()
 
 set(ASM_DIR asm)
-set(BIN_DIR target)
+set(BIN_DIR bin)
 
 # Toolchain
 set(PREFIX ${ARCH}-linux-musl-)
