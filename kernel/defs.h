@@ -109,7 +109,7 @@ int copyinstr(pagetable_t, char *, uint64, uint64);
 uint64 get_cycle();
 void timerinit();
 void set_next_timer();
-// uint64 get_time_ms();
+uint64 get_time_ms();
 
 // // pipe.c
 // int pipealloc(struct file *, struct file *);
