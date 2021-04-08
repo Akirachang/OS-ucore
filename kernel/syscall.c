@@ -7,7 +7,7 @@
 
 // char user_stk[4096];
 uint64 sys_write(int fd, uint64 va, uint len) {
-    printf("fd is %d\n",fd);
+    // printf("fd is %d\n",fd);
     if (fd != 0 && fd!=1)
         return -1;
     struct proc *p = curr_proc();
@@ -152,14 +152,14 @@ void syscall() {
     trace("syscall %d args:%p %p %p %p %p %p %p\n", id, args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
     switch (id) {
         case SYS_write:
-            printf("sy_write\n");
+            // printf("sy_write\n");
             ret = sys_write(args[0], args[1], args[2]);
-            printf("ret in write is: %d \n",ret);
+            // printf("ret in write is: %d \n",ret);
             break;
         case SYS_read:
-            printf("sy_read\n");
+            // printf("sy_read\n");
             ret = sys_read(args[0], args[1], args[2]);
-            printf("ret in read is: %d \n",ret);
+            // printf("ret in read is: %d \n",ret);
             break;
         case SYS_exit:
             printf("sys exit");
