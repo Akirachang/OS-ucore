@@ -5,7 +5,7 @@
 #include "riscv.h"
 #include "logger.h"
 
-#define min(a, b) a < b ? a : b;
+// #define min(a, b) a < b ? a : b;
 
 // char user_stk[4096];
 uint64 sys_write(int fd, uint64 va, uint len) {
@@ -154,7 +154,7 @@ void syscall() {
     trace("syscall %d args:%p %p %p %p %p %p %p\n", id, args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
     switch (id) {
         case SYS_write:
-            printf("hi im hhere");
+            // printf("hi im hhere");
             ret = sys_write(args[0], args[1], args[2]);
             break;
         case SYS_read:
