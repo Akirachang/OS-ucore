@@ -245,10 +245,10 @@ wait(int pid, int* code)
         // Scan through table looking for exited children.
         havekids = 0;
         for(np = pool; np < &pool[NPROC]; np++){
-            printf("%d",np->state != UNUSED);
-            printf("%d",np->parent == p);
-            printf("%d",(pid <= 0 || np->pid == pid));
-            printf("\n");
+            // printf("%d",np->state != UNUSED);
+            // printf("%d",np->parent == p);
+            // printf("%d",(pid <= 0 || np->pid == pid));
+            // printf("\n");
 
             if(np->state != UNUSED && np->parent == p && (pid <= 0 || np->pid == pid)){
                 havekids = 1;
@@ -294,7 +294,7 @@ int spawn(uint va){
 
     //exec
     char name[200];
-    copyinstr(np->pagetable, name, va, 200);
+    copyinstr(p->pagetable, name, va, 200);
     info("sys_exec %s\n", name);
     int exe = exec(name);
     if(exe != -1)
