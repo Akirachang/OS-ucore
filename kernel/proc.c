@@ -245,6 +245,10 @@ wait(int pid, int* code)
         // Scan through table looking for exited children.
         havekids = 0;
         for(np = pool; np < &pool[NPROC]; np++){
+            printf("%d\n",np->state != UNUSED);
+            printf("%d\n",np->parent == p);
+            printf("%d\n",(pid <= 0 || np->pid == pid));
+
             if(np->state != UNUSED && np->parent == p && (pid <= 0 || np->pid == pid)){
                 havekids = 1;
                 if(np->state == ZOMBIE){
