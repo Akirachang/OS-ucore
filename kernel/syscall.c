@@ -144,6 +144,14 @@ uint64 sys_munmap(uint64 start, uint64 len){
 // 16 8 4 2 1
 // 00110
 
+int sys_spawn(char* name){
+    int pid = fork();
+    int exe = exec(name);
+    if(exe!=-1)
+        return pid;
+    return -1;
+}
+
 void syscall() {
     struct proc *p = curr_proc();
     struct trapframe *trapframe = p->trapframe;
@@ -212,6 +220,10 @@ void syscall() {
             printf("sy_unmap");
             ret = sys_munmap(args[0],args[1]);
             printf("ret is %d \n",ret);
+            break;
+        case SYS_spawn:
+            print("sy_spawn");
+            ret = sys_spawn((char*)args[0]);
             break;
         default:
             ret = -1;
