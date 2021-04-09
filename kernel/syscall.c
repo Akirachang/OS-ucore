@@ -144,9 +144,9 @@ uint64 sys_munmap(uint64 start, uint64 len){
 // 16 8 4 2 1
 // 00110
 
-int sys_spawn(char* name){
+int sys_spawn(uint64 name){
     int pid = fork();
-    int exe = exec(name);
+    int exe = sys_exec(name);
     if(exe!=-1)
         return pid;
     return -1;
@@ -224,7 +224,7 @@ void syscall() {
         case SYS_spawn:
             printf("sy_spawn");
             printf("%p",args[0]);
-            ret = sys_spawn((char*)args[0]);
+            ret = sys_spawn(args[0]);
             printf("ret in spawn is %d",ret);
             break;
         default:
