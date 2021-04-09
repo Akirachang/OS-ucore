@@ -240,19 +240,19 @@ wait(int pid, int* code)
     struct proc *np;
     int havekids;
     struct proc *p = curr_proc();
-    printf("current proc is %d\n",p);
+    // printf("current proc is %d\n",p);
 
     for(;;){
         // Scan through table looking for exited children.
         havekids = 0;
         // printf("in wait pid is: %d\n",pid);
-        printf("current proc is %d\n",p);
+        // printf("current proc is %d\n",p);
         for(np = pool; np < &pool[NPROC]; np++){
             // printf("%d",np->state != UNUSED);
-            printf("%d\n",np->parent == p);
+            // printf("%d\n",np->parent == p);
             // printf("%d",(pid <= 0 || np->pid == pid));
             // printf("\n");
-            printf("%d\n", np->parent);
+            // printf("%d\n", np->parent);
             if(np->state != UNUSED && np->parent == p && (pid <= 0 || np->pid == pid)){
                 havekids = 1;
                 if(np->state == ZOMBIE){
