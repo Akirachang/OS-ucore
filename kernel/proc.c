@@ -244,12 +244,13 @@ wait(int pid, int* code)
     for(;;){
         // Scan through table looking for exited children.
         havekids = 0;
+        printf("in wait pid is: %d",pid);
         for(np = pool; np < &pool[NPROC]; np++){
             // printf("%d",np->state != UNUSED);
             // printf("%d",np->parent == p);
             // printf("%d",(pid <= 0 || np->pid == pid));
             // printf("\n");
-            printf("in wait np pid is: %d \n", pid);
+            // printf("in wait np pid is: %d \n", np->pid);
             if(np->state != UNUSED && np->parent == p && (pid <= 0 || np->pid == pid)){
                 havekids = 1;
                 if(np->state == ZOMBIE){
