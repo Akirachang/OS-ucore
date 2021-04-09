@@ -146,6 +146,7 @@ uint64 sys_munmap(uint64 start, uint64 len){
 
 int sys_spawn(uint64 name){
     int pid = spawn(name);
+    return pid;
 }
 
 void syscall() {
