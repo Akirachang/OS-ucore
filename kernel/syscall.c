@@ -222,7 +222,7 @@ void syscall() {
             printf("ret is %d \n",ret);
             break;
         case SYS_spawn:
-            print("sy_spawn");
+            printf("sy_spawn");
             ret = sys_spawn((char*)args[0]);
             break;
         default:
