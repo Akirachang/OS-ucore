@@ -269,7 +269,7 @@ wait(int pid, int* code)
     }
 }
 
-uint64 spawn(uint va){
+int spawn(uint va){
     int pid;
     struct proc *np;
     struct proc *p = curr_proc();
