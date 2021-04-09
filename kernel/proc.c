@@ -291,7 +291,7 @@ int spawn(uint va){
     pid = np->pid;
     np->parent = p;
     np->state = RUNNABLE;   
-    pool[pid] = *np;
+    // pool[pid] = *np;
     //exec
     char name[200];
     copyinstr(p->pagetable, name, va, 200);
