@@ -269,6 +269,39 @@ wait(int pid, int* code)
     }
 }
 
+uint64 spawn(uint va){
+    int pid;
+    struct proc *np;
+    struct proc *p = curr_proc();
+    // Allocate process.
+    if((np = allocproc()) == 0){
+        panic("allocproc\n");
+    }
+    // Copy user memory from parent to child.
+    if(uvmcopy(p->pagetable, np->pagetable, p->sz) < 0){
+        panic("uvmcopy\n");
+    }
+    np->sz = p->sz;
+
+    // copy saved user registers.
+    *(np->trapframe) = *(p->trapframe);
+
+    // Cause fork to return 0 in the child.
+    np->trapframe->a0 = 0;
+    pid = np->pid;
+    np->parent = p;
+    np->state = RUNNABLE;   
+
+    //exec
+    char name[200];
+    copyinstr(p->pagetable, name, va, 200);
+    info("sys_exec %s\n", name);
+    int exe = exec(name);
+    if(exe != -1)
+        return pid;
+    return -1;
+}
+
 void exit(int code) {
     struct proc *p = curr_proc();
     p->exit_code = code;
