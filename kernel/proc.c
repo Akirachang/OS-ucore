@@ -249,7 +249,7 @@ wait(int pid, int* code)
             // printf("%d",np->parent == p);
             // printf("%d",(pid <= 0 || np->pid == pid));
             // printf("\n");
-            printf("in wait np pid is: %d", pid);
+            printf("in wait np pid is: %d \n", pid);
             if(np->state != UNUSED && np->parent == p && (pid <= 0 || np->pid == pid)){
                 havekids = 1;
                 if(np->state == ZOMBIE){
@@ -289,7 +289,7 @@ int spawn(uint va){
     // Cause fork to return 0 in the child.
     np->trapframe->a0 = 0;
     pid = np->pid;
-    printf("in spawn np pid is: %d",pid);
+    // printf("in spawn np pid is: %d \n",pid);
     np->parent = p;
     np->state = RUNNABLE;   
     //exec
