@@ -292,6 +292,7 @@ int spawn(uint va){
     pid = np->pid;
     // printf("in spawn np pid is: %d \n",pid);
     np->parent = p;
+    printf("in spawn %d  %d\n",np->parent,p);
     np->state = RUNNABLE;   
     //exec
     char name[200];
