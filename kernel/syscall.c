@@ -192,6 +192,7 @@ void syscall() {
         case SYS_wait4:
             printf("sy_wait4\n");
             ret = sys_wait(args[0], args[1]);
+            printf("ret in wait is %d \n",ret);
             break;
         case SYS_times:
             printf("sy_times\n");
