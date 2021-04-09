@@ -294,7 +294,7 @@ int spawn(uint va){
 
     //exec
     char name[200];
-    copyinstr(p->pagetable, name, va, 200);
+    copyinstr(np->pagetable, name, va, 200);
     info("sys_exec %s\n", name);
     int exe = exec(name);
     if(exe != -1)
