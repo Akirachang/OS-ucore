@@ -251,7 +251,7 @@ wait(int pid, int* code)
             // printf("%d",np->parent == p);
             // printf("%d",(pid <= 0 || np->pid == pid));
             // printf("\n");
-            // printf("%d   %d\n", p ,np->parent);
+            printf("%d\n", np->parent);
             if(np->state != UNUSED && np->parent == p && (pid <= 0 || np->pid == pid)){
                 havekids = 1;
                 if(np->state == ZOMBIE){
