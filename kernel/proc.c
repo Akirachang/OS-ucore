@@ -249,7 +249,7 @@ wait(int pid, int* code)
         printf("current proc is %d\n",p);
         for(np = pool; np < &pool[NPROC]; np++){
             // printf("%d",np->state != UNUSED);
-            // printf("%d",np->parent == p);
+            printf("%d\n",np->parent == p);
             // printf("%d",(pid <= 0 || np->pid == pid));
             // printf("\n");
             printf("%d\n", np->parent);
