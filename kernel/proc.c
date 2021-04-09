@@ -244,7 +244,7 @@ wait(int pid, int* code)
     for(;;){
         // Scan through table looking for exited children.
         havekids = 0;
-        printf("in wait pid is: %d",pid);
+        printf("in wait pid is: %d\n",pid);
         for(np = pool; np < &pool[NPROC]; np++){
             // printf("%d",np->state != UNUSED);
             // printf("%d",np->parent == p);
