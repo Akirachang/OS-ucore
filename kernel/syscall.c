@@ -145,6 +145,7 @@ uint64 sys_munmap(uint64 start, uint64 len){
 // 00110
 
 uint64 sys_spawn(uint64 name){
+    fork();
     return spawn(name);
 }
 
