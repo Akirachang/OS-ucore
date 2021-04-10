@@ -298,9 +298,9 @@ int spawn(uint va){
     // Cause fork to return 0 in the child.
     np->trapframe->a0 = 0;
     pid = np->pid;
-    // printf("in spawn np pid is: %d \n",pid);
+    printf("in spawn np pid is: %d \n",pid);
     np->parent = p;
-    printf("in spawn %d  %d\n",np->parent,p);
+    printf("in spawn parent pid is: %d\n",np->parent->pid);
     np->state = RUNNABLE;   
     //exec
     char name[200];
