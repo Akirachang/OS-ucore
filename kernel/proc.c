@@ -240,7 +240,7 @@ wait(int pid, int* code)
     struct proc *np;
     int havekids;
     struct proc *p = curr_proc();
-    // printf("current proc is %d\n",p);
+    printf("current proc is %d\n",p->pid);
 
     for(;;){
         // Scan through table looking for exited children.
@@ -252,7 +252,8 @@ wait(int pid, int* code)
             // printf("%d\n",np->parent == p);
             // printf("%d",(pid <= 0 || np->pid == pid));
             // printf("\n");
-            // printf("%d\n", np->parent);
+            printf("%d\n", np->parent->pid);
+            printf("np pid %d\n", np->pid);
 
             // printf("%d %d %d\n",np->state != UNUSED,np->parent == p,(pid <= 0 || np->pid == pid));
             if(np->state != UNUSED && np->parent == p && (pid <= 0 || np->pid == pid)){
