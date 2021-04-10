@@ -254,7 +254,8 @@ wait(int pid, int* code)
             // printf("\n");
             if(np->parent!=0)
                 printf("%d\n", np->parent->pid);
-            printf("np pid %d\n", np->pid);
+            if(np->pid!=0)
+                printf("np pid %d\n", np->pid);
 
             // printf("%d %d %d\n",np->state != UNUSED,np->parent == p,(pid <= 0 || np->pid == pid));
             if(np->state != UNUSED && np->parent == p && (pid <= 0 || np->pid == pid)){
