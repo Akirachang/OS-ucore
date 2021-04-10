@@ -242,7 +242,6 @@ wait(int pid, int* code)
     struct proc *p = curr_proc();
     printf("current proc is %d\n",p->pid);
     //?
-    fork();
     for(;;){
         // Scan through table looking for exited children.
         havekids = 0;
