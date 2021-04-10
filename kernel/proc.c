@@ -216,8 +216,8 @@ fork(void)
     pid = np->pid;
     np->parent = p;
     np->state = RUNNABLE;
-    printf("in fork np pid is: %d \n",pid);
-    printf("in fork parent pid is: %d\n",np->parent->pid);
+    // printf("in fork np pid is: %d \n",pid);
+    // printf("in fork parent pid is: %d\n",np->parent->pid);
 
     return pid;
 }
