@@ -42,7 +42,7 @@ procinit(void)
 }
 
 int allocpid() {
-    static int PID = 1;
+    static int PID =0;
     return PID++;
 }
 pagetable_t
