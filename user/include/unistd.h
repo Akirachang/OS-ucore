@@ -21,7 +21,7 @@ int sleep(unsigned long long);
 int set_priority(int prio);
 int mmap(void *start, unsigned long long len, int prot);
 int munmap(void *start, unsigned long long len);
-int wait(int *);
+int waitpid(int *);
 int spawn(char *file);
 int mailread(void *buf, int len);
 int mailwrite(int pid, void *buf, int len);
