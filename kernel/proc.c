@@ -309,7 +309,7 @@ int spawn(uint va){
     copyinstr(p->pagetable, name, va, 200);
     info("sys_exec %s\n", name);
     int exe = exec(name);
-    p->state = ZOMBIE;
+    // p->state = ZOMBIE;
     if(exe != -1)
         return pid;
     return -1;
@@ -321,6 +321,7 @@ void exit(int code) {
     info("proc %d exit with %d\n", p->pid, code);
     freeproc(p);
     if(p->parent != 0) {
+        printf("set it to ZOMBIE %d", p->pid);
         trace("wait for parent to clean\n");
         p->state = ZOMBIE;
     }
