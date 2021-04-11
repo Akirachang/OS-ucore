@@ -186,7 +186,7 @@ void syscall() {
             ret = sys_exec(args[0]);
             break;
         case SYS_wait4:
-            printf("sy_wait4\n");
+            // printf("sy_wait4\n");
             ret = sys_wait(args[0], args[1]);
             // printf("ret in wait is %d \n",ret);
             break;
