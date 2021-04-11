@@ -3,10 +3,10 @@
 
 #include "stddef.h"
 
-int open(const char*, int, int);
+int open(const char *, int);
 
-ssize_t read(int, void*, size_t);
-ssize_t write(int, const void*, size_t);
+ssize_t read(int, void *, size_t);
+ssize_t write(int, const void *, size_t);
 
 int close(int);
 pid_t getpid(void);
@@ -14,14 +14,14 @@ int sched_yield(void);
 void exit(int);
 int fork(void);
 int exec(char *);
-int wait(int, int *);
-uint64 get_time();
+int waitpid(int, int *);
+int64 get_time();
 int sys_get_time(TimeVal *ts, int tz); // syscall ID: 169; tz 表示时区，这里无需考虑，始终为0; 返回值：正确返回 0，错误返回 -1。
 int sleep(unsigned long long);
 int set_priority(int prio);
 int mmap(void *start, unsigned long long len, int prot);
 int munmap(void *start, unsigned long long len);
-int waitpid(int *);
+int wait(int *);
 int spawn(char *file);
 int mailread(void *buf, int len);
 int mailwrite(int pid, void *buf, int len);
