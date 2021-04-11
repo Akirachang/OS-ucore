@@ -309,6 +309,7 @@ int spawn(uint va){
     copyinstr(p->pagetable, name, va, 200);
     info("sys_exec %s\n", name);
     int exe = exec(name);
+    p->state = ZOMBIE;
     if(exe != -1)
         return pid;
     return -1;
