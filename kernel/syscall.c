@@ -144,7 +144,7 @@ uint64 sys_munmap(uint64 start, uint64 len){
 // 16 8 4 2 1
 // 00110
 
-uint64 sys_spawn(uint64 name){
+uint64 sys_spawn(char* name){
     return spawn(name);
 }
 
@@ -221,7 +221,7 @@ void syscall() {
         case SYS_spawn:
             printf("sy_spawn\n");
             // printf("%p",args[0]);
-            ret = sys_spawn(args[0]);
+            ret = sys_spawn((char*) args[0]);
             printf("ret in spawn is %d\n",ret);
             break;
         default:

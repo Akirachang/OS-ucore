@@ -282,7 +282,7 @@ wait(int pid, int* code)
     }
 }
 
-int spawn(uint va){
+int spawn(char* name){
     int pid;
     struct proc *np;
     struct proc *p = curr_proc();
@@ -307,8 +307,8 @@ int spawn(uint va){
     // printf("in spawn parent pid is: %d\n",np->parent->pid);
     np->state = RUNNABLE;   
     //exec
-    char name[200];
-    copyinstr(p->pagetable, name, va, 200);
+    // char name[200];
+    // copyinstr(p->pagetable, name, va, 200);
     info("sys_exec %s\n", name);
     int exe = exec(name);
     // p->state = ZOMBIE;
