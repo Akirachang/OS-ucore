@@ -221,7 +221,7 @@ void syscall() {
         case SYS_spawn:
             printf("sy_spawn\n");
             // printf("%p",args[0]);
-            ret = sys_spawn((char*) args[0]);
+            ret = sys_spawn(args[0]);
             printf("ret in spawn is %d\n",ret);
             break;
         default:
