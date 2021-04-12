@@ -2,6 +2,7 @@
 #define __STDLIB_H__
 
 void panic(char *);
+void assert(int, int);
 
 #ifndef assert
 #define assert(f) \
