@@ -74,7 +74,7 @@ void yield(void);
 int fork(void);
 int exec(char*);
 int wait(int, int*);
-int spawn(uint va);
+int spawn(char* name);
 struct proc *allocproc();
 uint64 set_priority(int code);
 uint64 get_time(TimeVal* ts, int tz);
