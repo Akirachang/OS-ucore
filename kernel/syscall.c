@@ -148,7 +148,8 @@ uint64 sys_spawn(uint64 va){
     struct proc* p = curr_proc();
     char name[200];
     copyinstr(p->pagetable, name, va, 200);
-    return spawn(name);
+   uint64 sp = spawn(name);
+    return sp;
 }
 
 void syscall() {
