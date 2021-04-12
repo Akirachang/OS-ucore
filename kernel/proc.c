@@ -266,7 +266,7 @@ wait(int pid, int* code)
                 printf("there is a kid\n");
                 if(np->state == ZOMBIE){
                     // Found one.
-                    printf("FOUND A ZOMBIE! %d", np->pid);
+                    printf("FOUND A ZOMBIE! %d\n", np->pid);
                     np->state = UNUSED;
                     pid = np->pid;
                     *code = np->exit_code;
