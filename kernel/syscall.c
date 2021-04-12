@@ -159,12 +159,12 @@ void syscall() {
     trace("syscall %d args:%p %p %p %p %p %p %p\n", id, args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
     switch (id) {
         case SYS_write:
-            printf("sy_write\n");
+            // printf("sy_write\n");
             ret = sys_write(args[0], args[1], args[2]);
             // printf("ret in write is: %d \n",ret);
             break;
         case SYS_read:
-            printf("sy_read\n");
+            // printf("sy_read\n");
             ret = sys_read(args[0], args[1], args[2]);
             // printf("ret in read is: %d \n",ret);
             break;
@@ -173,7 +173,7 @@ void syscall() {
             ret = sys_exit(args[0]);
             break;
         case SYS_sched_yield:
-            printf("sys sched\n");
+            // printf("sys sched\n");
             ret = sys_sched_yield();
             break;
         case SYS_getpid:
