@@ -144,7 +144,10 @@ uint64 sys_munmap(uint64 start, uint64 len){
 // 16 8 4 2 1
 // 00110
 
-uint64 sys_spawn(char* name){
+uint64 sys_spawn(uint64 va){
+    struct proc* p = curr_proc();
+    char name[200];
+    copyinstr(p->pagetable, name, va, 200);
     return spawn(name);
 }
 
