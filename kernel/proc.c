@@ -323,7 +323,7 @@ void exit(int code) {
     info("proc %d exit with %d\n", p->pid, code);
     freeproc(p);
     if(p->parent != 0) {
-        printf("set it to ZOMBIE %d", p->pid);
+        printf("in exit -> set it to ZOMBIE %d\n", p->pid);
         trace("wait for parent to clean\n");
         p->state = ZOMBIE;
     }
