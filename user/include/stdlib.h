@@ -3,7 +3,7 @@
 
 void panic(char *);
 void assert(int, int);
-
+void assert(int);
 // #ifndef assert
 // #define assert(f) \
 //     if (!(f))     \

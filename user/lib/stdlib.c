@@ -13,3 +13,8 @@ void assert(int f, int code) {
         exit(code);
     }
 }
+
+void assert(int f){
+    if (!(f))     
+        exit(-1);
+}
