@@ -308,11 +308,19 @@ uint64 spawn(char* name){
     np->state = RUNNABLE;   
     //exec
     info("sys_exec %s\n", name);
-    int exe = exec(name);
+
+    int id = get_id_by_name(name);
+    if(id < 0)
+        return -1;
+    proc_freepagetable(np->pagetable, p->sz);
+    p->sz = 0;
+    p->pagetable = proc_pagetable(p);
+    if(p->pagetable == 0){
+        panic("");
+    }
+    loader(id, p);
     // p->state = ZOMBIE;
-    if(exe != -1)
-        return pid;
-    return -1;
+    return pid;
 }
 
 void exit(int code) {
