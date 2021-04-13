@@ -312,15 +312,18 @@ uint64 spawn(char* name){
     int id = get_id_by_name(name);
     if(id < 0)
         return -1;
-    proc_freepagetable(np->pagetable, p->sz);
+    proc_freepagetable(p->pagetable, p->sz);
     p->sz = 0;
     p->pagetable = proc_pagetable(p);
     if(p->pagetable == 0){
         panic("");
     }
     loader(id, p);
+    int exe = exec(name);
     // p->state = ZOMBIE;
-    return pid;
+    if(exe != -1)
+        return pid;
+    return -1;
 }
 
 void exit(int code) {
