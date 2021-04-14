@@ -170,7 +170,7 @@ void syscall() {
             // printf("ret in read is: %d \n",ret);
             break;
         case SYS_exit:
-            printf("sys exit\n");
+            // printf("sys exit\n");
             ret = sys_exit(args[0]);
             break;
         case SYS_sched_yield:
@@ -178,32 +178,32 @@ void syscall() {
             ret = sys_sched_yield();
             break;
         case SYS_getpid:
-            printf("sy_getpid\n");
+            // printf("sy_getpid\n");
             ret = sys_getpid();
             break;
         case SYS_clone: // SYS_fork
-            printf("sy_clone\n");
+            // printf("sy_clone\n");
             ret = sys_clone();
             break;
         case SYS_execve:
-            printf("sy_exec\n");
+            // printf("sy_exec\n");
             ret = sys_exec(args[0]);
             break;
         case SYS_wait4:
-            printf("sy_wait4\n");
+            // printf("sy_wait4\n");
             ret = sys_wait(args[0], args[1]);
-            printf("ret in wait is %d \n",ret);
+            // printf("ret in wait is %d \n",ret);
             break;
         case SYS_times:
-            printf("sy_times\n");
+            // printf("sy_times\n");
             ret = sys_times();
             break;
         case SYS_setpriority:
-            printf("sys prio\n");
+            // printf("sys prio\n");
             ret = sys_setpriority(args[0]);
             break;
         case SYS_gettimeofday:
-            printf("sys time\n");
+            // printf("sys time\n");
             // printf("args0 is %p",args[0]);
             // printf("\n");
             // printf("physical args0 is %p",useraddr(p->pagetable,args[0]));
@@ -211,22 +211,22 @@ void syscall() {
             // ret=-1;
             break;
         case SYS_mmap:
-            printf("sy_mmap\n");
+            // printf("sy_mmap\n");
             // printf("args0 is %p \n",args[0]);
             // printf("args1 is %p \n",args[1]);
             ret = sys_mmap(args[0],args[1],args[2]);
-            printf("ret is %d \n",ret);
+            // printf("ret is %d \n",ret);
             break;
         case SYS_munmap:
-            printf("sy_unmap\n");
+            // printf("sy_unmap\n");
             ret = sys_munmap(args[0],args[1]);
-            printf("ret is %d \n",ret);
+            // printf("ret is %d \n",ret);
             break;
         case SYS_spawn:
-            printf("sy_spawn\n");
+            // printf("sy_spawn\n");
             // printf("%p",args[0]);
             ret = sys_spawn(args[0]);
-            printf("ret in spawn is %d\n",ret);
+            // printf("ret in spawn is %d\n",ret);
             break;
         default:
             ret = -1;
