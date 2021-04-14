@@ -291,16 +291,8 @@ uint64 spawn(char* name){
         panic("allocproc\n");
     }
     // Copy user memory from parent to child.
-    if(uvmcopy(p->pagetable, np->pagetable, p->sz) < 0){
-        panic("uvmcopy\n");
-    }
-    np->sz = p->sz;
-
-    // copy saved user registers.
-    *(np->trapframe) = *(p->trapframe);
 
     // Cause fork to return 0 in the child.
-    np->trapframe->a0 = 0;
     pid = np->pid;
     // printf("in spawn np pid is: %d \n",pid);
     np->parent = p;
@@ -308,8 +300,10 @@ uint64 spawn(char* name){
     np->state = RUNNABLE;   
     //exec
     info("sys_exec %s\n", name);
-    exec(name);
-    // p->state = ZOMBIE;
+    int id = get_id_by_name(name);
+    if(id < 0)
+        return -1;
+    loader(id, np);
     
     return pid;
 
