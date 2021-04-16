@@ -86,7 +86,9 @@ int run_all_app() {
     int id = get_id_by_name("ch5_usershell");
     if(id < 0)
         panic("no user shell");
+    printf("1");
     loader(id, p);
+    printf("2");
     p->state = RUNNABLE;
     return 0;
 }
