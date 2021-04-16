@@ -6,8 +6,10 @@ typedef struct{
     uint64 usec;	// 微秒数
 }TimeVal;
 #endif
+struct file;
 struct context;
 struct proc;
+struct pipe;
 
 
 // panic.c
@@ -17,25 +19,24 @@ void panic(char *);
 // sbi.c
 void console_putchar(int);
 int console_getchar();
-// void set_timer(uint64);
+void set_timer(uint64);
 void shutdown();
-void set_timer(uint64 stime);
 
 
 // console.c
-// void consoleinit();
+void consoleinit(void);
 void consputc(int);
 
 // logger.c
-void printf(char *, ...);
+void printf(const char *, ...);
 #include "logger.h"
 // void printfinit(void);
 // void panic(char*);
 // trap.c
 void trapinit();
 void usertrapret();
-void set_usertrap();
-void set_kerneltrap();
+void set_usertrap(void);
+void set_kerneltrap(void);
 
 // string.c
 int memcmp(const void *, const void *, uint);
@@ -56,8 +57,8 @@ void swtch(struct context *, struct context *);
 // int finished();
 void batchinit();
 int run_all_app();
-int get_id_by_name(char* name);
-void loader(int, void*);
+int get_id_by_name(char *name);
+void loader(int, void *);
 // // // loader.c
 // // void batchinit();
 // // int run_all_app();
@@ -72,8 +73,8 @@ void scheduler(void) __attribute__((noreturn));
 void sched(void);
 void yield(void);
 int fork(void);
-int exec(char*);
-int wait(int, int*);
+int exec(char *);
+int wait(int, int *);
 uint64 spawn(char* name);
 struct proc *allocproc();
 uint64 set_priority(int code);
@@ -102,9 +103,10 @@ void uvmclear(pagetable_t, uint64);
 uint64 walkaddr(pagetable_t, uint64);
 pte_t * walk(pagetable_t pagetable, uint64 va, int alloc);
 uint64 useraddr(pagetable_t, uint64);
-int copyout(pagetable_t, uint64, char *, uint64);
-int copyin(pagetable_t, char *, uint64, uint64);
-int copyinstr(pagetable_t, char *, uint64, uint64);
+void debugwalk(pagetable_t, int);
+int copyin(pagetable_t, char*, uint64, uint64);
+int copyout(pagetable_t, uint64, char*, uint64);
+int copyinstr(pagetable_t, char*, uint64, uint64);
 
 // timer.c
 uint64 get_cycle();
@@ -112,15 +114,15 @@ void timerinit();
 void set_next_timer();
 uint64 get_time_ms();
 
-// // pipe.c
-// int pipealloc(struct file *, struct file *);
-// void pipeclose(struct pipe *, int);
-// int piperead(struct pipe *, uint64, int);
-// int pipewrite(struct pipe *, uint64, int);
+// pipe.c
+int pipealloc(struct file *, struct file *);
+void pipeclose(struct pipe *, int);
+int piperead(struct pipe *, uint64, int);
+int pipewrite(struct pipe *, uint64, int);
 
-// // file.c
-// void fileclose(struct file *);
-// struct file* filealloc();
+// file.c
+void fileclose(struct file *);
+struct file* filealloc();
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x) / sizeof((x)[0]))
 #define PAGE_SIZE (4096)

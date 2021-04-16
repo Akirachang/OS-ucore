@@ -3,9 +3,9 @@
 #define USTACK_SIZE (4096)
 #define TRAPFRAME_SIZE (4096)
 
-// #include "file.h"
+#include "file.h"
 
-// #define FD_MAX (16)
+#define FD_MAX (16)
 #define INT_MAX 100000
 
 struct context {
