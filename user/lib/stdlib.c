@@ -9,9 +9,3 @@ void panic(char *m)
     exit(-100);
 }
 
-void assert(int f, int code)
-{
-    if(!f) {
-        exit(code);
-    }
-}
