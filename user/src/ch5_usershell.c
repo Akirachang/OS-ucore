@@ -50,7 +50,7 @@ int main() {
                         int xstate = 0;
                         int exit_pid = 0;
                         exit_pid = waitpid(pid, &xstate);
-                        assert(pid == exit_pid,-1);
+                        assert(pid == exit_pid);
                         printf("Shell: Process %d exited with code %d\n", pid, xstate);
                     }
                     clear();
