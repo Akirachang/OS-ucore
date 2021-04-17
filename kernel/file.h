@@ -27,4 +27,4 @@ struct file {
 
 extern struct file filepool[128 * 16];
 
-#endif //!__FILE_H__
+#endif //__FILE_H__

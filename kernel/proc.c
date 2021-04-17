@@ -160,6 +160,7 @@ scheduler(void)
     //     swtch(&idle.context, &chosen->context);
     // }
     struct proc *p;
+    printf("yo im here\n");
     for(;;){
         int all_done = 1;
         for(p = pool; p < &pool[NPROC]; p++) {
@@ -175,6 +176,7 @@ scheduler(void)
         if(all_done)
             panic("all apps over\n");
     }
+    printf("hi, im here\n");
 }
 
 // Switch to scheduler.  Must hold only p->lock
