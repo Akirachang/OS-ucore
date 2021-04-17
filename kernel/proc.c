@@ -164,7 +164,6 @@ scheduler(void)
     for(;;){
         int all_done = 1;
         for(p = pool; p < &pool[NPROC]; p++) {
-            printf("in loop\n");
             if(p->state == RUNNABLE) {
                 all_done = 0;
                 p->state = RUNNING;
