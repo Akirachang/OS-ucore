@@ -27,23 +27,15 @@ uint64 console_read(uint64 va, uint64 len) {
 }
 
 uint64 sys_write(int fd, uint64 va, uint64 len) {
-    printf("a");
     if(fd == 0 || fd==1) {
-        printf("b");
         return console_write(va, len);
     }
-        printf("c");
     struct proc *p = curr_proc();
-            printf("e");
     struct file *f = p->files[fd];
-            printf("f");
     if(f->type == FD_PIPE) {
-        printf("g");
         info("write to pipe at %p\n", f->pipe);
-        printf("h");
         return pipewrite(f->pipe, va, len);
     }
-    printf("d");
     error("unknown file type %d\n", f->type);
     panic("syswrite: unknown file type\n");
     return -1;
