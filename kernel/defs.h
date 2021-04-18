@@ -28,7 +28,7 @@ void consoleinit(void);
 void consputc(int);
 
 // logger.c
-void printf(const char *, ...);
+void printf(char *, ...);
 #include "logger.h"
 // void printfinit(void);
 // void panic(char*);
