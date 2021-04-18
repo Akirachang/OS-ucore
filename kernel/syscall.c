@@ -298,6 +298,7 @@ void syscall() {
             break;
         case SYS_close:
             ret = sys_close(args[0]);
+            break;
         default:
             ret = -1;
             warn("unknown syscall %d\n", id);
