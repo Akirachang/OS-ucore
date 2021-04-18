@@ -38,7 +38,7 @@ uint64 sys_write(int fd, uint64 va, uint64 len) {
     struct file *f = p->files[fd];
             printf("f");
     if(f->type == FD_PIPE) {
-        prinf("g");
+        printf("g");
         info("write to pipe at %p\n", f->pipe);
         printf("h");
         return pipewrite(f->pipe, va, len);
