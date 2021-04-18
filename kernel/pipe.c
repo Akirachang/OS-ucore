@@ -45,6 +45,7 @@ pipeclose(struct pipe *pi, int writable)
 int
 pipewrite(struct pipe *pi, uint64 addr, int n)
 {
+    printf("in pipew");
     int w = 0;
     uint64 size;
     struct proc *p = curr_proc();
