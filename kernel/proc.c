@@ -138,27 +138,6 @@ struct proc* allocproc(void)
 void
 scheduler(void)
 {
-    // for(;;){
-    //     struct proc *p;
-    //     struct proc *chosen=0;
-    //     // printf("here");
-    //     for(p = pool; p < &pool[NPROC]; p++) {
-    //         // printf("here2");
-    //         if(p->state == RUNNABLE && 
-    //         (!chosen||p->stride < chosen->stride)) {
-    //             chosen = p;
-    //             // printf("chosen");
-    //         }
-    //     }
-    //     chosen->state = RUNNING;
-    //     chosen->stride+=chosen->pass; //将对应的 stride 加上其对应的步长 pass
-    //     current_proc = chosen;
-    //     if(current_proc->stride >= 500*(chosen->pass)){
-    //         exit(-1);
-    //         continue;
-    //     }
-    //     swtch(&idle.context, &chosen->context);
-    // }
     struct proc *p;
     printf("yo im here\n");
     for(;;){
