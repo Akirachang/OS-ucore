@@ -33,8 +33,8 @@ procinit(void)
     struct proc *p;
     for(p = pool; p < &pool[NPROC]; p++) {
         p->state = UNUSED;
-        p->kstack = (uint64)kstack[p - pool];
-        p->ustack = (uint64)ustack[p - pool];
+        p->kstack = (uint64) kstack[p - pool];
+        p->ustack = (uint64) ustack[p - pool];
         p->trapframe = (struct trapframe*)trapframe[p - pool];
         p->pid=0;
     }
