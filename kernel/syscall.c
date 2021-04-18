@@ -39,6 +39,7 @@ uint64 sys_write(int fd, uint64 va, uint64 len) {
         info("write to pipe at %p\n", f->pipe);
         return pipewrite(f->pipe, va, len);
     }
+    printf("d");
     error("unknown file type %d\n", f->type);
     panic("syswrite: unknown file type\n");
     return -1;
