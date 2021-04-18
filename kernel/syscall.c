@@ -34,7 +34,9 @@ uint64 sys_write(int fd, uint64 va, uint64 len) {
     }
         printf("c");
     struct proc *p = curr_proc();
+            printf("e");
     struct file *f = p->files[fd];
+            printf("f");
     if(f->type == FD_PIPE) {
         info("write to pipe at %p\n", f->pipe);
         return pipewrite(f->pipe, va, len);
