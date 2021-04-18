@@ -27,9 +27,12 @@ uint64 console_read(uint64 va, uint64 len) {
 }
 
 uint64 sys_write(int fd, uint64 va, uint64 len) {
+    printf("a");
     if(fd == 0) {
+        printf("b");
         return console_write(va, len);
     }
+        printf("c");
     struct proc *p = curr_proc();
     struct file *f = p->files[fd];
     if(f->type == FD_PIPE) {
