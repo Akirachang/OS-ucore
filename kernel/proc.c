@@ -150,6 +150,7 @@ scheduler(void)
                 curr_pid = p->pid;
                 // info("switch to next proc %d\n", p->pid);
                 swtch(&idle.context, &p->context);
+                printf("ends here");
             }
         }
         if(all_done)
@@ -244,17 +245,6 @@ wait(int pid, int* code)
         // printf("in wait pid is: %d\n",pid);
         // printf("current proc is %d\n",p);
         for(np = pool; np < &pool[NPROC]; np++){
-            // printf("%d",np->state != UNUSED);
-            // printf("%d\n",np->parent == p);
-            // printf("%d",(pid <= 0 || np->pid == pid));
-            // printf("\n");
-            // if(np->parent!=0)
-            //     printf("parent pid is %d\n", np->parent->pid);
-            // if(np->pid!=0){
-            //     printf("np pid %d\n", np->pid);
-            //     printf("\n");
-            // }
-            // printf("%d %d %d\n",np->state != UNUSED,np->parent == p,(pid <= 0 || np->pid == pid));
             if(np->state != UNUSED && np->parent == p && (pid <= 0 || np->pid == pid)){
                 havekids = 1;
                 // printf("there is a kid\n");

@@ -13,14 +13,6 @@ char names[20][100];
 const uint64 BASE_ADDRESS = 0x1000;
 const uint64 USTACK_BOTTOM = 0x0;
 
-
-// int finished() {
-//     ++fin;
-//     if (fin >= app_num)
-//         panic("all apps over\n");
-//     return 0;
-// }
-
 void batchinit() {
     char* s;
     app_info_ptr = (uint64 *) _app_num;
