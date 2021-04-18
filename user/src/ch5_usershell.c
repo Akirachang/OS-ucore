@@ -1,76 +1,73 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stddef.h>
+#include <string.h>
 
-const unsigned char LF = 0x0a;
-const unsigned char CR = 0x0d;
-const unsigned char DL = 0x7f;
-const unsigned char BS = 0x08;
+/// 不是测例，方便本地测试
 
-char line[100] = {};
+const char LF = 0x0a;
+const char CR = 0x0d;
+const char DL = 0x7f;
+const char BS = 0x08;
 
-int top = 0;
+int tail = 0;
 
-void push(char c) {
-    line[top++] = c;
-}
-
-void pop() {
-    --top;
-}
-
-int is_empty() {
-    return top == 0;
-}
-
-void clear() {
-    top = 0;
-}
-
-int main() {
-    printf("C user shell\n");
+int main()
+{
+    char line[1024];
+    puts("C user shell");
     printf(">> ");
-    while (1) {
+    for (;;)
+    {
         char c = getchar();
-        switch (c) {
-            case LF:
-            case CR:
-                printf("\n");
-                if (!is_empty()) {
-                    push('\0');
-                    int pid = fork();
-                    if (pid == 0) {
-                        // child process
-                        if (exec(line) < 0) {
-                            printf("no such program\n");
-                            exit(0);
-                        }
-                        panic("unreachable!");
-                    } else {
-                        int xstate = 0;
-                        int exit_pid = 0;
-                        exit_pid = waitpid(pid, &xstate);
-                        assert(pid == exit_pid);
-                        printf("Shell: Process %d exited with code %d\n", pid, xstate);
+        switch (c)
+        {
+        case LF:
+        case CR:
+            printf("\n");
+            if (tail != 0)
+            {
+                line[tail++] = '\0';
+                int cpid = spawn(line);
+                if (cpid < 0)
+                {
+                    printf("invalid file name\n");
+                    continue;
+                }
+                int xstate = 0, exit_pid = 0;
+                for (;;)
+                {
+                    exit_pid = waitpid(cpid, &xstate);
+                    if (exit_pid == -1)
+                    {
+                        sched_yield();
                     }
-                    clear();
+                    else
+                    {
+                        assert(cpid == exit_pid);
+                        printf("Shell: Process %d exited with code %d\n", cpid, xstate);
+                        break;
+                    }
                 }
-                printf(">> ");
-                break;
-            case BS:
-            case DL:
-                if (!is_empty()) {
-                    putchar(BS);
-                    printf(" ");
-                    putchar(BS);
-                    pop();
-                }
-                break;
-            default:
-                putchar(c);
-                push(c);
-                break;
+                tail = 0;
+            }
+            printf(">> ");
+            break;
+        case BS:
+        case DL:
+            if (tail != 0)
+            {
+                putchar(BS);
+                printf(" ");
+                putchar(BS);
+                --tail;
+            }
+            break;
+        default:
+            putchar(c);
+            line[tail++] = c;
+            break;
         }
     }
-    return 0;
 }
