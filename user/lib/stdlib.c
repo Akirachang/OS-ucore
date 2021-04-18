@@ -8,3 +8,4 @@ void panic(char *m)
     puts(m);
     exit(-100);
 }
+
