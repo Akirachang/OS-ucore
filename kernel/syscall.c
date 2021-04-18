@@ -28,7 +28,8 @@ uint64 console_read(uint64 va, uint64 len) {
 
 uint64 sys_write(int fd, uint64 va, uint64 len) {
     printf("a");
-    if(fd == 0) {
+    printf("")
+    if(fd == 0 && fd==1) {
         printf("b");
         return console_write(va, len);
     }
@@ -50,7 +51,7 @@ uint64 sys_write(int fd, uint64 va, uint64 len) {
 }
 
 uint64 sys_read(int fd, uint64 va, uint64 len) {
-    if(fd == 0) {
+    if(fd == 0&& fd==1) {
         return console_read(va, len);
     }
     struct proc *p = curr_proc();
