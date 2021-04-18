@@ -2,6 +2,7 @@
 #include "syscall_ids.h"
 #include "trap.h"
 #include "proc.h"
+#include "riscv.h"
 #define min(a, b) a < b ? a : b;
 
 uint64 console_write(uint64 va, uint64 len) {
@@ -297,7 +298,6 @@ void syscall() {
             break;
         case SYS_close:
             ret = sys_close(args[0]);
-            break;
         default:
             ret = -1;
             warn("unknown syscall %d\n", id);
