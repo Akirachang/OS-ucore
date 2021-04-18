@@ -141,3 +141,7 @@ int unlink(char *path)
 {
     return sys_unlinkat(AT_FDCWD, path, 0);
 }
+
+int pipe(void* p) {
+    return syscall(SYS_pipe2, p);
+}
