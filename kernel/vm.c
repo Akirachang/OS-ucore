@@ -25,12 +25,6 @@ pagetable_t kvmmake(void) {
 // and enable paging.
 void kvminit(void) {
     kernel_pagetable = kvmmake();
-    //******
-    // for(int i=0;i<512;i++){
-    //     // printf("pagetable entry %d is %p",i,kernel_pagetable[i]);    
-    //     // printf("n");
-    // }
-    //******
     w_satp(MAKE_SATP(kernel_pagetable));
     sfence_vma();
     // printf("enable pageing at %p\n", r_satp());
@@ -55,16 +49,8 @@ walk(pagetable_t pagetable, uint64 va, int alloc) {
 
     for (int level = 2; level > 0; level--) {
         pte_t *pte = &pagetable[PX(level, va)];
-        //******
-        // printf("pte is: %p",pte);
-        // printf("\n");
-        //******
         if (*pte & PTE_V) {
             pagetable = (pagetable_t) PTE2PA(*pte);
-            //******
-            // printf("pagetable in if is: %p",pagetable);
-            // printf("\n");
-            //******
         } else {
             if (!alloc || (pagetable = (pde_t *) kalloc()) == 0)
                 return 0;
@@ -87,25 +73,17 @@ walkaddr(pagetable_t pagetable, uint64 va) {
         return 0;
 
     pte = walk(pagetable, va, 0);
-    //******
-    // printf("*****table entry selected is: %p",pte);
-    // printf("\n");
     if (pte == 0){
-        // printf("here 1");
         return 0;
     }
     if ((*pte & PTE_V) == 0){
-        // printf("here 2");
         return 0;
     }
     if ((*pte & PTE_U) == 0){
-        // printf("here 3");
         return 0;
     }
     pa = PTE2PA(*pte);
     return pa;
-    //******
-
 }
 
 // Look up a virtual address, return the physical address,

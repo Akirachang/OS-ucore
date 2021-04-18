@@ -29,7 +29,7 @@ uint64 console_read(uint64 va, uint64 len) {
 // char user_stk[4096];
 uint64 sys_write(int fd, uint64 va, uint64 len) {
     // printf("fd is %d\n",fd);
-    if (fd ==0)
+    if (fd == 0)
         return console_write(va, len);
     struct proc *p = curr_proc();
     struct file *f = p->files[fd];
@@ -199,7 +199,7 @@ uint64 sys_spawn(uint64 va){
     struct proc* p = curr_proc();
     char name[200];
     copyinstr(p->pagetable, name, va, 200);
-   uint64 sp = spawn(name);
+    uint64 sp = spawn(name);
     return sp;
 }
 
