@@ -221,6 +221,7 @@ uint64 sys_mailread(void* buf, int len){
         len = 256;
     struct proc *p = curr_proc();
     printf("here");
+    printf("%d",sizeof(p->mail[p->pointRead]));
     if (len < sizeof(p->mail[p->pointRead])){ 
         p->pointRead++;
         return len;
