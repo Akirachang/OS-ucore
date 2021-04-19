@@ -242,19 +242,20 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     // printf("here");
     struct mails *mail = &p ->mail;
         // printf("here1");
+    if(len>256)
+        len=256;
     if((1+mail->end)%17 == mail->begin)
         return -1;
     if(len==0)
         return 0;
-    if(len>256)
-        len=256;
     mail->len[mail->end]=len;
         // printf("here2");
-    int ret = copyin(curr_proc()->pagetable,mail->mails[mail->end],(uint64)buf, len);
+    int cpyin = copyin(curr_proc()->pagetable,mail->mails[mail->end],(uint64)buf, len);
         // printf("here3");
-    if(ret == -1)
+    if(cpyin == -1)
         return -1;
-    mail->end = (1+mail->end)%17;
+    int update = (1+mail->end)%17;
+    mail->end = update;
     return len;
     // if(len>256)
     //     len = 256;
