@@ -217,70 +217,97 @@ uint64 sys_close(int fd) {
 }
 
 uint64 sys_mailread(void* buf, int len){
-    if(len>256)
-        len = 256;
     struct proc *p = curr_proc();
-    if(p->pointWrite== 0)
+    struct mailbox *mbox = &p -> mail_box;
+    if(mbox->tail == mbox -> head)
         return -1;
-    if (len < p->mailLen[p->pointRead]){ 
-        if(len ==0)
-            return 0;
-        if(copyout(p->pagetable,(uint64)buf,&p->mail[p->pointRead],len)!=-1)
-        {
-            printf("first read if\n");
-            p->pointWrite--;
-            p->pointRead++;
-            return len;
-        }
-        else
-            return -1;
-    }
-    else {
-        if(len==0)
-            return 0;
-        int temp = p->mailLen[p->pointRead];
-        if(copyout(p->pagetable,(uint64)buf,&p->mail[p->pointRead],p->mailLen[p->pointRead])!=-1){
-            printf("second read if\n");
-            printf("p->mailLen[p->pointRead] is %d\n",p->mailLen[p->pointRead]);
-            p->pointWrite--;
-            p->pointRead++;
-            return temp;
-        }
-        else{
-            return -1;
-        }
-    }
+    if(len == 0)
+        return 0;
+    if(len>mbox->len[mbox->head])
+        len = mbox->len[mbox->head];
+    int ret = copyout(p->pagetable,(uint64)buf, mbox->mails[mbox->head],len);
+    if(ret == -1)
+        return -1;
+    mbox->head = (1+mbox->head) %17;
+    return len;
+    // if(len>256)
+    //     len = 256;
+    // struct proc *p = curr_proc();
+    // if(p->pointWrite== 0)
+    //     return -1;
+    // if (len < p->mailLen[p->pointRead]){ 
+    //     if(len ==0)
+    //         return 0;
+    //     if(copyout(p->pagetable,(uint64)buf,&p->mail[p->pointRead],len)!=-1)
+    //     {
+    //         printf("first read if\n");
+    //         p->pointWrite--;
+    //         p->pointRead++;
+    //         return len;
+    //     }
+    //     else
+    //         return -1;
+    // }
+    // else {
+    //     if(len==0)
+    //         return 0;
+    //     int temp = p->mailLen[p->pointRead];
+    //     if(copyout(p->pagetable,(uint64)buf,&p->mail[p->pointRead],p->mailLen[p->pointRead])!=-1){
+    //         printf("second read if\n");
+    //         printf("p->mailLen[p->pointRead] is %d\n",p->mailLen[p->pointRead]);
+    //         p->pointWrite--;
+    //         p->pointRead++;
+    //         return temp;
+    //     }
+    //     else{
+    //         return -1;
+    //     }
+    // }
 }
 
 uint64 sys_mailwrite(int pid, void* buf, int len){
-    if(len>256)
-        len = 256;
     struct proc *p = get_proc(pid);
-    if((uint64)buf == 0x90000000ULL)
+    struct mailbox *mbox = &p ->mail_box;
+    if((1+mbox->tail)%17 == mbox->head)
         return -1;
-    if(len==0 && p->pointWrite == 16)
-       { 
-           return -1;
-       }
-    else if(len == 0){
+    if(len==0)
         return 0;
-    }
-    if(p->pointWrite == 16)
+    if(len>256)
+        len=256;
+    mbox->len[mbox->tail]=len;
+    int ret = copyin(curr_proc()->pagetable,mbox->mails[mbox->tial],(uint64)buf, len);
+    if(ret == -1)
         return -1;
-    // copyin(p->pagetable,&p->mail[p->pointWrite],(uint64)buf,len);
-    // void* temp = &buf;
-    // char* charbuf = (char*) temp;
-    copyin(p->pagetable,&p->mail[p->pointWrite],(uint64)buf,len);
-    // for(int i=0;i<len;i++){
-    //     copyin(p->pagetable,&p->mail[p->pointWrite][0],(uint64)buf,len);
-    //     p->mail[p->pointWrite][i] = charbuf[i];
-    // }
-    // for(int i=0;i<256;i++){
-    //     printf("%d ",p->mail[p->pointWrite]);
-    // }
-    p->mailLen[p->pointWrite] = len;
-    p->pointWrite++;
+    mbox->tail = (1+mbox->tail)%17;
     return len;
+    // if(len>256)
+    //     len = 256;
+    // struct proc *p = get_proc(pid);
+    // if((uint64)buf == 0x90000000ULL)
+    //     return -1;
+    // if(len==0 && p->pointWrite == 16)
+    //    { 
+    //        return -1;
+    //    }
+    // else if(len == 0){
+    //     return 0;
+    // }
+    // if(p->pointWrite == 16)
+    //     return -1;
+    // // copyin(p->pagetable,&p->mail[p->pointWrite],(uint64)buf,len);
+    // // void* temp = &buf;
+    // // char* charbuf = (char*) temp;
+    // copyin(p->pagetable,&p->mail[p->pointWrite],(uint64)buf,len);
+    // // for(int i=0;i<len;i++){
+    // //     copyin(p->pagetable,&p->mail[p->pointWrite][0],(uint64)buf,len);
+    // //     p->mail[p->pointWrite][i] = charbuf[i];
+    // // }
+    // // for(int i=0;i<256;i++){
+    // //     printf("%d ",p->mail[p->pointWrite]);
+    // // }
+    // p->mailLen[p->pointWrite] = len;
+    // p->pointWrite++;
+    // return len;
 }
 
 void syscall() {

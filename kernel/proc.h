@@ -29,6 +29,12 @@ struct context {
 
 enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 
+struct mailbox{
+    int head;
+    int tail;
+    int len[17];
+    int mails[17][256];
+};
 // Per-process state
 struct proc {
     // p->lock must be held when using these:
@@ -54,8 +60,5 @@ struct proc {
     uint64 num;
 
     //lab6
-    char mail[16];
-    int mailLen[16];
-    int pointWrite;
-    int pointRead;
+    struct mailbox* mail_box;
 };
