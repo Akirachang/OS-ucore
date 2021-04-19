@@ -244,10 +244,11 @@ uint64 sys_mailread(void* buf, int len){
 uint64 sys_mailwrite(int pid, void* buf, int len){
     if(len>256)
         len = 256;
-    if(p->pointWrite == 16)
-        return -1;
+    
     printf("here\n");
     struct proc *p = curr_proc();
+    if(p->pointWrite == 16)
+        return -1;
     // copyin(p->pagetable,&p->mail[p->pointWrite],(uint64)buf,len);
     // void* temp = &buf;
     // char* charbuf = (char*) temp;
