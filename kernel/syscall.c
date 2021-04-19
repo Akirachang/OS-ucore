@@ -98,6 +98,8 @@ uint64 sys_getpid() {
 
 uint64 sys_clone() {
     info("fork!\n");
+    curr_proc()->pointWrite =0;
+    curr_proc()->pointRead =0;
     return fork();
 }
 
