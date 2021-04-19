@@ -37,6 +37,8 @@ procinit(void)
         p->ustack = (uint64)ustack[p - pool];
         p->trapframe = (struct trapframe*)trapframe[p - pool];
         p->pid=0;
+        p->pointWrite = 0;
+        p->pointRead = 0;
     }
     idle.kstack = (uint64)boot_stack_top;
     idle.pid = 0;

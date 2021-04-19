@@ -52,4 +52,9 @@ struct proc {
     uint64 prio;
     uint64 pass;
     uint64 num;
+
+    //lab6
+    char mail[16][256];
+    int pointWrite;
+    int pointRead;
 };

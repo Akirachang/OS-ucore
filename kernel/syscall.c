@@ -216,6 +216,31 @@ uint64 sys_close(int fd) {
     return 0;
 }
 
+uint64 sys_mailread(void* buf, int len){
+    if(len>256)
+        len = 256;
+    struct proc *p = curr_proc();
+    if (len < sizeof(p->mail[p->pointRead])){ 
+        p->pointRead++;
+        return len;
+    }
+    else {
+        p->pointRead++;
+        return sizeof(p->mail[p->pointRead])
+    }
+}
+
+uint64 sys_mailwrite(int pid, char* buf, int len){
+    if(len>256)
+        len = 256;
+    struct proc *p = curr_proc();
+    for(int i=0;i<len;i++){
+        p->mail[p->pointWrite][i] = buf[i];
+    }
+    p->pointWrite++;
+    return sizeof(buf);
+}
+
 void syscall() {
     struct proc *p = curr_proc();
     struct trapframe *trapframe = p->trapframe;
@@ -291,6 +316,12 @@ void syscall() {
             // printf("%p",args[0]);
             ret = sys_spawn(args[0]);
             // printf("ret in spawn is %d\n",ret);
+            break;
+        case SYS_mailread:
+            ret = sys_mailread(args[0],args[1]);
+            break;
+        case SYS_mailwrite:
+            ret = sys_mailwrite(args[0],args[1],args[2]);
             break;
         default:
             ret = -1;
