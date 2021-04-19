@@ -275,7 +275,7 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     if(len>256)
         len=256;
     mbox->len[mbox->tail]=len;
-    int ret = copyin(curr_proc()->pagetable,mbox->mails[mbox->tial],(uint64)buf, len);
+    int ret = copyin(curr_proc()->pagetable,mbox->mails[mbox->tail],(uint64)buf, len);
     if(ret == -1)
         return -1;
     mbox->tail = (1+mbox->tail)%17;
