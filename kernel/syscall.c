@@ -253,7 +253,10 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     if((uint64)buf == 0x90000000ULL)
         return -1;
     if(len==0 && p->pointWrite == 16)
-        return -1;
+       { 
+           printf("this if");
+           return -1;
+       }
     else if(len == 0)
         return 0;
     printf("here\n");
