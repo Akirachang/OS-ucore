@@ -249,6 +249,7 @@ uint64 sys_mailread(void* buf, int len){
 uint64 sys_mailwrite(int pid, void* buf, int len){
     if(len>256)
         len = 256;
+    struct proc *p = get_proc(pid);
     if((uint64)buf == 0x90000000ULL)
         return -1;
     if(len==0 && p->pointWrite == 16)
@@ -256,7 +257,6 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     else if(len == 0)
         return 0;
     printf("here\n");
-    struct proc *p = get_proc(pid);
     printf("3");
     if(p->pointWrite == 16)
         return -1;
