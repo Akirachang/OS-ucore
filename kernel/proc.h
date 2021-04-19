@@ -60,5 +60,5 @@ struct proc {
     uint64 num;
 
     //lab6
-    struct mailbox* mail_box;
+    struct mailbox mail_box;
 };
