@@ -227,11 +227,14 @@ uint64 sys_mailread(void* buf, int len){
         len = mail->len[mail->head];
     if(len == 0)
         return 0;
-    int ret = copyout(p->pagetable,(uint64)buf, mail->mails[mail->head],len);
-    if(ret == -1)
+    int cpyout = copyout(p->pagetable,(uint64)buf, mail->mails[mail->head],len);
+    if(cpyout  == -1)
         return -1;
-    mail->head = (1+mail->head) %17;
-    return len;
+    else{
+        int update = (1+mail->head) %17;
+        mail->head = update;
+        return len;
+    }
     // if(len>256)
     //     len = 256;
     // struct proc *p = curr_proc();
