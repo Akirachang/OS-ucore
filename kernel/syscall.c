@@ -221,73 +221,40 @@ uint64 sys_close(int fd) {
 uint64 sys_mailread(void* buf, int len){
     struct proc *p = curr_proc();
     struct mails *mail = &p -> mail;
-    if(mail->tail == mail -> head)
+    if(mail->end == mail -> begin)
         return -1;
-    if(len>mail->len[mail->head])
-        len = mail->len[mail->head];
+    if(len>mail->len[mail->begin])
+        len = mail->len[mail->begin];
     if(len == 0)
         return 0;
-    int cpyout = copyout(p->pagetable,(uint64)buf, mail->mails[mail->head],len);
+    int cpyout = copyout(p->pagetable,(uint64)buf, mail->mails[mail->begin],len);
     if(cpyout  == -1)
         return -1;
     else{
-        int update = (1+mail->head) %17;
-        mail->head = update;
+        int update = (1+mail->begin) %17;
+        mail->begin = update;
         return len;
     }
-    // if(len>256)
-    //     len = 256;
-    // struct proc *p = curr_proc();
-    // if(p->pointWrite== 0)
-    //     return -1;
-    // if (len < p->mailLen[p->pointRead]){ 
-    //     if(len ==0)
-    //         return 0;
-    //     if(copyout(p->pagetable,(uint64)buf,&p->mail[p->pointRead],len)!=-1)
-    //     {
-    //         printf("first read if\n");
-    //         p->pointWrite--;
-    //         p->pointRead++;
-    //         return len;
-    //     }
-    //     else
-    //         return -1;
-    // }
-    // else {
-    //     if(len==0)
-    //         return 0;
-    //     int temp = p->mailLen[p->pointRead];
-    //     if(copyout(p->pagetable,(uint64)buf,&p->mail[p->pointRead],p->mailLen[p->pointRead])!=-1){
-    //         printf("second read if\n");
-    //         printf("p->mailLen[p->pointRead] is %d\n",p->mailLen[p->pointRead]);
-    //         p->pointWrite--;
-    //         p->pointRead++;
-    //         return temp;
-    //     }
-    //     else{
-    //         return -1;
-    //     }
-    // }
 }
 
 uint64 sys_mailwrite(int pid, void* buf, int len){
     struct proc *p = get_proc(pid);
-    printf("here");
+    // printf("here");
     struct mails *mail = &p ->mail;
-        printf("here1");
-    if((1+mail->tail)%17 == mail->head)
+        // printf("here1");
+    if((1+mail->end)%17 == mail->begin)
         return -1;
     if(len==0)
         return 0;
     if(len>256)
         len=256;
-    mail->len[mail->tail]=len;
-        printf("here2");
-    int ret = copyin(curr_proc()->pagetable,mail->mails[mail->tail],(uint64)buf, len);
-        printf("here3");
+    mail->len[mail->end]=len;
+        // printf("here2");
+    int ret = copyin(curr_proc()->pagetable,mail->mails[mail->end],(uint64)buf, len);
+        // printf("here3");
     if(ret == -1)
         return -1;
-    mail->tail = (1+mail->tail)%17;
+    mail->end = (1+mail->end)%17;
     return len;
     // if(len>256)
     //     len = 256;

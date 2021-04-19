@@ -30,8 +30,8 @@ struct context {
 enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 
 struct mails{
-    int head;
-    int tail;
+    int begin;
+    int end;
     int len[17];
     char mails[17][256];
 };
