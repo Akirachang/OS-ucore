@@ -230,16 +230,17 @@ uint64 sys_mailread(void* buf, int len){
     }
 }
 
-uint64 sys_mailwrite(int pid, char* buf, int len){
+uint64 sys_mailwrite(int pid, void* buf, int len){
     printf("am i here");
     if(len>256)
         len = 256;
     struct proc *p = curr_proc();
+    char* charbuf = (char*)buf;
     for(int i=0;i<len;i++){
         printf("%d\n",i);
         printf("%d\n",p->pointWrite);
-        printf("%d\n",buf[i]);
-        p -> mail[p->pointWrite][i] = buf[i];
+        // printf("%d\n",(buf[i]);
+        p -> mail[p->pointWrite][i] = charbuf[i];
     }
     printf("yo");
     p->pointWrite++;
@@ -323,11 +324,11 @@ void syscall() {
             // printf("ret in spawn is %d\n",ret);
             break;
         case SYS_mailread:
-            ret = sys_mailread((char*)args[0],args[1]);
+            ret = sys_mailread(args[0],args[1]);
             break;
         case SYS_mailwrite:
             printf("in here");
-            ret = sys_mailwrite(args[0],(char*)args[1],args[2]);
+            ret = sys_mailwrite(args[0],args[1],args[2]);
             break;
         default:
             ret = -1;
