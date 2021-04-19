@@ -241,7 +241,6 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     for(int i=0;i<sizeof(charbuf);i++){
         p->mail[p->pointWrite][i] = charbuf[i];
     }
-    printf("yo");
     p->pointWrite++;
     return sizeof(buf);
 }
@@ -332,6 +331,7 @@ void syscall() {
             printf("%p\n",args[2]);
 
             ret = sys_mailwrite(args[0],(void*)args[1],args[2]);
+            printf("ret in mail_write is:%d\n",ret);
             break;
         default:
             ret = -1;
