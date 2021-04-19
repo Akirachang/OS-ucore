@@ -221,13 +221,7 @@ uint64 sys_mailread(void* buf, int len){
         len = 256;
     struct proc *p = curr_proc();
     p->pointWrite--;
-    printf("here");
-    // printf("%d",sizeof(p->mail[p->pointRead]));
-    // for(int i=0;i<sizeof(p->mail[p->pointRead]);i++){
-    //     printf("%d ",p->mail[p->pointRead][i]);    
-    // }
     if (len < p->mailLen[p->pointRead]){ 
-        printf("1\n");
         if(copyout(p->pagetable,(uint64)buf,&p->mail[p->pointRead][0],len)!=-1)
         {
             p->pointRead++;
@@ -237,7 +231,6 @@ uint64 sys_mailread(void* buf, int len){
             return -1;
     }
     else {
-        printf("2\n");
         int temp = p->mailLen[p->pointRead];
         printf("temp is %d \n",temp);
         if(copyout(p->pagetable,(uint64)buf,&p->mail[p->pointRead][0],p->mailLen[p->pointRead])!=-1){
@@ -253,6 +246,8 @@ uint64 sys_mailread(void* buf, int len){
 uint64 sys_mailwrite(int pid, void* buf, int len){
     if(len>256)
         len = 256;
+    if((uint64)buf == 0x90000000ULL)
+        return -1;
     printf("here\n");
     struct proc *p = get_proc(pid);
     printf("3");
