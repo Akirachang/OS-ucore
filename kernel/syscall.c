@@ -246,7 +246,7 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     struct proc *p = curr_proc();
     // copyin(p->pagetable,&p->mail[p->pointWrite],(uint64)buf,len);
     void* temp = &buf;
-    char* charbuf = (char*) temp;
+    // char* charbuf = (char*) temp;
     copyin(p->pagetable,&p->mail[p->pointWrite][0],(uint64)buf,len);
     // for(int i=0;i<len;i++){
     //     copyin(p->pagetable,&p->mail[p->pointWrite][0],(uint64)buf,len);
