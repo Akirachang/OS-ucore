@@ -238,11 +238,11 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     void* temp = &buf;
     char* charbuf = (char*) temp;
     printf("%c",charbuf[0]);
-    for(int i=0;i<sizeof(charbuf);i++){
+    for(int i=0;i<len;i++){
         p->mail[p->pointWrite][i] = charbuf[i];
     }
     p->pointWrite++;
-    return sizeof(buf);
+    return len;
 }
 
 void syscall() {
