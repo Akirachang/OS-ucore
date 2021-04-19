@@ -236,12 +236,7 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
         len = 256;
     struct proc *p = curr_proc();
     char* charbuf = (char*)buf;
-    for(int i=0;i<len;i++){
-        printf("%d\n",i);
-        printf("%d\n",p->pointWrite);
-        printf("%d\n",charbuf[i]);
-        p -> mail[p->pointWrite][i] = charbuf[i];
-    }
+    p->mail[p->pointWrite]=buf;
     printf("yo");
     p->pointWrite++;
     return sizeof(buf);
