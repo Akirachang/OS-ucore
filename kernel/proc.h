@@ -29,7 +29,7 @@ struct context {
 
 enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 
-struct mailbox{
+struct mails{
     int head;
     int tail;
     int len[17];
@@ -60,5 +60,5 @@ struct proc {
     uint64 num;
 
     //lab6
-    struct mailbox mail_box;
+    struct mails mail_box;
 };

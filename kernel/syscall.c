@@ -220,7 +220,7 @@ uint64 sys_close(int fd) {
 
 uint64 sys_mailread(void* buf, int len){
     struct proc *p = curr_proc();
-    struct mailbox *mbox = &p -> mail_box;
+    struct mails *mbox = &p -> mail_box;
     if(mbox->tail == mbox -> head)
         return -1;
     if(len == 0)
@@ -270,7 +270,7 @@ uint64 sys_mailread(void* buf, int len){
 uint64 sys_mailwrite(int pid, void* buf, int len){
     struct proc *p = get_proc(pid);
     printf("here");
-    struct mailbox *mbox = &p ->mail_box;
+    struct mails *mbox = &p ->mail_box;
         printf("here1");
     if((1+mbox->tail)%17 == mbox->head)
         return -1;
