@@ -328,6 +328,10 @@ void syscall() {
             break;
         case SYS_mailwrite:
             printf("in here");
+            printf("%p\n",args[0]);
+            printf("%p\n",args[1]);
+            printf("%p\n",args[2]);
+
             ret = sys_mailwrite(args[0],(void*)args[1],args[2]);
             break;
         default:
