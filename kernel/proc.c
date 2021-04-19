@@ -37,6 +37,7 @@ procinit(void)
         p->ustack = (uint64)ustack[p - pool];
         p->trapframe = (struct trapframe*)trapframe[p - pool];
         p->pid=0;
+        //lab6
         p->pointWrite = 0;
         p->pointRead = 0;
     }
