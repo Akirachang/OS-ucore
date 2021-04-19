@@ -244,14 +244,15 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
         len = 256;
     printf("here\n");
     struct proc *p = curr_proc();
-    void* temp = &buf;
-    char* charbuf = (char*) temp;
-    for(int i=0;i<len;i++){
-        p->mail[p->pointWrite][i] = charbuf[i];
-    }
-    p->mailLen[p->pointWrite] = len;
-    p->pointWrite++;
-    return len;
+    // void* temp = &buf;
+    // char* charbuf = (char*) temp;
+    // for(int i=0;i<len;i++){
+    //     p->mail[p->pointWrite][i] = charbuf[i];
+    // }
+    // p->mailLen[p->pointWrite] = len;
+    // p->pointWrite++;
+    // return len;
+    return copyin(p->pagetable,&p->mail[p->pointWrite],buf,len);
 }
 
 void syscall() {
