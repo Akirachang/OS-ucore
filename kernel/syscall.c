@@ -219,12 +219,11 @@ uint64 sys_close(int fd) {
 uint64 sys_mailread(void* buf, int len){
     if(len>256)
         len = 256;
-    
     struct proc *p = curr_proc();
-    p->pointWrite--;
     if (len < p->mailLen[p->pointRead]){ 
         if(copyout(p->pagetable,(uint64)buf,&p->mail[p->pointRead][0],len)!=-1)
         {
+            p->pointWrite--;
             p->pointRead++;
             return len;
         }
@@ -237,6 +236,7 @@ uint64 sys_mailread(void* buf, int len){
         int temp = p->mailLen[p->pointRead];
         printf("temp is %d \n",temp);
         if(copyout(p->pagetable,(uint64)buf,&p->mail[p->pointRead][0],p->mailLen[p->pointRead])!=-1){
+            p->pointWrite--;
             p->pointRead++;
             return temp;
         }
