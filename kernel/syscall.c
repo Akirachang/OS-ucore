@@ -227,7 +227,7 @@ uint64 sys_mailread(void* buf, int len){
     // }
     if (len < p->mailLen[p->pointRead]){ 
         printf("1\n");
-        copyout(p->pagetable,(uint64)buf,&p->mail[p->pointWrite][0],len);
+        copyout(p->pagetable,(uint64)buf,&p->mail[p->pointRead][0],len);
         p->pointRead++;
         return len;
     }
@@ -235,7 +235,7 @@ uint64 sys_mailread(void* buf, int len){
         printf("2\n");
         int temp = p->mailLen[p->pointRead];
         printf("temp is %d \n",temp);
-        copyout(p->pagetable,(uint64)buf,&p->mail[p->pointWrite][0],len);
+        copyout(p->pagetable,(uint64)buf,&p->mail[p->pointRead][0],len);
         p->pointRead++;
         return temp;
     }
