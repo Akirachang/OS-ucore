@@ -324,11 +324,11 @@ void syscall() {
             // printf("ret in spawn is %d\n",ret);
             break;
         case SYS_mailread:
-            ret = sys_mailread(args[0],args[1]);
+            ret = sys_mailread((void*)args[0],args[1]);
             break;
         case SYS_mailwrite:
             printf("in here");
-            ret = sys_mailwrite(args[0],args[1],args[2]);
+            ret = sys_mailwrite(args[0],(void*)args[1],args[2]);
             break;
         default:
             ret = -1;
