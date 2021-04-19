@@ -8,7 +8,7 @@ static int app_cur, app_num;
 static uint64 *app_info_ptr;
 extern char _app_num[], _app_names[];
 int fin = 0;
-char names[20][100];
+char names[30][100];
 
 const uint64 BASE_ADDRESS = 0x1000;
 const uint64 USTACK_BOTTOM = 0x0;
