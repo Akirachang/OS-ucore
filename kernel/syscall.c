@@ -223,7 +223,7 @@ uint64 sys_mailread(void* buf, int len){
     printf("here");
     printf("%d",sizeof(p->mail[p->pointRead]));
     for(int i=0;i<sizeof(p->mail[p->pointRead]);i++){
-        printf("%c ",p->mail[p->pointRead][i]);    
+        printf("%d ",p->mail[p->pointRead][i]);    
     }
     if (len < sizeof(p->mail[p->pointRead])){ 
         p->pointRead++;
