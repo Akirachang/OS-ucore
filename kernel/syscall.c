@@ -233,7 +233,7 @@ uint64 sys_mailread(void* buf, int len){
     else {
         printf("2\n");
         int temp = p->mailLen[p->pointRead];
-        printf(temp);
+        printf("temp is %d \n",temp);
         p->pointRead++;
         return temp;
     }
