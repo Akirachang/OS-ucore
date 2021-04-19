@@ -20,7 +20,7 @@ struct proc idle;
 int curr_pid = 0;
 
 struct proc* get_proc(int pid) {
-    printf("here1");
+    printf("here1 %d", pid);
     return &pool[pid];
 }
 
