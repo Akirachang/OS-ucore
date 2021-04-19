@@ -33,7 +33,7 @@ struct mailbox{
     int head;
     int tail;
     int len[17];
-    int mails[17][256];
+    char mails[17][256];
 };
 // Per-process state
 struct proc {
