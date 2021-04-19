@@ -238,7 +238,9 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     void* temp = &buf;
     char* charbuf = (char*) temp;
     printf("%c",charbuf[0]);
-    p->mail[p->pointWrite] = charbuf[0];
+    for(int i=0;i<sizeof(charbuf);i++){
+        p->mail[p->pointWrite][i] = charbuf[i];
+    }
     printf("yo");
     p->pointWrite++;
     return sizeof(buf);
