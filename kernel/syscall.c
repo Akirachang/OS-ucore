@@ -252,6 +252,7 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     struct proc *p = get_proc(pid);
     if((uint64)buf == 0x90000000ULL)
         return -1;
+    printf("point write %d",p->pointWrite);
     if(len==0 && p->pointWrite == 16)
        { 
            printf("this if");
