@@ -220,17 +220,17 @@ uint64 sys_close(int fd) {
 
 uint64 sys_mailread(void* buf, int len){
     struct proc *p = curr_proc();
-    struct mails *mbox = &p -> mail;
-    if(mbox->tail == mbox -> head)
+    struct mails *mail = &p -> mail;
+    if(mail->tail == mail -> head)
         return -1;
+    if(len>mail->len[mail->head])
+        len = mail->len[mail->head];
     if(len == 0)
         return 0;
-    if(len>mbox->len[mbox->head])
-        len = mbox->len[mbox->head];
-    int ret = copyout(p->pagetable,(uint64)buf, mbox->mails[mbox->head],len);
+    int ret = copyout(p->pagetable,(uint64)buf, mail->mails[mail->head],len);
     if(ret == -1)
         return -1;
-    mbox->head = (1+mbox->head) %17;
+    mail->head = (1+mail->head) %17;
     return len;
     // if(len>256)
     //     len = 256;
@@ -270,21 +270,21 @@ uint64 sys_mailread(void* buf, int len){
 uint64 sys_mailwrite(int pid, void* buf, int len){
     struct proc *p = get_proc(pid);
     printf("here");
-    struct mails *mbox = &p ->mail;
+    struct mails *mail = &p ->mail;
         printf("here1");
-    if((1+mbox->tail)%17 == mbox->head)
+    if((1+mail->tail)%17 == mail->head)
         return -1;
     if(len==0)
         return 0;
     if(len>256)
         len=256;
-    mbox->len[mbox->tail]=len;
+    mail->len[mail->tail]=len;
         printf("here2");
-    int ret = copyin(curr_proc()->pagetable,mbox->mails[mbox->tail],(uint64)buf, len);
+    int ret = copyin(curr_proc()->pagetable,mail->mails[mail->tail],(uint64)buf, len);
         printf("here3");
     if(ret == -1)
         return -1;
-    mbox->tail = (1+mbox->tail)%17;
+    mail->tail = (1+mail->tail)%17;
     return len;
     // if(len>256)
     //     len = 256;
