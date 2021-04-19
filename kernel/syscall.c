@@ -226,10 +226,12 @@ uint64 sys_mailread(void* buf, int len){
     //     printf("%d ",p->mail[p->pointRead][i]);    
     // }
     if (len < p->mailLen[p->pointRead]){ 
+        printf("1\n");
         p->pointRead++;
         return len;
     }
     else {
+        printf("2\n");
         p->pointRead++;
         return p->mailLen[p->pointRead];
     }
