@@ -237,6 +237,7 @@ uint64 sys_mailwrite(int pid, char* buf, int len){
     struct proc *p = curr_proc();
     for(int i=0;i<len;i++){
         printf("%d\n",i);
+        printf("%d\n",p->pointWrite);
         p->mail[p->pointWrite][i] = buf[i];
     }
     printf("yo");
