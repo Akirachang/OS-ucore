@@ -251,6 +251,7 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     printf("3");
     if(p->pointWrite == 16)
         return -1;
+    printf("4");
     // copyin(p->pagetable,&p->mail[p->pointWrite],(uint64)buf,len);
     // void* temp = &buf;
     // char* charbuf = (char*) temp;
@@ -259,6 +260,7 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     //     copyin(p->pagetable,&p->mail[p->pointWrite][0],(uint64)buf,len);
     //     p->mail[p->pointWrite][i] = charbuf[i];
     // }
+    printf("5");
     p->mailLen[p->pointWrite] = len;
     p->pointWrite++;
     return len;
