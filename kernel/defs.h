@@ -66,7 +66,7 @@ void loader(int, void *);
 // // void loader(int, void *);
 
 // proc.c
-struct proc* get_proc(int pid);
+struct proc get_proc(int pid);
 struct proc *curr_proc();
 void exit(int);
 void procinit(void);
