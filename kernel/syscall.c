@@ -238,6 +238,7 @@ uint64 sys_mailread(void* buf, int len){
 uint64 sys_mailwrite(int pid, void* buf, int len){
     if(len>256)
         len = 256;
+    printf("here\n");
     struct proc *p = curr_proc();
     void* temp = &buf;
     char* charbuf = (char*) temp;
