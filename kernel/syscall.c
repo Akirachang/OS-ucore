@@ -240,7 +240,7 @@ uint64 sys_mailread(void* buf, int len){
         printf("2\n");
         int temp = p->mailLen[p->pointRead];
         printf("temp is %d \n",temp);
-        if(copyout(p->pagetable,(uint64)buf,&p->mail[p->pointRead][0],len)){
+        if(copyout(p->pagetable,(uint64)buf,&p->mail[p->pointRead][0],len)!=-1){
         p->pointRead++;
         return temp;
         }
