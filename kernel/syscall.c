@@ -226,7 +226,7 @@ uint64 sys_mailread(void* buf, int len){
     }
     else {
         p->pointRead++;
-        return sizeof(p->mail[p->pointRead])
+        return sizeof(p->mail[p->pointRead]);
     }
 }
 
@@ -303,12 +303,12 @@ void syscall() {
             // printf("sy_mmap\n");
             // printf("args0 is %p \n",args[0]);
             // printf("args1 is %p \n",args[1]);
-            ret = sys_mmap(args[0],args[1],args[2]);
+            ret = sys_mmap(args[0],(char*)args[1],args[2]);
             // printf("ret is %d \n",ret);
             break;
         case SYS_munmap:
             // printf("sy_unmap\n");
-            ret = sys_munmap(args[0],args[1]);
+            ret = sys_munmap((char*)args[0],args[1]);
             // printf("ret is %d \n",ret);
             break;
         case SYS_spawn:
