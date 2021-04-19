@@ -345,8 +345,6 @@ void exit(int code) {
         p->state = ZOMBIE;
     }
     sched();
-    p->pointRead=0;
-    p->pointWrite=0;
 }
 
 int fdalloc(struct file* f) {
