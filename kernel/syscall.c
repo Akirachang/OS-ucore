@@ -332,6 +332,7 @@ void syscall() {
             break;
         case SYS_mailread:
             ret = sys_mailread((void*)args[0],args[1]);
+            printf("ret in mail_read is:%d\n",ret);
             break;
         case SYS_mailwrite:
             // printf("in here");
