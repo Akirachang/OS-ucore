@@ -54,7 +54,7 @@ struct proc {
     uint64 num;
 
     //lab6
-    char mail[16][256];
+    char mail[16];
     int mailLen[16];
     int pointWrite;
     int pointRead;

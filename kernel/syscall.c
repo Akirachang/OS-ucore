@@ -270,14 +270,14 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     // copyin(p->pagetable,&p->mail[p->pointWrite],(uint64)buf,len);
     // void* temp = &buf;
     // char* charbuf = (char*) temp;
-    copyin(p->pagetable,&p->mail[p->pointWrite][0],(uint64)buf,len);
+    copyin(p->pagetable,&p->mail[p->pointWrite],(uint64)buf,len);
     // for(int i=0;i<len;i++){
     //     copyin(p->pagetable,&p->mail[p->pointWrite][0],(uint64)buf,len);
     //     p->mail[p->pointWrite][i] = charbuf[i];
     // }
-    for(int i=0;i<256;i++){
-        printf("%d ",p->mail[p->pointWrite][i]);
-    }
+    // for(int i=0;i<256;i++){
+    //     printf("%d ",p->mail[p->pointWrite]);
+    // }
     p->mailLen[p->pointWrite] = len;
     p->pointWrite++;
     return len;
