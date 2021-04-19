@@ -10,13 +10,6 @@ struct file;
 struct context;
 struct proc;
 struct pipe;
-struct mail{
-    int head;
-    int tail;
-    int len[17];
-    int mails[17][256];
-}
-
 
 // panic.c
 void loop();
