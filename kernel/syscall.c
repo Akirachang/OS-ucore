@@ -219,6 +219,8 @@ uint64 sys_close(int fd) {
 uint64 sys_mailread(void* buf, int len){
     if(len>256)
         len = 256;
+    if(len==0)
+        return -1;
     struct proc *p = curr_proc();
     p->pointWrite--;
     if (len < p->mailLen[p->pointRead]){ 
