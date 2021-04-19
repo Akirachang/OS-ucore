@@ -248,6 +248,7 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     
     printf("here\n");
     struct proc *p = get_proc(pid);
+    printf("3");
     if(p->pointWrite == 16)
         return -1;
     // copyin(p->pagetable,&p->mail[p->pointWrite],(uint64)buf,len);
