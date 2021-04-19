@@ -268,7 +268,7 @@ uint64 sys_mailread(void* buf, int len){
 uint64 sys_mailwrite(int pid, void* buf, int len){
     struct proc *p = get_proc(pid);
     printf("here");
-    struct mailbox *mbox = p ->mail_box;
+    struct mailbox *mbox = &p ->mail_box;
         printf("here1");
     if((1+mbox->tail)%17 == mbox->head)
         return -1;
