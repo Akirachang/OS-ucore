@@ -227,6 +227,7 @@ uint64 sys_mailread(void* buf, int len){
     // }
     if (len < p->mailLen[p->pointRead]){ 
         printf("1\n");
+        copyout(p->pagetable,(uint64)buf,&p->mail[p->pointWrite][0],len);
         p->pointRead++;
         return len;
     }
