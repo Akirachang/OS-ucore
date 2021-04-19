@@ -221,6 +221,8 @@ uint64 sys_mailread(void* buf, int len){
         len = 256;
     struct proc *p = curr_proc();
     if (len < p->mailLen[p->pointRead]){ 
+        if(len ==0)
+            return 0;
         if(copyout(p->pagetable,(uint64)buf,&p->mail[p->pointRead][0],len)!=-1)
         {
             p->pointWrite--;
