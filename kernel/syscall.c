@@ -269,6 +269,7 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     struct proc *p = get_proc(pid);
     printf("here");
     struct mailbox *mbox = p ->mail_box;
+        printf("here1");
     if((1+mbox->tail)%17 == mbox->head)
         return -1;
     if(len==0)
@@ -276,7 +277,9 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     if(len>256)
         len=256;
     mbox->len[mbox->tail]=len;
+        printf("here2");
     int ret = copyin(curr_proc()->pagetable,mbox->mails[mbox->tail],(uint64)buf, len);
+        printf("here3");
     if(ret == -1)
         return -1;
     mbox->tail = (1+mbox->tail)%17;
