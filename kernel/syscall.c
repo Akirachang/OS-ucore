@@ -27,7 +27,9 @@ uint64 console_read(uint64 va, uint64 len) {
 }
 
 uint64 sys_write(int fd, uint64 va, uint64 len) {
-    if(fd == 0 || fd==1) {
+    if(fd>15)
+        return -1;
+    if(fd<=2) {
         return console_write(va, len);
     }
     struct proc *p = curr_proc();
