@@ -218,7 +218,7 @@ uint64 sys_close(int fd) {
 
 uint64 sys_mailread(void* buf, int len){
     struct proc *p = curr_proc();
-    struct mailbox *mbox = p -> mail_box;
+    struct mailbox *mbox = &p -> mail_box;
     if(mbox->tail == mbox -> head)
         return -1;
     if(len == 0)
