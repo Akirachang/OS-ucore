@@ -321,6 +321,7 @@ void syscall() {
             ret = sys_mailread((char*)args[0],args[1]);
             break;
         case SYS_mailwrite:
+            printf("in here");
             ret = sys_mailwrite(args[0],(char*)args[1],args[2]);
             break;
         default:
