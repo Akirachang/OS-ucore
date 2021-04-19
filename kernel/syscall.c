@@ -220,18 +220,18 @@ uint64 sys_mailread(void* buf, int len){
     if(len>256)
         len = 256;
     struct proc *p = curr_proc();
-    printf("here");
-    printf("%d",sizeof(p->mail[p->pointRead]));
-    for(int i=0;i<sizeof(p->mail[p->pointRead]);i++){
-        printf("%d ",p->mail[p->pointRead][i]);    
-    }
-    if (len < sizeof(p->mail[p->pointRead])){ 
+    // printf("here");
+    // printf("%d",sizeof(p->mail[p->pointRead]));
+    // for(int i=0;i<sizeof(p->mail[p->pointRead]);i++){
+    //     printf("%d ",p->mail[p->pointRead][i]);    
+    // }
+    if (len < p->mailLen[p->pointRead]){ 
         p->pointRead++;
         return len;
     }
     else {
         p->pointRead++;
-        return sizeof(p->mail[p->pointRead]);
+        return p->mailLen[p->pointRead];
     }
 }
 
@@ -244,6 +244,7 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     for(int i=0;i<len;i++){
         p->mail[p->pointWrite][i] = charbuf[i];
     }
+    p->mailLen[p->pointWrite] = len;
     p->pointWrite++;
     return len;
 }

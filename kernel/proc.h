@@ -55,6 +55,7 @@ struct proc {
 
     //lab6
     char** mail;
+    int mailLen[16];
     int pointWrite;
     int pointRead;
 };
