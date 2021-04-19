@@ -238,6 +238,7 @@ uint64 sys_mailwrite(int pid, char* buf, int len){
     for(int i=0;i<len;i++){
         p->mail[p->pointWrite][i] = buf[i];
     }
+    printf("yo");
     p->pointWrite++;
     return sizeof(buf);
 }
