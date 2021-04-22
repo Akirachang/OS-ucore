@@ -17,7 +17,7 @@ struct {
 void
 kinit()
 {
-    printf("ekernel = %p\n", (void*)ekernel);
+    kmem.freelist = 0;
     freerange(ekernel, (void*)PHYSTOP);
 }
 
@@ -60,7 +60,9 @@ kalloc(void)
     l = kmem.freelist;
     if(l) {
         kmem.freelist = l->next;
-        memset((char *) l, 5, PGSIZE);// fill with junk
+        memset((char *) l, 5, PGSIZE); // fill with junk
+    } else {
+        error("memory run out\n");    
     }
     return (void*)l;
 }

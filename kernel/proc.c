@@ -70,9 +70,8 @@ proc_pagetable(struct proc *p)
         return 0;
     }
 
-    if((p->trapframe = (struct trapframe *)kalloc()) == 0){
-        panic("kalloc\n");
-    }
+        memset(p->trapframe, 0, sizeof(struct trapframe));
+
     // map the trapframe just below TRAMPOLINE, for trampoline.S.
     if(mappages(pagetable, TRAPFRAME, PGSIZE,
                 (uint64)(p->trapframe), PTE_R | PTE_W) < 0){;
@@ -95,9 +94,9 @@ proc_freepagetable(pagetable_t pagetable, uint64 sz)
 static void
 freeproc(struct proc *p)
 {
-    if(p->trapframe)
-        kfree((void*)p->trapframe);
-    p->trapframe = 0;
+    // if(p->trapframe)
+    //     kfree((void*)p->trapframe);
+    // p->trapframe = 0;
     if(p->pagetable)
         proc_freepagetable(p->pagetable, p->sz);
     p->pagetable = 0;
@@ -197,13 +196,15 @@ sched(void)
     struct proc *p = curr_proc();
     if(p->state == RUNNING)
         panic("sched running");
+    current_proc = &idle;
     swtch(&p->context, &idle.context);
 }
 
 // Give up the CPU for one scheduling round.
 void yield(void)
 {
-    current_proc->state = RUNNABLE;
+    struct proc *p = curr_proc();
+    p->state = RUNNABLE;    
     sched();
 }
 
@@ -346,7 +347,7 @@ void exit(int code) {
 int fdalloc(struct file* f) {
     struct proc* p = curr_proc();
     // fd = 0 is reserved for stdio/stdout
-    for(int i = 1; i < FD_MAX; ++i) {
+    for(int i = 3; i < FD_MAX; ++i) {
         if(p->files[i] == 0) {
             p->files[i] = f;
             return i;
@@ -372,5 +373,9 @@ uint64 get_time(TimeVal* ts, int tz) {
     ts->sec = get_cycle()/12500000;
     ts->usec = (get_cycle()%12500000)*10/125;
     // printf("hi2");
+    return 0;
+}
+
+int cpuid() {
     return 0;
 }

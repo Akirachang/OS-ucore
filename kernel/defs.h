@@ -6,10 +6,13 @@ typedef struct{
     uint64 usec;	// 微秒数
 }TimeVal;
 #endif
-struct file;
+struct buf;
 struct context;
-struct proc;
+struct file;
+struct inode;
 struct pipe;
+struct proc;
+struct superblock;
 
 // panic.c
 void loop();
@@ -80,6 +83,8 @@ uint64 set_priority(int code);
 uint64 get_time(TimeVal* ts, int tz);
 
 int fdalloc(struct file *);
+int cpuid();
+
 
 // kalloc.c
 void *kalloc(void);
@@ -106,6 +111,8 @@ void debugwalk(pagetable_t, int);
 int copyin(pagetable_t, char*, uint64, uint64);
 int copyout(pagetable_t, uint64, char*, uint64);
 int copyinstr(pagetable_t, char*, uint64, uint64);
+int either_copyout(int user_dst, uint64 dst, char* src, uint64 len);
+int either_copyin(int user_src, uint64 src, char* dst, uint64 len);
 
 // timer.c
 uint64 get_cycle();
@@ -122,6 +129,46 @@ int pipewrite(struct pipe *, uint64, int);
 // // file.c
 void fileclose(struct file *);
 struct file* filealloc();
+int fileopen(char*, uint64);
+uint64 filewrite(struct file*, uint64, uint64);
+uint64 fileread(struct file*, uint64, uint64);
+
+// plic.c
+void plicinit(void);
+int plic_claim(void);
+void plic_complete(int);
+
+// virtio_disk.c
+void virtio_disk_init(void);
+void virtio_disk_rw(struct buf *, int);
+void virtio_disk_intr(void);
+
+// fs.c
+void fsinit();
+int dirlink(struct inode *, char *, uint);
+struct inode *dirlookup(struct inode *, char *, uint *);
+struct inode *ialloc(uint, short);
+struct inode *idup(struct inode *);
+void iinit();
+void ivalid(struct inode *);
+void iput(struct inode *);
+void iunlock(struct inode *);
+void iunlockput(struct inode *);
+void iupdate(struct inode *);
+struct inode *namei(char *);
+struct inode *root_dir();
+int readi(struct inode *, int, uint64, uint, uint);
+int writei(struct inode *, int, uint64, uint, uint);
+void itrunc(struct inode *);
+
+// bio.c
+void binit(void);
+struct buf *bread(uint, uint);
+void brelse(struct buf *);
+void bwrite(struct buf *);
+void bpin(struct buf *);
+void bunpin(struct buf *);
+
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x) / sizeof((x)[0]))
 #define PAGE_SIZE (4096)

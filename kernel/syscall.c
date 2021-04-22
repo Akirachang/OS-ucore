@@ -1,8 +1,12 @@
 #include "defs.h"
+#include "fcntl.h"
+#include "proc.h"
 #include "syscall_ids.h"
 #include "trap.h"
 #include "proc.h"
 #include "riscv.h"
+#include "fs.h"
+
 #define min(a, b) a < b ? a : b;
 
 uint64 console_write(uint64 va, uint64 len) {
@@ -18,7 +22,7 @@ uint64 console_write(uint64 va, uint64 len) {
 uint64 console_read(uint64 va, uint64 len) {
     struct proc *p = curr_proc();
     char str[200];
-    for(int i = 0; i < len; ++i) {
+    for(int i = 0; i < MIN(len, 200); ++i) {
         int c = console_getchar();
         str[i] = c;
     }
@@ -37,6 +41,8 @@ uint64 sys_write(int fd, uint64 va, uint64 len) {
     if(f->type == FD_PIPE) {
         info("write to pipe at %p\n", f->pipe);
         return pipewrite(f->pipe, va, len);
+         } else if (f->type == FD_INODE) {
+        return filewrite(f, va, len);
     }
     error("unknown file type %d\n", f->type);
     panic("syswrite: unknown file type\n");
@@ -52,6 +58,8 @@ uint64 sys_read(int fd, uint64 va, uint64 len) {
     if(f->type == FD_PIPE) {
         info("read to pipe at %p\n", f->pipe);
         return piperead(f->pipe, va, len);
+         } else if (f->type == FD_INODE) {
+        return fileread(f, va, len);
     }
     error("unknown file type %d\n", f->type);
     panic("sysread: unknown file type\n");
@@ -118,7 +126,8 @@ uint64 sys_wait(int pid, uint64 va) {
 }
 
 uint64 sys_times() {
-    return get_time_ms();
+    uint64 time = get_time_ms();
+    return time;
 }
 
 uint64 sys_setpriority(int code) {
@@ -218,6 +227,13 @@ uint64 sys_close(int fd) {
     return 0;
 }
 
+uint64 sys_openat(uint64 va, uint64 omode, uint64 _flags) {
+    struct proc *p = curr_proc();
+    char path[200];
+    copyinstr(p->pagetable, path, va, 200);
+    return fileopen(path, omode);
+}
+
 uint64 sys_mailread(void* buf, int len){
     // printf("here1");
     struct proc *p = curr_proc();
@@ -282,6 +298,12 @@ void syscall() {
             // printf("sy_read\n");
             ret = sys_read(args[0], args[1], args[2]);
             // printf("ret in read is: %d \n",ret);
+            break;
+        case SYS_openat:
+            ret = sys_openat(args[0], args[1], args[2]);
+            break;
+        case SYS_close:
+            ret = sys_close(args[0]);
             break;
         case SYS_exit:
             // printf("sys exit\n");
@@ -354,6 +376,9 @@ void syscall() {
 
             ret = sys_mailwrite(args[0],(void*)args[1],args[2]);
             printf("ret in mail_write is:%d\n",ret);
+            break;
+        case SYS_pipe2:
+            ret = sys_pipe(args[0]);
             break;
         default:
             ret = -1;

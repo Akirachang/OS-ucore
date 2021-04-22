@@ -47,8 +47,13 @@ int get_id_by_name(char* name) {
 }
 
 void alloc_ustack(struct proc *p) {
-    if (mappages(p->pagetable, USTACK_BOTTOM, USTACK_SIZE, (uint64) kalloc(), PTE_U | PTE_R | PTE_W | PTE_X) != 0) {
-        panic("");
+void* page = kalloc();
+    if(page == 0) {
+        panic("can't alloc user stack");
+    }
+    memset(page, 0, PGSIZE);
+    if (mappages(p->pagetable, USTACK_BOTTOM, USTACK_SIZE, (uint64) page, PTE_U | PTE_R | PTE_W | PTE_X) != 0) {
+            panic("");
     }
     p->ustack = USTACK_BOTTOM;
     p->trapframe->sp = p->ustack + USTACK_SIZE;
