@@ -30,9 +30,10 @@ uint64 console_read(uint64 va, uint64 len) {
 }
 
 uint64 sys_write(int fd, uint64 va, uint64 len) {
-    if(fd>15)
-        return -1;
-    if(fd<=2) {
+    // if(fd>15)
+    //     return -1;
+    // if(fd<=2) {
+    if (fd == 0) {
         return console_write(va, len);
     }
     struct proc *p = curr_proc();
@@ -49,7 +50,7 @@ uint64 sys_write(int fd, uint64 va, uint64 len) {
 }
 
 uint64 sys_read(int fd, uint64 va, uint64 len) {
-    if(fd == 0 || fd==1) {
+    if (fd == 0) {
         return console_read(va, len);
     }
     struct proc *p = curr_proc();
@@ -217,10 +218,6 @@ uint64 sys_close(int fd) {
         return 0;
     struct proc *p = curr_proc();
     struct file *f = p->files[fd];
-    if(f->type != FD_PIPE) {
-        error("unknown file type %d\n", f->type);
-        panic("fileclose: unknown file type\n");
-    }
     fileclose(f);
     p->files[fd] = 0;
     return 0;
