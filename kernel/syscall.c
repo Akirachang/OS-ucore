@@ -3,8 +3,7 @@
 #include "proc.h"
 #include "syscall_ids.h"
 #include "trap.h"
-#include "proc.h"
-#include "riscv.h"
+
 #include "fs.h"
 
 #define min(a, b) a < b ? a : b;
