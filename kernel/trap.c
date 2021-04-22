@@ -17,14 +17,6 @@ typedef struct{
 extern char trampoline[], uservec[], userret[];
 void kernelvec();
 
-
-
-void trapinit() {
-    // intr_on();
-    set_kerneltrap();
-}
-
-
 // void unknown_trap() {
 //     printf("unknown trap: %p, stval = %p\n", r_scause(), r_stval());
 //     exit(-1);
