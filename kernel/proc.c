@@ -42,7 +42,7 @@ procinit(void)
         p->state = UNUSED;
         p->kstack = (uint64)kstack[p - pool];
         p->ustack = (uint64)ustack[p - pool];
-        p->trapframe = (struct trapframe*)trapframe[p - pool];
+        p->trapframe = kalloc();
         p->pid=0;
     }
     idle.kstack = (uint64)boot_stack_top;
