@@ -21,11 +21,6 @@ void kernelvec();
 //     printf("unknown trap: %p, stval = %p\n", r_scause(), r_stval());
 //     exit(-1);
 // }
-void kerneltrap() {
-    if((r_sstatus() & SSTATUS_SPP) == 0)
-        panic("kerneltrap: not from supervisor mode");
-    panic("trap from kernel\n");
-}
 
 // set up to take exceptions and traps while in the kernel.
 void set_usertrap(void) {
