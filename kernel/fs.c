@@ -403,29 +403,28 @@ struct inode *root_dir() {
 //HERE
 int
 dirunlink(struct inode *dp, char *name){
-    info("into dirunlink\n");
+    // printf("here1\n");
     int off;
     struct dirent de;
     struct inode *ip;
-    // Check that name is present.
+
     if((ip = dirlookup(dp, name, 0)) == 0){
-        warn("dirunlink : dirlookup\n");
         return -1;
     }
-    // Look for the dirent that match the ip.
+
     for(off = 0; off < dp->size; off += sizeof(de)){
-        if(readi(dp, 0, (uint64)&de, off, sizeof(de)) != sizeof(de))
-            panic("dirlink read");
+            // printf("here2\n");
+        if(readi(dp, 0, (uint64)&de, off, sizeof(de))!=sizeof(de))
         if(strncmp(de.name, name, strlen(name)) == 0)
             break;
     }
     if(off == dp->size){
-        warn("dirunlink: off == dp->size\n");
+        // printf("here3\n");
         return -1;
     }
     de.inum = 0;
-    if(writei(dp, 0, (uint64)&de, off, sizeof(de)) != sizeof(de)) {
-        warn("dirunlink: writei\n");
+    if(writei(dp, 0, (uint64)&de, off, sizeof(de))!=sizeof(de)) {
+        printf("dirunlink: writei\n");
     }
     return 0;
 }
