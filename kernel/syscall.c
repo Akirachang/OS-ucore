@@ -278,11 +278,6 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     }
 }
 
-int sys_fstat(int fd, struct Stat* st){
-    struct proc *p = curr_proc();
-
-}
-
 uint64 sys_linkat(uint64 olddirfd, char* oldpath_, uint64 newdirfd, char* newpath_, uint64 flags){
     info("into function linkat\n");
 

@@ -400,6 +400,36 @@ struct inode *root_dir() {
     ivalid(r);
     return r;
 }
+//HERE
+int
+dirunlink(struct inode *dp, char *name){
+    info("into dirunlink\n");
+    int off;
+    struct dirent de;
+    struct inode *ip;
+    // Check that name is present.
+    if((ip = dirlookup(dp, name, 0)) == 0){
+        warn("dirunlink : dirlookup\n");
+        return -1;
+    }
+    // Look for the dirent that match the ip.
+    for(off = 0; off < dp->size; off += sizeof(de)){
+        if(readi(dp, 0, (uint64)&de, off, sizeof(de)) != sizeof(de))
+            panic("dirlink read");
+        if(strncmp(de.name, name, strlen(name)) == 0)
+            break;
+    }
+    if(off == dp->size){
+        warn("dirunlink: off == dp->size\n");
+        return -1;
+    }
+    de.inum = 0;
+    if(writei(dp, 0, (uint64)&de, off, sizeof(de)) != sizeof(de)) {
+        warn("dirunlink: writei\n");
+    }
+    return 0;
+}
+
 
 struct inode *namei(char *path) {
     int skip = 0;
