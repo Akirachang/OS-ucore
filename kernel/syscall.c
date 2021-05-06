@@ -327,8 +327,7 @@ uint64 sys_fstat(uint64 fd, struct Stat* st){
     }
     struct inode *ip;
     struct inode *dp = root_dir();
-    struct proc* p = curr_proc();
-    ip = p->files[fd]->ip;
+    ip = curr_proc()->files[fd]->ip;
     int numlink = 0;
     int i;
     struct dirent de;
