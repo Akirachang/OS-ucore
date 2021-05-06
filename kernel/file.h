@@ -8,6 +8,9 @@
 // pipe.h
 #define PIPESIZE 512
 
+#define DIR 0o040000		// directory
+#define FILE 0o100000		// ordinary regular file
+
 
 // in-memory copy of an inode
 struct inode {
@@ -45,8 +48,10 @@ struct file {
     struct pipe *pipe; // FD_PIPE
     struct inode *ip;  // FD_INODE
     uint off;
-};
 
+    //lab 7
+    struct Stat *stat;
+};
 
 extern struct file filepool[128 * 16];  // NPROC * PROC_MAX
 

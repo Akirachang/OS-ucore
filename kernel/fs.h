@@ -69,4 +69,14 @@ struct dirent {
     char name[DIRSIZ];
 };
 
+//lab7
+struct Stat {
+	uint64 dev;     // 文件所在磁盘驱动器号
+	uint64 ino;     // inode 文件所在 inode 编号
+	uint32 mode;    // 文件类型
+	uint32 nlink;   // 硬链接数量，初始为1
+	uint64 pad[7];  // 无需考虑，为了兼容性设计
+};
+
+
 #endif //!__FS_H__

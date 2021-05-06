@@ -49,7 +49,7 @@ uint64 sys_write(int fd, uint64 va, uint64 len) {
 }
 
 uint64 sys_read(int fd, uint64 va, uint64 len) {
-    if(fd == 0 || fd==1) {
+    if(fd == 0 ) {
         return console_read(va, len);
     }
     struct proc *p = curr_proc();
@@ -278,6 +278,99 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     }
 }
 
+int sys_fstat(int fd, struct Stat* st){
+    struct proc *p = curr_proc();
+
+}
+
+uint64 sys_linkat(uint64 olddirfd, char* oldpath_, uint64 newdirfd, char* newpath_, uint64 flags){
+    info("into function linkat\n");
+
+    char oldpath[DIRSIZ], newpath[DIRSIZ];
+    pagetable_t pagetable = curr_proc()->pagetable;
+    copyin(pagetable, oldpath, (uint64)oldpath_, DIRSIZ);
+    copyin(pagetable, newpath, (uint64)newpath_, DIRSIZ);
+
+    struct inode *ip, *dp;
+    dp = root_dir();
+    if(strncmp(oldpath, newpath, DIRSIZ) == 0){
+        warn("linkat: oldpath == newpath\n");
+        return -1;
+    }
+    if ((ip = dirlookup(dp, oldpath, 0)) == 0){
+        warn("linkat : dirlookup\n");
+        return -1;
+    }
+    if(dirlink(dp, newpath, ip->inum) < 0){
+        warn("linkat : dirlink\n");
+        return -1;
+    }
+    return 0;
+}
+
+uint64 sys_unlinkat(uint64 dirfd, char* path_, uint64 flags) {
+    info("into function unlinkat\n");
+
+    char path[DIRSIZ];
+    pagetable_t pagetable = curr_proc()->pagetable;
+    copyin(pagetable, path, (uint64)path_, DIRSIZ);
+
+    struct inode *ip, *dp;
+    dp = root_dir();
+    if ((ip = dirlookup(dp, path, 0)) == 0){
+        warn("unlinkat : dirlookup\n");
+        return -1;
+    }
+    if(dirunlink(dp, path) < 0){
+        warn("unlinkat : dirunslink\n");
+        return -1;
+    }
+    return 0;
+}
+
+uint64 sys_fstat(uint64 fd, struct Stat* st){
+    info("into function fstat\n");
+    info("fd = %d\n", fd);
+    if(fd < 0 || fd >= 16){
+        warn("fd out of range\n");
+        return -1;
+    }
+    struct inode *ip, *dp;
+    dp = root_dir();
+    struct proc* p = curr_proc();
+    ip = p->files[fd]->ip;
+    // Look for link number.
+    int nlink = 0;
+    int off;
+    struct dirent de;
+    for(off = 0; off < dp->size; off += sizeof(de)){
+        if(readi(dp, 0, (uint64)&de, off, sizeof(de)) != sizeof(de)){
+            warn("fstat readi\n");
+            return -1;
+        }
+        if(de.inum == ip->inum) {
+            nlink++;
+        }
+    }
+    struct Stat sst;
+
+    sst.dev = ip->dev;
+    sst.ino = ip->inum;
+    if(ip->type == T_DIR)
+        sst.mode = DIR;
+    else if(ip->type == T_FILE)
+        sst.mode = FILE;
+    else{
+        warn("no such file mode exit\n");
+        return -1;
+    }
+    sst.nlink = nlink;
+    if(copyout(p->pagetable, (uint64)st, (char*)&sst, sizeof(sst)) < 0){
+        return -1;
+    }
+    return 0;
+}
+
 void syscall() {
     struct proc *p = curr_proc();
     struct trapframe *trapframe = p->trapframe;
@@ -330,6 +423,7 @@ void syscall() {
             // printf("sy_times\n");
             ret = sys_times();
             break;
+            
         case SYS_setpriority:
             // printf("sys prio\n");
             ret = sys_setpriority(args[0]);
@@ -375,6 +469,20 @@ void syscall() {
             break;
         case SYS_pipe2:
             ret = sys_pipe(args[0]);
+            break;
+        case SYS_linkat:
+            // printf("%p, %p, %p, %p\n", args[0], args[1], args[2], args[3]);
+            ret = sys_linkat(args[0], (char*)args[1], args[2], (char*)args[3], args[4]);
+            // ret = 0;
+            break;
+
+        case SYS_unlinkat: 
+            // printf("%p, %p, %p\n", args[0] , args[1], args[2]);
+            ret = sys_unlinkat(args[0], (char*)args[1], args[2]);
+            // ret = 0;
+            break;
+        case SYS_fstat:
+            ret = sys_fstat(args[0],(struct Stat*)args[1]);
             break;
         default:
             ret = -1;
