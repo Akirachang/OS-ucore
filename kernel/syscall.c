@@ -278,12 +278,12 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
     }
 }
 
-uint64 sys_link(uint64 olddirfd, char* oldpath_, uint64 newdirfd, char* newpath_, uint64 flags){
+uint64 sys_link(uint64 old_DIR_fd, char* old_path, uint64 new_DIR_fd, char* new_path, uint64 flags){
     char outdate_path[DIRSIZ], currNew_path[DIRSIZ];
     struct proc *p = curr_proc();
     pagetable_t pagetable = p->pagetable;
-    copyin(pagetable, outdate_path, (uint64)oldpath_, DIRSIZ);
-    copyin(pagetable, currNew_path, (uint64)newpath_, DIRSIZ);
+    copyin(pagetable, outdate_path, (uint64)old_path, DIRSIZ);
+    copyin(pagetable, currNew_path, (uint64)new_path, DIRSIZ);
     struct inode *ip;
     struct inode *dp = root_dir();
     if(!strncmp(outdate_path, currNew_path, DIRSIZ)){
