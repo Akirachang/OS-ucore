@@ -325,37 +325,38 @@ uint64 sys_fstat(uint64 fd, struct Stat* st){
         printf("exceeded!\n");
         return -1;
     }
-    struct inode *ip, *dp;
-    dp = root_dir();
+    struct inode *ip;
+    struct inode *dp = root_dir();
     struct proc* p = curr_proc();
     ip = p->files[fd]->ip;
-    // Look for link number.
-    int nlink = 0;
-    int off;
+    int numlink = 0;
+    int i;
     struct dirent de;
-    for(off = 0; off < dp->size; off += sizeof(de)){
-        if(readi(dp, 0, (uint64)&de, off, sizeof(de)) != sizeof(de)){
-            warn("fstat readi\n");
+    for(i = 0; i < dp->size; i += sizeof(de)){
+        if(readi(dp, 0, (uint64)&de, i, sizeof(de)) != sizeof(de))
+        {
             return -1;
         }
-        if(de.inum == ip->inum) {
-            nlink++;
+        if(de.inum == ip->inum) 
+        {
+            numlink++;
         }
     }
-    struct Stat sst;
-
-    sst.dev = ip->dev;
-    sst.ino = ip->inum;
+    struct Stat status;
+    status.dev = ip->dev;
+    status.ino = ip->inum;
     if(ip->type == T_DIR)
-        sst.mode = DIR;
-    else if(ip->type == T_FILE)
-        sst.mode = FILE;
+    {
+        status.mode = DIR;
+    }
+    else if(ip->type == T_FILE){
+        status.mode = FILE;
+    }
     else{
-        warn("no such file mode exit\n");
         return -1;
     }
-    sst.nlink = nlink;
-    if(copyout(p->pagetable, (uint64)st, (char*)&sst, sizeof(sst)) < 0){
+    status.nlink = numlink;
+    if(copyout(p->pagetable, (uint64)st, (char*)&status, sizeof(status)) < 0){
         return -1;
     }
     return 0;
