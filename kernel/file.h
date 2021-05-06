@@ -8,9 +8,6 @@
 // pipe.h
 #define PIPESIZE 512
 
-#define DIR 0o040000		// directory
-#define FILE 0o100000		// ordinary regular file
-
 
 // in-memory copy of an inode
 struct inode {

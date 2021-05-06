@@ -35,6 +35,19 @@ struct mails{
     int len[17];
     char mails[17][256];
 };
+
+struct Stat {
+	uint64 dev;     // 文件所在磁盘驱动器号
+	uint64 ino;     // inode 文件所在 inode 编号
+	uint32 mode;    // 文件类型
+	uint32 nlink;   // 硬链接数量，初始为1
+	uint64 pad[7];  // 无需考虑，为了兼容性设计
+};
+
+// 文件类型只需要考虑:
+#define DIR 0x040000		// directory
+#define FILE 0x100000		// ordinary regular file
+
 // Per-process state
 struct proc {
     // p->lock must be held when using these:
