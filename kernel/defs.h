@@ -146,6 +146,8 @@ void virtio_disk_intr(void);
 // fs.c
 void fsinit();
 int dirlink(struct inode *, char *, uint);
+int dirunlink(struct inode *dp, char *name);
+
 struct inode *dirlookup(struct inode *, char *, uint *);
 struct inode *ialloc(uint, short);
 struct inode *idup(struct inode *);
