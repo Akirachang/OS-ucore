@@ -284,19 +284,18 @@ uint64 sys_link(uint64 olddirfd, char* oldpath_, uint64 newdirfd, char* newpath_
     pagetable_t pagetable = p->pagetable;
     copyin(pagetable, outdate_path, (uint64)oldpath_, DIRSIZ);
     copyin(pagetable, currNew_path, (uint64)newpath_, DIRSIZ);
-
-    struct inode *ip, *dp;
-    dp = root_dir();
-    if(strncmp(outdate_path, currNew_path, DIRSIZ) == 0){
-        warn("linkat: outdate_path == currNew_path\n");
+    struct inode *ip;
+    struct inode *dp = root_dir();
+    if(!strncmp(outdate_path, currNew_path, DIRSIZ)){
+        //printf("here");
         return -1;
     }
-    if ((ip = dirlookup(dp, outdate_path, 0)) == 0){
-        warn("linkat : dirlookup\n");
+    if (!(ip = dirlookup(dp, outdate_path, 0))){
+        //printf("here1");
         return -1;
     }
     if(dirlink(dp, currNew_path, ip->inum) < 0){
-        warn("linkat : dirlink\n");
+        //printf("here2");
         return -1;
     }
     return 0;
