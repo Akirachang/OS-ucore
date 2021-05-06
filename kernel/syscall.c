@@ -301,22 +301,20 @@ uint64 sys_link(uint64 old_DIR_fd, char* old_path, uint64 new_DIR_fd, char* new_
     return 0;
 }
 
-uint64 sys_unlink(uint64 dirfd, char* path_, uint64 flags) {
+uint64 sys_unlink(uint64 DIR_fd, char* path, uint64 flags) {
     info("into function unlinkat\n");
     char path_dir[DIRSIZ];
     pagetable_t pagetable = curr_proc()->pagetable;
-    copyin(pagetable, path_dir, (uint64)path_, DIRSIZ);
-
-    struct inode *ip, *dp;
-    dp = root_dir();
-    if ((ip = dirlookup(dp, path_dir, 0)) == 0){
-        warn("unlinkat : dirlookup\n");
+    copyin(pagetable, path_dir, (uint64)path, DIRSIZ);
+    struct inode *ip;
+    struct inode *dp = root_dir();
+    if (!(ip = dirlookup(dp, path_dir, 0)))
+    {
+        return -1;}
+    if(dirunlink(dp, path_dir) < 0)
+    {
         return -1;
-    }
-    if(dirunlink(dp, path_dir) < 0){
-        warn("unlinkat : dirunslink\n");
-        return -1;
-    }
+        }
     return 0;
 }
 
@@ -324,7 +322,7 @@ uint64 sys_fstat(uint64 fd, struct Stat* st){
     info("into function fstat\n");
     info("fd = %d\n", fd);
     if(fd < 0 || fd >= 16){
-        warn("fd out of range\n");
+        printf("exceeded!\n");
         return -1;
     }
     struct inode *ip, *dp;
