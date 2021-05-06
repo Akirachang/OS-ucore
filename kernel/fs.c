@@ -400,7 +400,7 @@ struct inode *root_dir() {
     ivalid(r);
     return r;
 }
-//HERE
+
 int
 dirunlink(struct inode *dp, char *name){
     info("into dirunlink\n");
@@ -409,7 +409,7 @@ dirunlink(struct inode *dp, char *name){
     struct inode *ip;
     // Check that name is present.
     if((ip = dirlookup(dp, name, 0)) == 0){
-        // warn("dirunlink : dirlookup\n");
+        // printf("here1");
         return -1;
     }
     // Look for the dirent that match the ip.
@@ -420,7 +420,7 @@ dirunlink(struct inode *dp, char *name){
             break;
     }
     if(off == dp->size){
-        // warn("dirunlink: off == dp->size\n");
+        // printf("here1");
         return -1;
     }
     de.inum = 0;

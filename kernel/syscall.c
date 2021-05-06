@@ -279,22 +279,23 @@ uint64 sys_mailwrite(int pid, void* buf, int len){
 }
 
 uint64 sys_link(uint64 olddirfd, char* oldpath_, uint64 newdirfd, char* newpath_, uint64 flags){
-    char oldpath[DIRSIZ], newpath[DIRSIZ];
-    pagetable_t pagetable = curr_proc()->pagetable;
-    copyin(pagetable, oldpath, (uint64)oldpath_, DIRSIZ);
-    copyin(pagetable, newpath, (uint64)newpath_, DIRSIZ);
+    char outdate_path[DIRSIZ], currNew_path[DIRSIZ];
+    struct proc *p = curr_proc();
+    pagetable_t pagetable = p->pagetable;
+    copyin(pagetable, outdate_path, (uint64)oldpath_, DIRSIZ);
+    copyin(pagetable, currNew_path, (uint64)newpath_, DIRSIZ);
 
     struct inode *ip, *dp;
     dp = root_dir();
-    if(strncmp(oldpath, newpath, DIRSIZ) == 0){
-        warn("linkat: oldpath == newpath\n");
+    if(strncmp(outdate_path, currNew_path, DIRSIZ) == 0){
+        warn("linkat: outdate_path == currNew_path\n");
         return -1;
     }
-    if ((ip = dirlookup(dp, oldpath, 0)) == 0){
+    if ((ip = dirlookup(dp, outdate_path, 0)) == 0){
         warn("linkat : dirlookup\n");
         return -1;
     }
-    if(dirlink(dp, newpath, ip->inum) < 0){
+    if(dirlink(dp, currNew_path, ip->inum) < 0){
         warn("linkat : dirlink\n");
         return -1;
     }
