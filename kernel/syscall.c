@@ -225,9 +225,9 @@ uint64 sys_close(int fd) {
 
 uint64 sys_openat(uint64 va, uint64 omode, uint64 _flags) {
     struct proc *p = curr_proc();
-    char path[200];
-    copyinstr(p->pagetable, path, va, 200);
-    return fileopen(path, omode);
+    char path_dir[200];
+    copyinstr(p->pagetable, path_dir, va, 200);
+    return fileopen(path_dir, omode);
 }
 
 uint64 sys_mailread(void* buf, int len){
@@ -303,18 +303,17 @@ uint64 sys_link(uint64 old_DIR_fd, char* old_path, uint64 new_DIR_fd, char* new_
 
 uint64 sys_unlink(uint64 dirfd, char* path_, uint64 flags) {
     info("into function unlinkat\n");
-
-    char path[DIRSIZ];
+    char path_dir[DIRSIZ];
     pagetable_t pagetable = curr_proc()->pagetable;
-    copyin(pagetable, path, (uint64)path_, DIRSIZ);
+    copyin(pagetable, path_dir, (uint64)path_, DIRSIZ);
 
     struct inode *ip, *dp;
     dp = root_dir();
-    if ((ip = dirlookup(dp, path, 0)) == 0){
+    if ((ip = dirlookup(dp, path_dir, 0)) == 0){
         warn("unlinkat : dirlookup\n");
         return -1;
     }
-    if(dirunlink(dp, path) < 0){
+    if(dirunlink(dp, path_dir) < 0){
         warn("unlinkat : dirunslink\n");
         return -1;
     }
@@ -464,15 +463,11 @@ void syscall() {
             ret = sys_pipe(args[0]);
             break;
         case SYS_linkat:
-            // printf("%p, %p, %p, %p\n", args[0], args[1], args[2], args[3]);
             ret = sys_link(args[0], (char*)args[1], args[2], (char*)args[3], args[4]);
-            // ret = 0;
             break;
 
         case SYS_unlinkat: 
-            // printf("%p, %p, %p\n", args[0] , args[1], args[2]);
             ret = sys_unlink(args[0], (char*)args[1], args[2]);
-            // ret = 0;
             break;
         case SYS_fstat:
             ret = sys_fstat(args[0],(struct Stat*)args[1]);
