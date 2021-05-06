@@ -355,7 +355,7 @@ uint64 sys_fstat(uint64 fd, struct Stat* st){
         return -1;
     }
     status.nlink = numlink;
-    if(copyout(p->pagetable, (uint64)st, (char*)&status, sizeof(status)) < 0){
+    if(copyout(curr_proc()->pagetable, (uint64)st, (char*)&status, sizeof(status)) < 0){
         return -1;
     }
     return 0;
