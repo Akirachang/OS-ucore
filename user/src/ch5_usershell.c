@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 const unsigned char LF = 0x0a;
 const unsigned char CR = 0x0d;
@@ -30,6 +31,7 @@ void clear() {
 int main() {
     printf("C user shell\n");
     printf(">> ");
+    fflush(stdout);
     while (1) {
         char c = getchar();
         switch (c) {
@@ -56,6 +58,7 @@ int main() {
                     clear();
                 }
                 printf(">> ");
+                fflush(stdout);
                 break;
             case BS:
             case DL:
@@ -63,11 +66,13 @@ int main() {
                     putchar(BS);
                     printf(" ");
                     putchar(BS);
+                    fflush(stdout);
                     pop();
                 }
                 break;
             default:
                 putchar(c);
+                fflush(stdout);
                 push(c);
                 break;
         }

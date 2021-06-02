@@ -9,26 +9,73 @@
 int getchar()
 {
     char byte = 0;
-    read(stdin, &byte, 1);
-    return byte;
+    if (1 == read(stdin, &byte, 1)) {
+        return byte;
+    } else {
+        return EOF;
+    }
+}
+
+#define __LINE_WIDTH 256
+
+static char buffer[__LINE_WIDTH];
+static int buffer_len;
+
+// Returns: number of chars written, negative for failure
+// Warn: buffer_len[f] will not be changed
+int __write_buffer() {
+    if (buffer_len == 0) return 0;
+    int r = write(stdout, buffer, buffer_len);
+    return r;
+}
+
+// Clear buffer_len[f]
+void __clear_buffer() {
+    buffer_len = 0;
+}
+
+int __fflush() {
+    int r = __write_buffer();
+    __clear_buffer();
+    return r >= 0 ? 0 : r;
+}
+
+int fflush(int fd) {
+    if(fd == 1)
+        return __fflush();
+    return 0;
+}
+
+static int out(int f, const char *s, size_t l)
+{
+    if(f != stdout)
+        return write(f, s, l);
+    int ret = 0;
+    for (size_t i = 0; i < l; i++) {
+        char c = s[i];
+        buffer[buffer_len++] = c;
+        if (buffer_len == __LINE_WIDTH || c == '\n') {
+            int r = __write_buffer();
+            __clear_buffer(f);
+            if (r < 0) return r;
+            if (r < buffer_len) return ret + r;
+            ret += r;
+        }
+    }
+    return ret;
 }
 
 int putchar(int c)
 {
     char byte = c;
-    return write(stdout, &byte, 1);
+    return out(stdout, &byte, 1);
 }
 
 int puts(const char *s)
 {
     int r;
-    r = -(write(stdout, s, strlen(s)) < 0 || putchar('\n') < 0);
+    r = -(out(stdout, s, strlen(s)) < 0 || putchar('\n') < 0);
     return r;
-}
-
-static void out(int f, const char *s, size_t l)
-{
-    write(f, s, l);
 }
 
 static char digits[] = "0123456789abcdef";
@@ -75,8 +122,8 @@ static void printptr(uint64 x)
 void printf(const char *fmt, ...)
 {
     va_list ap;
-    int cnt = 0, l = 0;
-    char *a, *z, *s = (char *)fmt, str;
+    int l = 0;
+    char *a, *z, *s = (char *)fmt;
     int f = stdout;
 
     va_start(ap, fmt);
