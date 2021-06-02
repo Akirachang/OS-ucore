@@ -65,7 +65,7 @@ QEMUOPTS = \
     -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0
 
 run: kernel
-	$(CP) $(U)/fs-copy.img
+	$(CP) $(U)/fs.img $(U)/fs-copy.img
 	$(QEMU) $(QEMUOPTS)
 
 # QEMU's gdb stub command line changed in 0.11
