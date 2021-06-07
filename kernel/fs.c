@@ -118,7 +118,7 @@ ialloc(uint dev, short type) {
         }
         brelse(bp);
     }
-    panic("ialloc: no inodes");
+    // panic("ialloc: no inodes");
     return 0;
 }
 
