@@ -118,7 +118,7 @@ ialloc(uint dev, short type) {
         }
         brelse(bp);
     }
-    // panic("ialloc: no inodes");
+    panic("ialloc: no inodes");
     return 0;
 }
 
@@ -157,8 +157,7 @@ iget(uint dev, uint inum) {
 
     // Recycle an inode entry.
     if (empty == 0)
-        return 0;
-        // panic("iget: no inodes");
+        panic("iget: no inodes");
 
     ip = empty;
     ip->dev = dev;
@@ -350,8 +349,7 @@ dirlookup(struct inode *dp, char *name, uint *poff) {
     struct dirent de;
 
     if (dp->type != T_DIR)
-        return 0;
-        // panic("dirlookup not DIR");
+        panic("dirlookup not DIR");
 
     for (off = 0; off < dp->size; off += sizeof(de)) {
         if (readi(dp, 0, (uint64) &de, off, sizeof(de)) != sizeof(de))

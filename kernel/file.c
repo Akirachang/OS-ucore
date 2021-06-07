@@ -54,15 +54,15 @@ create(char *path, short type) {
         iput(ip);
         return 0;
     }
-    // if ((ip = ialloc(dp->dev, type)) == 0)
-        // panic("create: ialloc");
+    if ((ip = ialloc(dp->dev, type)) == 0)
+        panic("create: ialloc");
 
     trace("create dinod and inode type = %d\n", type);
     
     ivalid(ip);
     iupdate(ip);
-    // if(dirlink(dp, path, ip->inum) < 0)
-    //     panic("create: dirlink");
+    if(dirlink(dp, path, ip->inum) < 0)
+        panic("create: dirlink");
 
     iput(dp);
     return ip;
