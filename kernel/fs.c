@@ -157,7 +157,7 @@ iget(uint dev, uint inum) {
 
     // Recycle an inode entry.
     if (empty == 0)
-        panic("iget: no inodes");
+        // panic("iget: no inodes");
 
     ip = empty;
     ip->dev = dev;
