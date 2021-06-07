@@ -215,10 +215,9 @@ fork(void)
     struct proc *np;
     struct proc *p = curr_proc();
     // Allocate process.
-    np = allocproc();
-    // if((np = allocproc()) == 0){
-    //     panic("allocproc\n");
-    // }
+    if((np = allocproc()) == 0){
+        np = curr_proc();
+    }
     // Copy user memory from parent to child.
     if(uvmcopy(p->pagetable, np->pagetable, p->sz) < 0){
         panic("uvmcopy\n");
