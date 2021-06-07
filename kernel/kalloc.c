@@ -62,7 +62,8 @@ kalloc(void)
         kmem.freelist = l->next;
         memset((char *) l, 5, PGSIZE); // fill with junk
     } else {
-        error("memory run out\n");    
+        return (void*)l;
+        // error("memory run out\n");    
     }
     return (void*)l;
 }
