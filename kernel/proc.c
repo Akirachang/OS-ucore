@@ -221,7 +221,7 @@ fork(void)
     // Copy user memory from parent to child.
     if(uvmcopy(p->pagetable, np->pagetable, p->sz) < 0){
         // panic("uvmcopy\n");
-        return pid;
+        return np->pid;
     }
     np->sz = p->sz;
 
