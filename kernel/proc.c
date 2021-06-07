@@ -215,6 +215,7 @@ fork(void)
     struct proc *np;
     struct proc *p = curr_proc();
     // Allocate process.
+    np = allocproc();
     // if((np = allocproc()) == 0){
     //     panic("allocproc\n");
     // }
