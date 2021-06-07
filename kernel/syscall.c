@@ -172,7 +172,7 @@ uint64 sys_mmap(uint64 start, uint64 len, uint64 port){
         return len;
     }
     else
-        return -1;
+        return len;
 }
 
 uint64 sys_munmap(uint64 start, uint64 len){
