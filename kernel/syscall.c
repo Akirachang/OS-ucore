@@ -106,7 +106,7 @@ uint64 sys_getpid() {
 }
 
 uint64 sys_clone() {
-    info("fork!\n");
+    // info("fork!\n");
     return fork();
 }
 
